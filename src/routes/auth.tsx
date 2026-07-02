@@ -23,37 +23,15 @@ function AuthPage() {
     setErr(null);
     setLoading(true);
     try {
-      const testEmail = "test@gmintel.ai";
-      const testPass = "Password123!";
-      
-      // Attempt login
-      const { error } = await supabase.auth.signInWithPassword({
-        email: testEmail,
-        password: testPass,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/app` : undefined,
+        },
       });
-      
-      if (error) {
-        // If user doesn't exist, create it automatically
-        const { error: signUpError } = await supabase.auth.signUp({
-          email: testEmail,
-          password: testPass,
-          options: {
-            data: { full_name: "Developer Test User" },
-          },
-        });
-        if (signUpError) throw signUpError;
-        
-        // Final login attempt
-        const { error: signInAgainError } = await supabase.auth.signInWithPassword({
-          email: testEmail,
-          password: testPass,
-        });
-        if (signInAgainError) throw signInAgainError;
-      }
-      nav({ to: "/app" });
+      if (error) throw error;
     } catch (e: unknown) {
-      setErr(e instanceof Error ? e.message : "Automatic login failed");
-    } finally {
+      setErr(e instanceof Error ? e.message : "Google login failed");
       setLoading(false);
     }
   }
