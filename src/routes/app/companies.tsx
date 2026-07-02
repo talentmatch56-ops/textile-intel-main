@@ -121,18 +121,18 @@ function Page() {
       {/* Table */}
       <div className="rounded-lg border border-border bg-card overflow-hidden">
         <div className="grid grid-cols-12 gap-2 px-4 py-2.5 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30 border-b border-border">
-          <button className="col-span-4 flex items-center gap-1 hover:text-foreground text-left" onClick={() => handleSort("name")}>
+          <button className="col-span-6 sm:col-span-4 flex items-center gap-1 hover:text-foreground text-left" onClick={() => handleSort("name")}>
             Company <ArrowUpDown className="h-3 w-3" />
           </button>
-          <button className="col-span-2 flex items-center gap-1 hover:text-foreground" onClick={() => handleSort("country_code")}>
+          <button className="hidden sm:flex col-span-2 items-center gap-1 hover:text-foreground" onClick={() => handleSort("country_code")}>
             Country <ArrowUpDown className="h-3 w-3" />
           </button>
-          <div className="col-span-2">Type</div>
-          <div className="col-span-1">Employees</div>
-          <button className="col-span-2 text-right flex items-center justify-end gap-1 hover:text-foreground" onClick={() => handleSort("ai_trust_score")}>
+          <div className="hidden md:block col-span-2">Type</div>
+          <div className="hidden lg:block col-span-1">Employees</div>
+          <button className="col-span-3 sm:col-span-2 text-right flex items-center justify-end gap-1 hover:text-foreground" onClick={() => handleSort("ai_trust_score")}>
             Trust <ArrowUpDown className="h-3 w-3" />
           </button>
-          <div className="col-span-1 text-right">Risk</div>
+          <div className="col-span-3 sm:col-span-1 text-right">Risk</div>
         </div>
         <div className="divide-y divide-border">
           {isLoading && (
@@ -143,25 +143,26 @@ function Page() {
           )}
           {filtered.map((c) => (
             <div key={c.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-              <div className="col-span-4">
+              <div className="col-span-6 sm:col-span-4 min-w-0">
                 <div className="font-medium text-foreground truncate">{c.name}</div>
-                <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                  <MapPin className="h-3 w-3" />{c.city ?? "—"}
-                  {c.year_founded && <span>· est. {c.year_founded}</span>}
+                <div className="text-xs text-muted-foreground flex flex-wrap items-center gap-x-1 gap-y-0.5 mt-0.5">
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{c.city ?? "—"}{c.country_code ? `, ${c.country_code}` : ""}</span>
+                  {c.year_founded && <span className="hidden sm:inline">· est. {c.year_founded}</span>}
                 </div>
               </div>
-              <div className="col-span-2 font-mono text-xs text-muted-foreground">
+              <div className="hidden sm:block col-span-2 font-mono text-xs text-muted-foreground truncate">
                 <div>{countryMap[c.country_code ?? ""] ?? c.country_code ?? "—"}</div>
               </div>
-              <div className="col-span-2 text-xs text-muted-foreground truncate">{c.business_type ?? "—"}</div>
-              <div className="col-span-1 text-xs text-muted-foreground font-mono">{c.employees_range ?? "—"}</div>
-              <div className="col-span-2 text-right">
+              <div className="hidden md:block col-span-2 text-xs text-muted-foreground truncate">{c.business_type ?? "—"}</div>
+              <div className="hidden lg:block col-span-1 text-xs text-muted-foreground font-mono">{c.employees_range ?? "—"}</div>
+              <div className="col-span-3 sm:col-span-2 text-right">
                 <div className="font-mono tabular-nums text-foreground font-semibold">{c.ai_trust_score ?? "—"}</div>
                 {c.ai_quality_score != null && (
                   <div className="text-[10px] text-muted-foreground">Q: {c.ai_quality_score}</div>
                 )}
               </div>
-              <div className="col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
+              <div className="col-span-3 sm:col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
             </div>
           ))}
         </div>

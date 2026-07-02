@@ -129,22 +129,24 @@ function Dashboard() {
           </div>
           <div className="divide-y divide-border">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
-              <div className="col-span-5">Company</div>
-              <div className="col-span-2">Country</div>
-              <div className="col-span-2">Category</div>
-              <div className="col-span-2 text-right">Trust</div>
-              <div className="col-span-1 text-right">Risk</div>
+              <div className="col-span-6 sm:col-span-5">Company</div>
+              <div className="hidden sm:block col-span-2">Country</div>
+              <div className="hidden md:block col-span-2">Category</div>
+              <div className="col-span-3 sm:col-span-2 text-right">Trust</div>
+              <div className="col-span-3 sm:col-span-1 text-right">Risk</div>
             </div>
             {companies.slice(0, 8).map((c) => (
               <div key={c.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40">
-                <div className="col-span-5">
-                  <div className="font-medium text-foreground">{c.name}</div>
-                  <div className="text-xs text-muted-foreground">{c.city ?? "—"}</div>
+                <div className="col-span-6 sm:col-span-5">
+                  <div className="font-medium text-foreground truncate">{c.name}</div>
+                  <div className="text-xs text-muted-foreground truncate">
+                    {c.city ? `${c.city}, ` : ""}{c.country_code ?? "—"}
+                  </div>
                 </div>
-                <div className="col-span-2 font-mono text-xs text-muted-foreground">{c.country_code ?? "—"}</div>
-                <div className="col-span-2 text-xs text-muted-foreground truncate">{c.business_type ?? "—"}</div>
-                <div className="col-span-2 text-right font-mono tabular-nums text-foreground">{c.ai_trust_score ?? "—"}</div>
-                <div className="col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
+                <div className="hidden sm:block col-span-2 font-mono text-xs text-muted-foreground">{c.country_code ?? "—"}</div>
+                <div className="hidden md:block col-span-2 text-xs text-muted-foreground truncate">{c.business_type ?? "—"}</div>
+                <div className="col-span-3 sm:col-span-2 text-right font-mono tabular-nums text-foreground">{c.ai_trust_score ?? "—"}</div>
+                <div className="col-span-3 sm:col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
               </div>
             ))}
           </div>

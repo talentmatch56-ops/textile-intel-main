@@ -3,13 +3,6 @@ import { NAV_ITEMS, SECTIONS, type NavItem } from "./nav-items";
 import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const grouped = (["core", "intel", "workflow", "admin"] as const).map((k) => ({
-    key: k,
-    label: SECTIONS[k],
-    items: NAV_ITEMS.filter((i) => i.section === k),
-  }));
-
   return (
     <aside className="hidden md:flex w-60 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div className="h-14 flex items-center gap-2 px-4 border-b border-sidebar-border">
@@ -19,20 +12,7 @@ export function AppSidebar() {
           <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Textile · AI</div>
         </div>
       </div>
-      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
-        {grouped.map((g) => (
-          <div key={g.key}>
-            <div className="px-3 pb-1.5 text-[10px] uppercase tracking-widest text-muted-foreground/70 font-medium">
-              {g.label}
-            </div>
-            <div className="space-y-0.5">
-              {g.items.map((item) => (
-                <SidebarLink key={item.to} item={item} active={isActive(pathname, item.to)} />
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
+      <SidebarContent />
       <div className="border-t border-sidebar-border px-3 py-3 text-[10px] font-mono text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
@@ -43,16 +23,56 @@ export function AppSidebar() {
   );
 }
 
+export function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const grouped = (["core", "intel", "workflow", "admin"] as const).map((k) => ({
+    key: k,
+    label: SECTIONS[k],
+    items: NAV_ITEMS.filter((i) => i.section === k),
+  }));
+
+  return (
+    <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
+      {grouped.map((g) => (
+        <div key={g.key}>
+          <div className="px-3 pb-1.5 text-[10px] uppercase tracking-widest text-muted-foreground/70 font-medium">
+            {g.label}
+          </div>
+          <div className="space-y-0.5">
+            {g.items.map((item) => (
+              <SidebarLink
+                key={item.to}
+                item={item}
+                active={isActive(pathname, item.to)}
+                onClick={onItemClick}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </nav>
+  );
+}
+
 function isActive(pathname: string, to: string) {
   if (to === "/app") return pathname === "/app" || pathname === "/app/";
   return pathname === to || pathname.startsWith(to + "/");
 }
 
-function SidebarLink({ item, active }: { item: NavItem; active: boolean }) {
+function SidebarLink({
+  item,
+  active,
+  onClick,
+}: {
+  item: NavItem;
+  active: boolean;
+  onClick?: () => void;
+}) {
   const Icon = item.icon;
   return (
     <Link
       to={item.to}
+      onClick={onClick}
       className={cn(
         "group flex items-center gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors",
         active

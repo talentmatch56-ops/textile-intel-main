@@ -160,21 +160,26 @@ function Page() {
         </div>
         <div className="divide-y divide-border">
           <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
-            <div className="col-span-4">Product</div>
-            <div className="col-span-2">Country</div>
-            <div className="col-span-1">Unit</div>
-            <div className="col-span-2 text-right">Low</div>
-            <div className="col-span-2 text-right">High</div>
-            <div className="col-span-1 text-right">Δ MoM</div>
+            <div className="col-span-6 sm:col-span-4">Product</div>
+            <div className="hidden sm:block col-span-2">Country</div>
+            <div className="hidden md:block col-span-1">Unit</div>
+            <div className="col-span-3 sm:col-span-2 text-right">Low</div>
+            <div className="col-span-3 sm:col-span-2 text-right">High</div>
+            <div className="hidden sm:block col-span-1 text-right">Δ MoM</div>
           </div>
           {filteredTable.map((p, i) => (
             <div key={i} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-              <div className="col-span-4 font-medium">{p.product}</div>
-              <div className="col-span-2 text-muted-foreground">{p.country}</div>
-              <div className="col-span-1 font-mono text-xs text-muted-foreground">{p.unit}</div>
-              <div className="col-span-2 text-right font-mono tabular-nums">${p.low.toFixed(2)}</div>
-              <div className="col-span-2 text-right font-mono tabular-nums">${p.high.toFixed(2)}</div>
-              <div className={`col-span-1 text-right font-mono tabular-nums text-xs flex items-center justify-end gap-0.5 ${p.change >= 0 ? "text-success" : "text-destructive"}`}>
+              <div className="col-span-6 sm:col-span-4 min-w-0">
+                <div className="font-medium truncate">{p.product}</div>
+                <div className="text-xs text-muted-foreground mt-0.5 sm:hidden truncate">
+                  {p.country} · per {p.unit}
+                </div>
+              </div>
+              <div className="hidden sm:block col-span-2 text-muted-foreground truncate">{p.country}</div>
+              <div className="hidden md:block col-span-1 font-mono text-xs text-muted-foreground">{p.unit}</div>
+              <div className="col-span-3 sm:col-span-2 text-right font-mono tabular-nums">${p.low.toFixed(2)}</div>
+              <div className="col-span-3 sm:col-span-2 text-right font-mono tabular-nums">${p.high.toFixed(2)}</div>
+              <div className={`hidden sm:flex col-span-1 text-right font-mono tabular-nums text-xs items-center justify-end gap-0.5 ${p.change >= 0 ? "text-success" : "text-destructive"}`}>
                 {p.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                 {Math.abs(p.change)}%
               </div>

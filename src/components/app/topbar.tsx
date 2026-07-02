@@ -1,12 +1,45 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Bell, Command, Search } from "lucide-react";
+import { Bell, Command, Menu, Search } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SidebarContent } from "./sidebar";
 
 export function AppTopbar() {
   const { user, signOut } = useAuth();
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="h-14 border-b border-border bg-card/50 backdrop-blur flex items-center gap-3 px-4">
+      {/* Mobile Menu Trigger */}
+      <div className="md:hidden">
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle Menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-60 p-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
+            <div className="h-14 flex items-center gap-2 px-4 border-b border-sidebar-border">
+              <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center font-mono text-primary-foreground text-sm font-bold">GM</div>
+              <div>
+                <div className="font-display text-sm font-bold leading-none">GMIntel</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Textile · AI</div>
+              </div>
+            </div>
+            <SidebarContent onItemClick={() => setOpen(false)} />
+            <div className="border-t border-sidebar-border px-3 py-3 text-[10px] font-mono text-muted-foreground mt-auto">
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+                LIVE · v0.1
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
       <div className="flex-1 max-w-2xl flex items-center gap-2 h-9 px-3 rounded-md bg-muted/60 border border-border text-sm text-muted-foreground">
         <Search className="h-4 w-4" />
         <input
