@@ -92,10 +92,10 @@ function Page() {
       </div>
 
       {/* Tab navigation */}
-      <div className="flex gap-1 border-b border-border">
+      <div className="flex gap-1 border-b border-border overflow-x-auto flex-nowrap whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {([["companies", "Company Management", Building2], ["users", "User Management", Users], ["audit", "Audit Log", ClipboardList]] as const).map(([key, label, Icon]) => (
           <button key={key} onClick={() => setActiveTab(key)}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors ${activeTab === key ? "border-primary text-foreground font-medium" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
+            className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors ${activeTab === key ? "border-primary text-foreground font-medium" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
             <Icon className="h-3.5 w-3.5" />{label}
           </button>
         ))}
@@ -104,28 +104,28 @@ function Page() {
       {/* Company Management */}
       {activeTab === "companies" && (
         <div className="rounded-lg border border-border bg-card overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-border">
-            <div>
-              <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Company Registry</div>
-              <div className="font-display font-semibold">Verification queue</div>
-            </div>
-            <div className="flex gap-2">
-              {["all", "pending_review", "verified", "rejected", "archived"].map((s) => (
-                <button key={s} onClick={() => setStatusFilter(s)}
-                  className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}>
-                  {s === "pending_review" ? "Pending" : s}
-                </button>
-              ))}
-            </div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border gap-3">
+          <div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Company Registry</div>
+            <div className="font-display font-semibold">Verification queue</div>
           </div>
+          <div className="flex flex-wrap gap-1.5">
+            {["all", "pending_review", "verified", "rejected", "archived"].map((s) => (
+              <button key={s} onClick={() => setStatusFilter(s)}
+                className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}>
+                {s === "pending_review" ? "Pending" : s}
+              </button>
+            ))}
+          </div>
+        </div>
           <div className="divide-y divide-border">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
-              <div className="col-span-4">Company</div>
-              <div className="col-span-2">Country</div>
-              <div className="col-span-2">Type</div>
-              <div className="col-span-1 text-right">Trust</div>
-              <div className="col-span-1 text-right">Risk</div>
-              <div className="col-span-2 text-right">Action</div>
+              <div className="col-span-5 sm:col-span-4">Company</div>
+              <div className="hidden sm:block col-span-2">Country</div>
+              <div className="hidden md:block col-span-2">Type</div>
+              <div className="col-span-2 sm:col-span-1 text-right">Trust</div>
+              <div className="hidden sm:block col-span-1 text-right">Risk</div>
+              <div className="col-span-5 sm:col-span-2 text-right">Action</div>
             </div>
             {filteredCompanies.length === 0 && (
               <div className="p-8 text-center text-sm text-muted-foreground">No companies in this status.</div>
@@ -134,18 +134,20 @@ function Page() {
               const action = STATUS_ACTIONS[c.status ?? "pending_review"];
               return (
                 <div key={c.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-                  <div className="col-span-4">
+                  <div className="col-span-5 sm:col-span-4 min-w-0">
                     <div className="font-medium truncate">{c.name}</div>
-                    <div className="text-xs text-muted-foreground">{c.city}</div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {c.city ? `${c.city}, ` : ""}{c.country_code ?? "—"}
+                    </div>
                   </div>
-                  <div className="col-span-2 font-mono text-xs text-muted-foreground">{c.country_code}</div>
-                  <div className="col-span-2 text-xs text-muted-foreground capitalize">{c.business_type}</div>
-                  <div className="col-span-1 text-right font-mono tabular-nums">{c.ai_trust_score ?? "—"}</div>
-                  <div className="col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
-                  <div className="col-span-2 text-right">
+                  <div className="hidden sm:block col-span-2 font-mono text-xs text-muted-foreground truncate">{c.country_code ?? "—"}</div>
+                  <div className="hidden md:block col-span-2 text-xs text-muted-foreground capitalize truncate">{c.business_type ?? "—"}</div>
+                  <div className="col-span-2 sm:col-span-1 text-right font-mono tabular-nums">{c.ai_trust_score ?? "—"}</div>
+                  <div className="hidden sm:block col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
+                  <div className="col-span-5 sm:col-span-2 text-right">
                     {action && (
                       <button onClick={() => updateStatus(c.id, action.nextStatus)}
-                        className={`text-[10px] font-mono px-2 py-1 rounded border transition-colors ${action.cls}`}>
+                        className={`text-[10px] font-mono px-2 py-1 rounded border transition-colors ${action.cls} truncate`}>
                         {action.label}
                       </button>
                     )}
@@ -166,26 +168,29 @@ function Page() {
           </div>
           <div className="divide-y divide-border">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
-              <div className="col-span-4">User</div>
-              <div className="col-span-3">Company</div>
-              <div className="col-span-2">Role</div>
-              <div className="col-span-2">Joined</div>
+              <div className="col-span-7 sm:col-span-4">User</div>
+              <div className="hidden sm:block col-span-3">Company</div>
+              <div className="col-span-4 sm:col-span-2">Role</div>
+              <div className="hidden md:block col-span-2">Joined</div>
               <div className="col-span-1 text-right">More</div>
             </div>
             {allProfiles.map((u) => (
               <div key={u.id}>
                 <div className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-                  <div className="col-span-4">
-                    <div className="font-medium">{u.full_name || "—"}</div>
+                  <div className="col-span-7 sm:col-span-4 min-w-0">
+                    <div className="font-medium truncate">{u.full_name || "—"}</div>
                     <div className="text-xs text-muted-foreground font-mono truncate">{u.email}</div>
+                    <div className="text-xs text-muted-foreground sm:hidden truncate mt-0.5">
+                      {(u as Record<string, unknown>).company as string || "No Company"}
+                    </div>
                   </div>
-                  <div className="col-span-3 text-xs text-muted-foreground truncate">{(u as Record<string, unknown>).company as string || "—"}</div>
-                  <div className="col-span-2">
+                  <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">{(u as Record<string, unknown>).company as string || "—"}</div>
+                  <div className="col-span-4 sm:col-span-2">
                     <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as Record<string, unknown>).role as string] ?? ROLE_COLORS.viewer}`}>
                       <ShieldCheck className="h-2.5 w-2.5" />{(u as Record<string, unknown>).role as string || "viewer"}
                     </span>
                   </div>
-                  <div className="col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString()}</div>
+                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString()}</div>
                   <div className="col-span-1 text-right">
                     <button onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)} className="text-muted-foreground hover:text-foreground">
                       {expandedUser === u.id ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -218,17 +223,22 @@ function Page() {
           </div>
           <div className="divide-y divide-border">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
-              <div className="col-span-3">Action</div>
-              <div className="col-span-4">Entity</div>
-              <div className="col-span-3">Actor</div>
-              <div className="col-span-2 text-right">When</div>
+              <div className="col-span-4 sm:col-span-3">Action</div>
+              <div className="col-span-5 sm:col-span-4">Entity</div>
+              <div className="hidden sm:block col-span-3">Actor</div>
+              <div className="col-span-3 sm:col-span-2 text-right">When</div>
             </div>
             {MOCK_AUDIT_LOGS.map((log) => (
               <div key={log.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-                <div className="col-span-3 font-mono text-xs text-primary">{log.action}</div>
-                <div className="col-span-4 text-sm truncate">{log.entity}</div>
-                <div className="col-span-3 text-xs text-muted-foreground font-mono truncate">{log.actor}</div>
-                <div className="col-span-2 text-right text-xs font-mono text-muted-foreground">
+                <div className="col-span-4 sm:col-span-3 font-mono text-xs text-primary truncate">{log.action}</div>
+                <div className="col-span-5 sm:col-span-4 text-sm min-w-0">
+                  <div className="truncate">{log.entity}</div>
+                  <div className="text-[10px] text-muted-foreground font-mono truncate sm:hidden mt-0.5">
+                    by {log.actor}
+                  </div>
+                </div>
+                <div className="hidden sm:block col-span-3 text-xs text-muted-foreground font-mono truncate">{log.actor}</div>
+                <div className="col-span-3 sm:col-span-2 text-right text-xs font-mono text-muted-foreground">
                   {new Date(log.created_at).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                 </div>
               </div>
