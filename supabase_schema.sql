@@ -351,3 +351,30 @@ INSERT INTO public.companies (slug, name, country_code, city, business_type, ai_
   ('mumbai-organic', 'Mumbai Organic Mills', 'IN', 'Mumbai', 'manufacturer', 89, 'low', 'verified'),
   ('hanoi-active', 'Hanoi Active', 'VN', 'Hanoi', 'manufacturer', 82, 'low', 'verified')
 ON CONFLICT (slug) DO NOTHING;
+
+-- ============= PRE-REGISTER TEST USER =============
+-- This inserts the dev@gmail.com user directly into Supabase auth.users
+-- with password 'Password123!' and confirmed status, bypassing SMTP limits.
+DELETE FROM auth.users WHERE email = 'dev@gmail.com';
+
+INSERT INTO auth.users (
+  instance_id, id, aud, role, email, encrypted_password, 
+  email_confirmed_at, raw_app_meta_data, raw_user_meta_data, 
+  created_at, updated_at, is_super_admin, phone_confirmed_at
+) VALUES (
+  '00000000-0000-0000-0000-000000000000',
+  gen_random_uuid(),
+  'authenticated',
+  'authenticated',
+  'dev@gmail.com',
+  crypt('Password123!', gen_salt('bf')),
+  now(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Developer Test User"}',
+  now(),
+  now(),
+  false,
+  now()
+);
+
+
