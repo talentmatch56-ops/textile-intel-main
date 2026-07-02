@@ -5,10 +5,12 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SidebarContent } from "./sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function AppTopbar() {
   const { user, signOut } = useAuth();
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <header className="h-14 border-b border-border bg-card/50 backdrop-blur flex items-center gap-3 px-4">
@@ -40,11 +42,11 @@ export function AppTopbar() {
         </Sheet>
       </div>
 
-      <div className="flex-1 max-w-2xl flex items-center gap-2 h-9 px-3 rounded-md bg-muted/60 border border-border text-sm text-muted-foreground">
-        <Search className="h-4 w-4" />
+      <div className="flex-1 min-w-0 max-w-2xl flex items-center gap-2 h-9 px-3 rounded-md bg-muted/60 border border-border text-sm text-muted-foreground">
+        <Search className="h-4 w-4 shrink-0" />
         <input
-          placeholder="Search companies, countries, products, HS codes…"
-          className="flex-1 bg-transparent outline-none placeholder:text-muted-foreground text-foreground"
+          placeholder={isMobile ? "Search…" : "Search companies, countries, products, HS codes…"}
+          className="w-full min-w-0 bg-transparent outline-none placeholder:text-muted-foreground text-foreground"
         />
         <kbd className="hidden md:inline-flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-background">
           <Command className="h-3 w-3" /> K
