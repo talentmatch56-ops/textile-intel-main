@@ -52,18 +52,25 @@ function Page() {
     queryFn: async () => { const res = await supabase.from("reports").select("*").order("created_at", { ascending: false }); return res.data ?? []; },
   });
 
-  const reports = [...(dbReports && dbReports.length > 0 ? dbReports : MOCK_REPORTS), ...localReports];
+  const reports = [...localReports, ...(dbReports && dbReports.length > 0 ? dbReports : MOCK_REPORTS)];
 
   const generateReport = async (kind: string, title: string) => {
     setGenerating(kind);
-    const newReport = { id: crypto.randomUUID(), kind, title: `${title} — ${new Date().toLocaleDateString("en-GB")}`, status: "generating", created_at: new Date().toISOString() };
+    const newId = crypto.randomUUID();
+    const newReport = { id: newId, kind, title: `${title} — ${new Date().toLocaleDateString("en-GB")}`, status: "generating", created_at: new Date().toISOString() };
     setLocalReports((prev) => [newReport, ...prev]);
     toast.info(`Generating ${title}...`);
     
-    await supabase.from("reports").insert({ kind, title: newReport.title, status: "generating" }).catch(() => {});
+    // Perform database write in background without blocking the UI simulation
+    supabase.from("reports").insert({ kind, title: newReport.title, status: "generating" })
+      .then(({ error }) => {
+        if (error) {
+          console.warn("Supabase report insert skipped:", error.message);
+        }
+      });
     
     setTimeout(() => {
-      setLocalReports((prev) => prev.map((r) => r.id === newReport.id ? { ...r, status: "ready" } : r));
+      setLocalReports((prev) => prev.map((r) => r.id === newId ? { ...r, status: "ready" } : r));
       setGenerating(null);
       toast.success(`${title} is ready for download!`);
     }, 4000);
