@@ -7,8 +7,9 @@ import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
 import { RiskBadge } from "@/components/app/risk-badge";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { toast } from "sonner";
+import { MOCK_COMPANIES } from "@/utils/mock-companies";
 
 export const Route = createFileRoute("/app/")({ component: Dashboard });
 
@@ -52,7 +53,7 @@ function Dashboard() {
     queryKey: ["dashboard"],
     queryFn: async () => {
       const [companies, countries, news, prices] = await Promise.all([
-        supabase.from("companies").select("id, name, country_code, city, ai_risk_level, ai_trust_score, business_type, employees_range, created_at", { count: "exact" }),
+        supabase.from("companies").select("id, name, country_code, city, ai_risk_level, ai_trust_score, business_type, employees_range, created_at, slug", { count: "exact" }),
         supabase.from("countries").select("code, name"),
         supabase.from("news_items").select("id, title, source, published_at, category").order("published_at", { ascending: false }).limit(6),
         supabase.from("price_points").select("id, product, country_code, unit, price_low, price_high, currency, observed_at").order("observed_at", { ascending: false }).limit(120),
@@ -61,8 +62,17 @@ function Dashboard() {
     },
   });
 
-  const companies = data?.companies.data ?? [];
-  const totalCompanies = data?.companies.count ?? companies.length;
+  const dbCompanies = data?.companies.data ?? [];
+  const companies = useMemo(() => {
+    const list = [...dbCompanies];
+    MOCK_COMPANIES.forEach((mock) => {
+      if (!list.some((c) => c.slug === mock.slug)) {
+        list.push(mock as any);
+      }
+    });
+    return list;
+  }, [dbCompanies]);
+  const totalCompanies = companies.length;
   const countries = data?.countries.data ?? [];
   const news = data?.news.data ?? [];
   const prices = data?.prices.data ?? [];

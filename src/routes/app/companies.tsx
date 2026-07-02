@@ -8,6 +8,8 @@ import { StatCard } from "@/components/app/stat-card";
 import { RiskBadge } from "@/components/app/risk-badge";
 import { Button } from "@/components/ui/button";
 
+import { MOCK_COMPANIES } from "@/utils/mock-companies";
+
 export const Route = createFileRoute("/app/companies")({ component: Page });
 
 type SortKey = "name" | "ai_trust_score" | "ai_risk_score" | "country_code";
@@ -17,21 +19,30 @@ function Page() {
   const [countryFilter, setCountryFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [riskFilter, setRiskFilter] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("ai_trust_score");
-  const [sortAsc, setSortAsc] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [sortAsc, setSortAsc] = useState(true);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["companies-all"],
+    queryKey: ["companies"],
     queryFn: async () => {
       const [companies, countries] = await Promise.all([
-        supabase.from("companies").select("id,name,country_code,city,business_type,ai_risk_level,ai_trust_score,ai_quality_score,employees_range,certifications,moq,status,year_founded"),
+        supabase.from("companies").select("*").order("name"),
         supabase.from("countries").select("code,name"),
       ]);
       return { companies: companies.data ?? [], countries: countries.data ?? [] };
     },
   });
 
-  const companies = data?.companies ?? [];
+  const dbCompanies = data?.companies ?? [];
+  const companies = useMemo(() => {
+    const list = [...dbCompanies];
+    MOCK_COMPANIES.forEach((mock) => {
+      if (!list.some((c) => c.slug === mock.slug)) {
+        list.push(mock as any);
+      }
+    });
+    return list;
+  }, [dbCompanies]);
   const countries = data?.countries ?? [];
   const countryMap = Object.fromEntries(countries.map((c) => [c.code, c.name]));
 

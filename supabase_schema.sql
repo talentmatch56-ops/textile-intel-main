@@ -58,12 +58,52 @@ $$;
 -- Auto-create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+DECLARE
+  _email TEXT;
+  _domain TEXT;
+  _company_name TEXT;
+  _company_slug TEXT;
 BEGIN
-  INSERT INTO public.profiles (id, email, full_name)
-  VALUES (NEW.id, NEW.email, COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email))
-  ON CONFLICT (id) DO NOTHING;
-  INSERT INTO public.user_roles (user_id, role) VALUES (NEW.id, 'viewer')
+  _email := NEW.email;
+  
+  -- Extract domain from email (e.g. user@arvindmills.com -> arvindmills.com)
+  _domain := SUBSTRING(_email FROM '@(.*)$');
+  
+  -- Check if it is a standard public domain
+  IF _domain IS NOT NULL AND _domain NOT IN ('gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'live.com', 'icloud.com', 'aol.com', 'zoho.com', 'proton.me', 'protonmail.com') THEN
+    -- Extract company name from domain (e.g. arvindmills.com -> arvindmills -> Arvind Mills)
+    _company_name := REGEXP_REPLACE(SUBSTRING(_domain FROM '^([^\.]+)'), '[_-]', ' ', 'g');
+    -- Capitalize words (e.g. arvind mills -> Arvind Mills)
+    _company_name := INITCAP(_company_name);
+    _company_slug := LOWER(REGEXP_REPLACE(_company_name, '\s+', '-', 'g'));
+    
+    -- Insert company if it doesn't exist
+    INSERT INTO public.companies (slug, name, status, business_type)
+    VALUES (_company_slug, _company_name, 'pending_review', 'manufacturer')
+    ON CONFLICT (slug) DO NOTHING;
+    
+    -- Insert profile with company name
+    INSERT INTO public.profiles (id, email, full_name, company)
+    VALUES (
+      NEW.id, 
+      _email, 
+      COALESCE(NEW.raw_user_meta_data->>'full_name', _email),
+      _company_name
+    )
+    ON CONFLICT (id) DO UPDATE 
+    SET company = EXCLUDED.company, full_name = EXCLUDED.full_name;
+  ELSE
+    -- Insert default profile
+    INSERT INTO public.profiles (id, email, full_name)
+    VALUES (NEW.id, _email, COALESCE(NEW.raw_user_meta_data->>'full_name', _email))
+    ON CONFLICT (id) DO NOTHING;
+  END IF;
+
+  -- Default role 'viewer'
+  INSERT INTO public.user_roles (user_id, role) 
+  VALUES (NEW.id, 'viewer')
   ON CONFLICT DO NOTHING;
+
   RETURN NEW;
 END;
 $$;
