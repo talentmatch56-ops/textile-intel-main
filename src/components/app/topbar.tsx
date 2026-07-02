@@ -24,8 +24,8 @@ export function AppTopbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-60 p-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-            <div className="h-14 flex items-center gap-2 px-4 border-b border-sidebar-border">
-              <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center font-mono text-primary-foreground text-sm font-bold">GM</div>
+            <div className="h-14 flex items-center gap-2.5 px-4 border-b border-sidebar-border">
+              <img src="/gmintel_logo.png" alt="GMIntel Logo" className="h-7 w-7 rounded-md object-cover border border-border/50" />
               <div>
                 <div className="font-display text-sm font-bold leading-none">GMIntel</div>
                 <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Textile · AI</div>
