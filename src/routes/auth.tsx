@@ -27,6 +27,9 @@ function AuthPage() {
         provider: "google",
         options: {
           redirectTo: typeof window !== "undefined" ? `${window.location.origin}/app` : undefined,
+          queryParams: {
+            prompt: "select_account",
+          },
         },
       });
       if (error) throw error;
