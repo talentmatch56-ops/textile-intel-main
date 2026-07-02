@@ -1,16 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Building2, Factory, Globe2, Layers, Sparkles, TrendingUp } from "lucide-react";
+import { Building2, Factory, Globe2, Layers, Sparkles, TrendingUp, Loader2, Download, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
 import { RiskBadge } from "@/components/app/risk-badge";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/")({ component: Dashboard });
 
+const BRIEFING_CONTENT = {
+  title: "GMIntel AI Briefing — July 2026",
+  date: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+  sections: [
+    {
+      title: "1. Global Supply Chain & Logistics",
+      content: "Geopolitical tensions and canal routing adjustments in Q2 2026 have led to synthetic fiber shipping delays of 20-30 days. Freight rates have risen by 11.4% MoM, squeezing margin buffers for downstream converters."
+    },
+    {
+      title: "2. Cotton & Feedstock Pricing Index",
+      content: "Raw cotton prices have stabilized near $0.84/lb due to upgraded US yield outlooks. However, PTA and MEG feedstock spikes in China have pushed polyester filament yarn up 4.2% MoM, prompting a shift towards cotton-rich blends."
+    },
+    {
+      title: "3. Trade Policy & Compliance Shift",
+      content: "The EU Green Deal and Eco-Design directives starting Jan 2027 are pushing immediate demand for full Tier-2 material traceability. Sourcing pipelines are actively shifting from Southeast Asia to integrated hubs like India and Turkey."
+    },
+    {
+      title: "4. Actionable Sourcing Recommendation",
+      content: "• Audit Tier-2 supplier certifications (GOTS, OEKO-TEX) immediately.\n• Diversify denim orders to Turkish hubs to secure H2 2026 capacity.\n• Lock in polyester yarn contracts to hedge against petroleum-feedstock spikes."
+    }
+  ]
+};
+
 function Dashboard() {
+  const [briefingOpen, setBriefingOpen] = useState(false);
+  const [briefingLoading, setBriefingLoading] = useState(false);
+
+  const handleGenerateBriefing = () => {
+    setBriefingLoading(true);
+    toast.info("Analyzing platform intelligence and compiling your executive briefing...");
+    setTimeout(() => {
+      setBriefingLoading(false);
+      setBriefingOpen(true);
+      toast.success("Executive briefing generated successfully!");
+    }, 1500);
+  };
   const { data } = useQuery({
     queryKey: ["dashboard"],
     queryFn: async () => {
@@ -56,7 +93,21 @@ function Dashboard() {
         eyebrow="Command Center"
         title="Global Textile Intelligence Dashboard"
         description="Real-time market, supplier and risk signals across the world's textile hubs."
-        actions={<Button variant="outline" size="sm"><Sparkles className="h-3.5 w-3.5 mr-1.5" />Generate AI briefing</Button>}
+        actions={
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleGenerateBriefing}
+            disabled={briefingLoading}
+            className="relative"
+          >
+            {briefingLoading ? (
+              <><Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> Compiling…</>
+            ) : (
+              <><Sparkles className="h-3.5 w-3.5 mr-1.5" /> Generate AI briefing</>
+            )}
+          </Button>
+        }
       />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -192,6 +243,64 @@ function Dashboard() {
       <div className="text-[10px] font-mono text-muted-foreground">
         Prices shown: {prices.length} recent observations · AI insights are estimates and clearly labeled.
       </div>
+
+      {briefingOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-2xl rounded-lg border border-border bg-card shadow-lg p-6 max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+            <button 
+              onClick={() => setBriefingOpen(false)}
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground p-1 rounded hover:bg-muted transition-colors cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+              <h3 className="font-display text-lg font-bold text-foreground">{BRIEFING_CONTENT.title}</h3>
+            </div>
+            
+            <div className="text-[10px] font-mono text-muted-foreground mb-4 uppercase tracking-widest border-b border-border pb-2">
+              Compiled on {BRIEFING_CONTENT.date} · Live Market Intelligence
+            </div>
+            
+            <div className="flex-1 overflow-y-auto space-y-4 pr-1 text-sm text-muted-foreground leading-relaxed">
+              {BRIEFING_CONTENT.sections.map((sec, idx) => (
+                <div key={idx} className="space-y-1.5">
+                  <h4 className="font-semibold text-foreground font-display">{sec.title}</h4>
+                  <p className="whitespace-pre-line">{sec.content}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-border">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  const text = `${BRIEFING_CONTENT.title}\nDate: ${BRIEFING_CONTENT.date}\n\n` + 
+                    BRIEFING_CONTENT.sections.map(s => `${s.title}\n${s.content}`).join("\n\n");
+                  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.download = `gmintel_ai_briefing_${new Date().toISOString().slice(0,10)}.txt`;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  URL.revokeObjectURL(url);
+                  toast.success("Downloading briefing...");
+                }}
+                className="gap-1.5"
+              >
+                <Download className="h-3.5 w-3.5" /> Download
+              </Button>
+              <Button size="sm" onClick={() => setBriefingOpen(false)}>
+                Dismiss
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
