@@ -1,12 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Settings, Users, Building2, ShieldCheck, ClipboardList, CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Settings, Users, Building2, ShieldCheck, ClipboardList, CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp, AlertOctagon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
 import { RiskBadge } from "@/components/app/risk-badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/admin")({ component: Page });
 
@@ -42,6 +49,8 @@ function Page() {
   const [activeTab, setActiveTab] = useState<"companies" | "users" | "audit">("companies");
   const [statusFilter, setStatusFilter] = useState("pending_review");
   const [expandedUser, setExpandedUser] = useState<string | null>(null);
+  const [mockProfiles, setMockProfiles] = useState(MOCK_USERS);
+  const [suspendedUserIds, setSuspendedUserIds] = useState<string[]>([]);
 
   const { data: companies, refetch: refetchCompanies } = useQuery({
     queryKey: ["admin-companies"],
@@ -51,16 +60,23 @@ function Page() {
     },
   });
 
-  const { data: profiles } = useQuery({
+  const { data: profiles, refetch: refetchProfiles } = useQuery({
     queryKey: ["admin-profiles"],
     queryFn: async () => {
-      const res = await supabase.from("profiles").select("id,email,full_name,company,created_at");
-      return res.data ?? [];
+      const { data: pData } = await supabase.from("profiles").select("id,email,full_name,company,created_at");
+      const { data: rData } = await supabase.from("user_roles").select("user_id,role");
+      return (pData ?? []).map(p => ({
+        ...p,
+        role: rData?.find(r => r.user_id === p.id)?.role || "viewer"
+      }));
     },
   });
 
   const allCompanies = companies ?? [];
-  const allProfiles = profiles && profiles.length > 0 ? profiles : MOCK_USERS;
+  const allProfiles = [
+    ...(profiles ?? []),
+    ...mockProfiles.filter(m => !profiles?.some(p => p.email === m.email))
+  ];
 
   const filteredCompanies = statusFilter === "all" ? allCompanies : allCompanies.filter((c) => c.status === statusFilter);
 
@@ -74,6 +90,40 @@ function Page() {
   const updateStatus = async (id: string, status: string) => {
     await supabase.from("companies").update({ status } as Record<string, string>).eq("id", id);
     refetchCompanies();
+  };
+
+  const handleUpdateRole = async (userId: string, newRole: string) => {
+    if (userId.startsWith("u")) {
+      setMockProfiles(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
+      toast.success(`Role updated to ${newRole} for mock user`);
+      return;
+    }
+    try {
+      const { data } = await supabase.from("user_roles").select("id").eq("user_id", userId).maybeSingle();
+      let res;
+      if (data) {
+        res = await supabase.from("user_roles").update({ role: newRole } as Record<string, string>).eq("user_id", userId);
+      } else {
+        res = await supabase.from("user_roles").insert({ user_id: userId, role: newRole } as Record<string, string>);
+      }
+      if (res.error) throw res.error;
+      toast.success(`Role updated to ${newRole} successfully`);
+      refetchProfiles();
+    } catch (e: unknown) {
+      console.error(e);
+      toast.error(e instanceof Error ? e.message : "Failed to update role");
+    }
+  };
+
+  const handleToggleSuspend = (userId: string) => {
+    const isSuspended = suspendedUserIds.includes(userId);
+    if (isSuspended) {
+      setSuspendedUserIds(prev => prev.filter(id => id !== userId));
+      toast.success("User account activated");
+    } else {
+      setSuspendedUserIds(prev => [...prev, userId]);
+      toast.error("User account suspended");
+    }
   };
 
   return (
@@ -186,9 +236,15 @@ function Page() {
                   </div>
                   <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">{(u as Record<string, unknown>).company as string || "—"}</div>
                   <div className="col-span-4 sm:col-span-2">
-                    <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as Record<string, unknown>).role as string] ?? ROLE_COLORS.viewer}`}>
-                      <ShieldCheck className="h-2.5 w-2.5" />{(u as Record<string, unknown>).role as string || "viewer"}
-                    </span>
+                    {suspendedUserIds.includes(u.id) ? (
+                      <span className="inline-flex items-center gap-1 rounded border border-destructive/30 bg-destructive/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide text-destructive">
+                        <AlertOctagon className="h-2.5 w-2.5" /> Suspended
+                      </span>
+                    ) : (
+                      <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as Record<string, unknown>).role as string] ?? ROLE_COLORS.viewer}`}>
+                        <ShieldCheck className="h-2.5 w-2.5" />{(u as Record<string, unknown>).role as string || "viewer"}
+                      </span>
+                    )}
                   </div>
                   <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString()}</div>
                   <div className="col-span-1 text-right">
@@ -202,8 +258,32 @@ function Page() {
                     <div className="pt-3 text-xs text-muted-foreground space-y-1">
                       <div><span className="font-mono text-foreground">ID:</span> {u.id}</div>
                       <div className="flex gap-2 mt-2">
-                        <Button size="sm" variant="outline" className="h-7 text-xs">Change Role</Button>
-                        <Button size="sm" variant="outline" className="h-7 text-xs text-destructive border-destructive/30 hover:bg-destructive/10">Suspend</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button size="sm" variant="outline" className="h-7 text-xs flex items-center gap-1" disabled={suspendedUserIds.includes(u.id)}>
+                              Change Role <ChevronDown className="h-3 w-3" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="start">
+                            {["admin", "analyst", "viewer"].map((r) => (
+                              <DropdownMenuItem key={r} onClick={() => handleUpdateRole(u.id, r)}>
+                                {r.charAt(0).toUpperCase() + r.slice(1)}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleToggleSuspend(u.id)}
+                          className={`h-7 text-xs ${
+                            suspendedUserIds.includes(u.id)
+                              ? "text-success border-success/30 hover:bg-success/10"
+                              : "text-destructive border-destructive/30 hover:bg-destructive/10"
+                          }`}
+                        >
+                          {suspendedUserIds.includes(u.id) ? "Unsuspend" : "Suspend"}
+                        </Button>
                       </div>
                     </div>
                   </div>
