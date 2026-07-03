@@ -28,6 +28,7 @@ function CategoryBadge({ category }: { category?: string | null }) {
 
 function Page() {
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading } = useQuery({
     queryKey: ["news-all"],
@@ -64,11 +65,17 @@ function Page() {
     { id: "8", title: "Punjab cabinet approves new Textile and Apparel Policy 2026 for infrastructure boost", summary: "Ludhiana — The regional government approved capital subsidies and power concession packages to upgrade looms, print hubs, and green effluent treatment networks.", source: "Textile Insights", category: "trade_policy", country_code: "IN", published_at: new Date(Date.now() - 502000000).toISOString(), url: "https://textileinsights.in" },
     { id: "9", title: "Pakistan polyester staple fibre capacity doubles with Faisalabad expansion", summary: "Lahore — Major PSF producers in Punjab's textile hub have commissioned new lines bringing total national capacity to 800,000 tonnes per annum.", source: "APTMA Weekly", category: "factory_opening", country_code: "PK", published_at: new Date(Date.now() - 518400000).toISOString(), url: "#" },
     { id: "10", title: "China's synthetic fibre prices rise 4.2% on higher feedstock costs", summary: "Shanghai — Polyester filament yarn prices climbed 4.2% MoM as PTA and MEG costs rose following crude oil strength, squeezing downstream converter margins.", source: "CCFGroup", category: "price", country_code: "CN", published_at: new Date(Date.now() - 604800000).toISOString(), url: "#" },
+    { id: "11", title: "GOTS 7.0 standard takes effect — tighter chemical restrictions for certified mills", summary: "Hamburg — The Global Organic Textile Standard released version 7.0 with expanded chemical input restrictions and mandatory digital traceability requirements, affecting 12,000+ certified facilities worldwide.", source: "GOTS Press", category: "sustainability", country_code: "DE", published_at: new Date(Date.now() - 648000000).toISOString(), url: "https://global-standard.org" },
+    { id: "12", title: "Patagonia and Inditex join Science-Based Targets initiative for textile decarbonization", summary: "Barcelona — Two of fashion's largest buyers have committed to 50% Scope 3 emission reductions by 2030, triggering cascading sustainability requirements across 4,000 Tier-1 and Tier-2 suppliers.", source: "Sustainable Apparel Coalition", category: "sustainability", country_code: "ES", published_at: new Date(Date.now() - 691200000).toISOString(), url: "#" },
   ];
 
-  const displayNews = news.length > 0 ? filtered : (categoryFilter === "all" ? mockNews : mockNews.filter((n) => n.category === categoryFilter));
-  const displayFeatured = displayNews[0];
-  const displayRest = displayNews.slice(1);
+  const baseMock = categoryFilter === "all" ? mockNews : mockNews.filter((n) => n.category === categoryFilter);
+  const displayNews = news.length > 0 ? filtered : baseMock;
+  const displayFiltered = searchQuery
+    ? displayNews.filter((n) => n.title.toLowerCase().includes(searchQuery.toLowerCase()) || (n.summary ?? "").toLowerCase().includes(searchQuery.toLowerCase()))
+    : displayNews;
+  const displayFeatured = displayFiltered[0];
+  const displayRest = displayFiltered.slice(1);
 
   return (
     <div className="space-y-6">
@@ -79,31 +86,42 @@ function Page() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Total Articles" value={(news.length || mockNews.length).toString()} icon={<Newspaper className="h-4 w-4" />} />
-        <StatCard label="Trade Policy" value={mockNews.filter(n => n.category === "trade_policy").length} delta={{ value: "this week", positive: true }} />
-        <StatCard label="Price Alerts" value={mockNews.filter(n => n.category === "price").length} />
-        <StatCard label="Factory Openings" value={mockNews.filter(n => n.category === "factory_opening").length} delta={{ value: "new", positive: true }} />
+        <StatCard label="Total Articles" value={displayNews.length.toString()} icon={<Newspaper className="h-4 w-4" />} />
+        <StatCard label="Trade Policy" value={displayNews.filter(n => n.category === "trade_policy").length} delta={{ value: "this week", positive: true }} />
+        <StatCard label="Sustainability" value={displayNews.filter(n => n.category === "sustainability").length} delta={{ value: "new", positive: true }} />
+        <StatCard label="Factory Openings" value={displayNews.filter(n => n.category === "factory_opening").length} delta={{ value: "new", positive: true }} />
       </div>
 
-      {/* Category filter pills */}
-      <div className="flex flex-wrap gap-2">
-        {["all", "trade_policy", "price", "factory_opening", "market", "sustainability"].map((cat) => {
-          const meta = CATEGORY_META[cat];
-          const label = cat === "all" ? "All News" : meta?.label ?? cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => setCategoryFilter(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-mono border transition-colors ${
-                categoryFilter === cat
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
-              }`}
-            >
-              {label}
-            </button>
-          );
-        })}
+      {/* Search + Category filter */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1 min-w-0">
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search articles by title or keyword…"
+            className="w-full h-9 pl-9 pr-3 rounded-md border border-border bg-card text-sm outline-none focus:border-primary"
+          />
+          <Newspaper className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {["all", "trade_policy", "price", "factory_opening", "market", "sustainability"].map((cat) => {
+            const meta = CATEGORY_META[cat];
+            const label = cat === "all" ? "All News" : meta?.label ?? cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setCategoryFilter(cat)}
+                className={`px-3 py-1.5 rounded-full text-xs font-mono border transition-colors ${
+                  categoryFilter === cat
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {isLoading && <div className="p-12 text-center text-muted-foreground text-sm">Loading news…</div>}

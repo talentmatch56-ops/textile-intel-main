@@ -179,3 +179,25 @@
 @utility ring-focus {
   @apply outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@utility animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+@layer base {
+  .glow-success {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--success) 30%, transparent),
+                0 4px 16px -4px color-mix(in oklab, var(--success) 20%, transparent);
+  }
+
+  /* Markdown rendered content inside chat */
+  .prose-chat strong { font-weight: 600; color: var(--color-foreground); }
+  .prose-chat ul { list-style: disc; padding-left: 1.25rem; margin-top: 0.5rem; space-y: 0.25rem; }
+  .prose-chat li { margin-top: 0.25rem; }
+  .prose-chat p + p { margin-top: 0.5rem; }
+}

@@ -60,9 +60,23 @@ function Page() {
   }, [searchFilter]);
 
   const chartData = useMemo(() => {
-    const base = selectedProduct === "Cotton" ? 1.5 : selectedProduct === "Polyester" ? 1.1 : selectedProduct === "Denim" ? 3.5 : selectedProduct === "Silk" ? 18 : 8;
+    const baseMap: Record<string, number> = {
+      Cotton: 1.5, Polyester: 1.1, Denim: 3.5, Silk: 18, Wool: 10, Linen: 8, Viscose: 1.4, Nylon: 2.3,
+    };
+    const base = baseMap[selectedProduct] ?? 2;
     return generatePriceSeries(base);
   }, [selectedProduct]);
+
+  const COUNTRY_PRICES: Record<string, { country: string; price: number }[]> = {
+    Cotton:    [{ country: "India", price: 1.52 }, { country: "Bangladesh", price: 1.32 }, { country: "Pakistan", price: 1.40 }, { country: "Vietnam", price: 1.18 }, { country: "China", price: 1.08 }, { country: "Turkey", price: 1.78 }],
+    Polyester: [{ country: "China", price: 0.98 }, { country: "India", price: 1.12 }, { country: "Vietnam", price: 1.05 }, { country: "Indonesia", price: 1.08 }, { country: "Pakistan", price: 1.15 }, { country: "Turkey", price: 1.22 }],
+    Denim:     [{ country: "Turkey", price: 4.10 }, { country: "Bangladesh", price: 2.90 }, { country: "China", price: 2.70 }, { country: "India", price: 3.20 }, { country: "Pakistan", price: 2.80 }, { country: "Egypt", price: 3.50 }],
+    Silk:      [{ country: "India", price: 20.5 }, { country: "China", price: 16.0 }, { country: "Vietnam", price: 14.5 }, { country: "Italy", price: 28.0 }, { country: "Thailand", price: 18.0 }, { country: "Brazil", price: 22.0 }],
+    Wool:      [{ country: "Italy", price: 13.2 }, { country: "Australia", price: 10.5 }, { country: "China", price: 9.1 }, { country: "Turkey", price: 11.8 }, { country: "India", price: 8.9 }, { country: "Germany", price: 14.5 }],
+    Linen:     [{ country: "Portugal", price: 8.5 }, { country: "China", price: 6.8 }, { country: "India", price: 7.2 }, { country: "Belgium", price: 9.8 }, { country: "France", price: 10.2 }, { country: "Egypt", price: 6.5 }],
+    Viscose:   [{ country: "China", price: 1.25 }, { country: "India", price: 1.45 }, { country: "Indonesia", price: 1.35 }, { country: "Pakistan", price: 1.30 }, { country: "Turkey", price: 1.55 }, { country: "Vietnam", price: 1.40 }],
+    Nylon:     [{ country: "China", price: 2.10 }, { country: "Taiwan", price: 2.55 }, { country: "India", price: 2.35 }, { country: "Vietnam", price: 2.20 }, { country: "South Korea", price: 2.75 }, { country: "Italy", price: 3.10 }],
+  };
 
   const latestRow = PRICE_TABLE[0];
 
@@ -124,17 +138,10 @@ function Page() {
           <div className="font-display font-semibold mb-4">{selectedProduct} by market</div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={[
-                { country: "India", price: 1.52 },
-                { country: "Bangladesh", price: 1.32 },
-                { country: "Pakistan", price: 1.40 },
-                { country: "Vietnam", country_short: "Vietnam", price: 1.18 },
-                { country: "China", price: 1.08 },
-                { country: "Turkey", price: 1.78 },
-              ].filter(() => true)} layout="vertical" margin={{ left: 4 }}>
+              <BarChart data={COUNTRY_PRICES[selectedProduct] ?? COUNTRY_PRICES.Cotton} layout="vertical" margin={{ left: 4 }}>
                 <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" horizontal={false} />
                 <XAxis type="number" stroke="var(--muted-foreground)" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v}`} />
-                <YAxis type="category" dataKey="country" stroke="var(--muted-foreground)" fontSize={10} width={70} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="country" stroke="var(--muted-foreground)" fontSize={10} width={75} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8, fontSize: 12 }}
                   formatter={(v: number) => [`$${v}/kg`, "Avg Price"]} />
                 <Bar dataKey="price" fill="var(--primary)" radius={[0, 4, 4, 0]} />
@@ -186,8 +193,9 @@ function Page() {
             </div>
           ))}
         </div>
-        <div className="px-4 py-2 border-t border-border bg-muted/20 text-[10px] font-mono text-muted-foreground">
-          Prices are AI-estimated from public trade data · Updated daily · {filteredTable.length} records shown
+        <div className="px-4 py-2 border-t border-border bg-muted/20 text-[10px] font-mono text-muted-foreground flex items-center justify-between">
+          <span>Prices are AI-estimated from public trade data · {filteredTable.length} records shown</span>
+          <span className="text-primary">Updated: {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
         </div>
       </div>
     </div>

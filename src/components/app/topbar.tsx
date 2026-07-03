@@ -35,7 +35,7 @@ export function AppTopbar() {
             <div className="border-t border-sidebar-border px-3 py-3 text-[10px] font-mono text-muted-foreground mt-auto">
               <div className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-                LIVE · v0.1
+                LIVE · v1.0
               </div>
             </div>
           </SheetContent>
@@ -53,7 +53,7 @@ export function AppTopbar() {
         </kbd>
       </div>
       <div className="flex-1" />
-      <Button variant="ghost" size="icon" className="text-muted-foreground">
+      <Button variant="ghost" size="icon" className="text-muted-foreground" aria-label="Notifications">
         <Bell className="h-4 w-4" />
       </Button>
       {user ? (

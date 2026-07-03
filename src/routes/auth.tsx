@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@tanstack/react-router";
-import { Eye, EyeOff } from "lucide-react";
+import { AlertCircle, CheckCircle2, Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({ component: AuthPage });
 
@@ -18,6 +18,34 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
+
+  function getPasswordStrength(pw: string): { label: string; color: string; pct: number } {
+    if (!pw) return { label: "", color: "", pct: 0 };
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    if (score <= 1) return { label: "Weak",   color: "bg-destructive", pct: 25 };
+    if (score === 2) return { label: "Fair",   color: "bg-warning",     pct: 50 };
+    if (score === 3) return { label: "Good",   color: "bg-info",        pct: 75 };
+    return               { label: "Strong", color: "bg-success",    pct: 100 };
+  }
+
+  async function handleForgotPassword() {
+    if (!email) { setErr("Enter your email first to reset password."); return; }
+    setErr(null); setLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: typeof window !== "undefined" ? `${window.location.origin}/auth` : undefined,
+      });
+      if (error) throw error;
+      setForgotSent(true);
+    } catch (e: unknown) {
+      setErr(e instanceof Error ? e.message : "Password reset failed");
+    } finally { setLoading(false); }
+  }
 
   async function handleGoogleSignIn() {
     setErr(null);
@@ -101,7 +129,19 @@ function AuthPage() {
               <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                {mode === "signin" && (
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    disabled={loading}
+                    className="text-[11px] text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>
               <div className="relative">
                 <Input
                   id="password"
@@ -120,8 +160,30 @@ function AuthPage() {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+              {mode === "signup" && password && (() => {
+                const s = getPasswordStrength(password);
+                return (
+                  <div className="space-y-1">
+                    <div className="h-1 rounded-full bg-muted overflow-hidden">
+                      <div className={`h-full rounded-full transition-all ${s.color}`} style={{ width: `${s.pct}%` }} />
+                    </div>
+                    <div className="text-[10px] font-mono text-muted-foreground">Password strength: {s.label}</div>
+                  </div>
+                );
+              })()}
             </div>
-            {err && <div className="text-xs text-destructive">{err}</div>}
+            {err && (
+              <div className="flex items-start gap-2 text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-md px-3 py-2">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <span>{err}</span>
+              </div>
+            )}
+            {forgotSent && (
+              <div className="flex items-start gap-2 text-xs text-success bg-success/10 border border-success/20 rounded-md px-3 py-2">
+                <CheckCircle2 className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <span>Password reset email sent! Check your inbox.</span>
+              </div>
+            )}
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "…" : mode === "signin" ? "Sign in" : "Create account"}
             </Button>

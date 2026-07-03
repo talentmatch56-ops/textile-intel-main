@@ -11,11 +11,21 @@ import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { MOCK_COMPANIES } from "@/utils/mock-companies";
 
+const MOCK_NEWS_ITEMS = [
+  { id: "d1", title: "Bangladesh garment exports surge 18% in Q2 2026", source: "Textile World", category: "market", published_at: new Date(Date.now() - 3600000).toISOString() },
+  { id: "d2", title: "India announces new textile PLI scheme worth ₹10,683 crore", source: "Fibre2Fashion", category: "trade_policy", published_at: new Date(Date.now() - 86400000).toISOString() },
+  { id: "d3", title: "Cotton prices stabilise as US crop forecast improves", source: "Reuters Commodities", category: "price", published_at: new Date(Date.now() - 172800000).toISOString() },
+  { id: "d4", title: "Vietnam's textile hub in Binh Duong opens 3 new mills", source: "Vietnam Textiles", category: "factory_opening", published_at: new Date(Date.now() - 259200000).toISOString() },
+  { id: "d5", title: "EU Green Deal textile regulations force supply chain transparency by 2027", source: "EcoTextile News", category: "trade_policy", published_at: new Date(Date.now() - 345600000).toISOString() },
+  { id: "d6", title: "Turkey denim sector rebounds with $2.1B in export orders for H2 2026", source: "Textilforum", category: "market", published_at: new Date(Date.now() - 432000000).toISOString() },
+];
+
 export const Route = createFileRoute("/app/")({ component: Dashboard });
 
+const now = new Date();
 const BRIEFING_CONTENT = {
-  title: "GMIntel AI Briefing — July 2026",
-  date: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+  title: `GMIntel AI Briefing — ${now.toLocaleDateString("en-US", { month: "long", year: "numeric" })}`,
+  date: now.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
   sections: [
     {
       title: "1. Global Supply Chain & Logistics",
@@ -219,7 +229,7 @@ function Dashboard() {
             <div className="font-display font-semibold">Industry pulse</div>
           </div>
           <div className="divide-y divide-border">
-            {news.map((n) => (
+            {(news.length > 0 ? news : MOCK_NEWS_ITEMS).map((n) => (
               <div key={n.id} className="p-4 hover:bg-muted/40">
                 <div className="text-[10px] font-mono uppercase text-muted-foreground flex items-center justify-between">
                   <span>{n.category ?? "News"}</span>
@@ -229,7 +239,6 @@ function Dashboard() {
                 <div className="text-xs text-muted-foreground mt-1">{n.source}</div>
               </div>
             ))}
-            {news.length === 0 && <div className="p-6 text-sm text-muted-foreground">No news yet.</div>}
           </div>
         </div>
       </div>

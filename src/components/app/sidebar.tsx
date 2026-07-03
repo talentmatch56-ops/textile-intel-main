@@ -18,7 +18,7 @@ export function AppSidebar() {
       <div className="border-t border-sidebar-border px-3 py-3 text-[10px] font-mono text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-          LIVE · v0.1
+          LIVE · v1.0
         </div>
       </div>
     </aside>
