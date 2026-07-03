@@ -1,4 +1,4 @@
-@import "tailwindcss" source(none);
+@import "tailwindcss";
 @source "../src";
 @import "tw-animate-css";
 
@@ -70,7 +70,8 @@
   --card-foreground: oklch(0.18 0.02 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.02 250);
-  --primary: oklch(0.62 0.19 42);           /* amber terminal accent */
+  --primary: oklch(0.62 0.19 42);
+  /* amber terminal accent */
   --primary-foreground: oklch(0.15 0.02 60);
   --secondary: oklch(0.95 0.006 250);
   --secondary-foreground: oklch(0.2 0.02 250);
@@ -159,8 +160,14 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
-  .font-mono { font-family: var(--font-mono); }
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
 
   .ticker-grid {
     background-image:
@@ -172,7 +179,7 @@
 
   .glow-primary {
     box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
-                0 8px 32px -8px color-mix(in oklab, var(--primary) 30%, transparent);
+      0 8px 32px -8px color-mix(in oklab, var(--primary) 30%, transparent);
   }
 }
 
@@ -181,8 +188,13 @@
 }
 
 @keyframes scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @utility animate-scroll {
@@ -192,12 +204,27 @@
 @layer base {
   .glow-success {
     box-shadow: 0 0 0 1px color-mix(in oklab, var(--success) 30%, transparent),
-                0 4px 16px -4px color-mix(in oklab, var(--success) 20%, transparent);
+      0 4px 16px -4px color-mix(in oklab, var(--success) 20%, transparent);
   }
 
   /* Markdown rendered content inside chat */
-  .prose-chat strong { font-weight: 600; color: var(--color-foreground); }
-  .prose-chat ul { list-style: disc; padding-left: 1.25rem; margin-top: 0.5rem; row-gap: 0.25rem; }
-  .prose-chat li { margin-top: 0.25rem; }
-  .prose-chat p + p { margin-top: 0.5rem; }
+  .prose-chat strong {
+    font-weight: 600;
+    color: var(--color-foreground);
+  }
+
+  .prose-chat ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    row-gap: 0.25rem;
+  }
+
+  .prose-chat li {
+    margin-top: 0.25rem;
+  }
+
+  .prose-chat p+p {
+    margin-top: 0.5rem;
+  }
 }
