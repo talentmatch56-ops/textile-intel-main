@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { 
   Settings, Users, Building2, ShieldCheck, ClipboardList, 
   CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp, 
@@ -65,6 +65,23 @@ function Page() {
   const [expandedUser, setExpandedUser] = useState<string | null>(null);
   const [mockProfiles, setMockProfiles] = useState(MOCK_USERS);
   const [suspendedUserIds, setSuspendedUserIds] = useState<string[]>([]);
+
+  // Active user role checking
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUserRole, setCurrentUserRole] = useState<string>("viewer");
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setCurrentUser(user);
+        supabase.from("user_roles").select("role").eq("user_id", user.id).maybeSingle().then(({ data }) => {
+          if (data) {
+            setCurrentUserRole(data.role);
+          }
+        });
+      }
+    });
+  }, []);
 
   // CRUD modal states
   const [modalOpen, setModalOpen] = useState(false);
@@ -229,7 +246,11 @@ function Page() {
       return;
     }
 
-    const generatedSlug = formSlug.trim() || formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    // Ensure unique slug by appending a short random suffix on creation to bypass key constraints
+    const baseSlug = formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const generatedSlug = formSlug.trim() || (isEditing 
+      ? baseSlug 
+      : `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`);
 
     const payload = {
       name: formName.trim(),
@@ -259,7 +280,7 @@ function Page() {
       refetchCompanies();
     } catch (e: any) {
       console.error("Save failed:", e);
-      toast.error(e.message || "Failed to save company details");
+      toast.error(e.message || e.details || "Failed to save company details due to Supabase RLS policy or format issue");
     }
   };
 
@@ -270,6 +291,26 @@ function Page() {
         title="Admin Panel"
         description="Manage company verification, user roles, and platform audit logs."
       />
+
+      {currentUserRole !== "admin" && (
+        <div className="p-4 rounded-lg border border-warning/30 bg-warning/5 text-warning text-xs flex flex-col gap-2 font-mono">
+          <div className="flex items-start gap-2">
+            <AlertOctagon className="h-4 w-4 shrink-0 mt-0.5 text-warning" />
+            <div>
+              <span className="font-bold uppercase tracking-wider text-amber-500">Security Access Alert:</span> Your current session <strong>({currentUser?.email || "anonymous"})</strong> has database role <span className="underline font-bold">"{currentUserRole}"</span>.
+            </div>
+          </div>
+          <div>
+            Supabase Row Level Security (RLS) policies prevent non-admin accounts from writing to the companies registry table.
+          </div>
+          <div className="mt-1 text-[11px] bg-background/80 p-2.5 rounded border border-border font-mono select-all">
+            INSERT INTO public.user_roles (user_id, role) VALUES ('{currentUser?.id || "your-user-id"}', 'admin') ON CONFLICT (user_id, role) DO UPDATE SET role = 'admin';
+          </div>
+          <div className="text-[10px] text-muted-foreground">
+            👉 Copy and run the SQL query above in your Supabase Dashboard SQL Editor to grant yourself Admin rights!
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <StatCard label="Total Companies" value={stats.total} icon={<Building2 className="h-4 w-4" />} />

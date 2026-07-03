@@ -73,8 +73,8 @@ function Page() {
   const countries = data?.countries ?? [];
   const countryMap = Object.fromEntries(countries.map((c) => [c.code, c.name]));
 
-  const businessTypes = useMemo(() => [...new Set(companies.map((c) => c.business_type).filter(Boolean))].sort(), [companies]);
-  const availableCountries = useMemo(() => [...new Set(companies.map((c) => c.country_code).filter(Boolean))].sort(), [companies]);
+  const businessTypes = useMemo(() => [...new Set(companies.map((c) => c.business_type).filter((t): t is string => !!t))].sort(), [companies]);
+  const availableCountries = useMemo(() => [...new Set(companies.map((c) => c.country_code).filter((code): code is string => !!code))].sort(), [companies]);
 
   const filtered = useMemo(() => {
     let list = [...companies];

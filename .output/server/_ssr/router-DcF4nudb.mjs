@@ -4,10 +4,10 @@ import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].m
 import { n as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { n as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { P as useRouter, c as HeadContent, d as createRouter, f as Outlet, g as Link, h as createRootRouteWithContext, m as createFileRoute, p as lazyRouteComponent, s as Scripts } from "../_libs/@tanstack/react-router+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CCxniI5F.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-DcF4nudb.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-CxNn7LFv.css";
+var styles_default = "/assets/styles-CAlD6r02.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -221,7 +221,7 @@ var $$splitComponentImporter$2 = () => import("./chat-CDajpALz.mjs");
 var Route$2 = createFileRoute("/app/chat")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
 var $$splitComponentImporter$1 = () => import("./analytics-95P8hFUr.mjs");
 var Route$1 = createFileRoute("/app/analytics")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
-var $$splitComponentImporter = () => import("./admin-C3u4ezWP.mjs");
+var $$splitComponentImporter = () => import("./admin-D9dIwcJ2.mjs");
 var Route = createFileRoute("/app/admin")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
 var AuthRoute = Route$17.update({
 	id: "/auth",

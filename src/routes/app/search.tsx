@@ -35,7 +35,7 @@ function Page() {
   const companies = data?.companies ?? [];
   const countries = data?.countries ?? [];
   const countryMap = Object.fromEntries(countries.map((c) => [c.code, c.name]));
-  const availableCountries = useMemo(() => [...new Set(companies.map((c) => c.country_code).filter(Boolean))].sort(), [companies]);
+  const availableCountries = useMemo(() => [...new Set(companies.map((c) => c.country_code).filter((code): code is string => !!code))].sort(), [companies]);
 
   const results = useMemo(() => {
     if (!hasSearched) return [];

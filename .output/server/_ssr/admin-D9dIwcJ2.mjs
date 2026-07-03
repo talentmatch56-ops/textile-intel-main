@@ -13,7 +13,7 @@ import { t as RiskBadge } from "./risk-badge-kdjMzVg8.mjs";
 import { n as Label, t as Input } from "./label-B7oQAA24.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/admin-C3u4ezWP.js
+//#region node_modules/.nitro/vite/services/ssr/assets/admin-D9dIwcJ2.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var Dialog = Dialog$1;
@@ -163,6 +163,18 @@ function Page() {
 	const [expandedUser, setExpandedUser] = (0, import_react.useState)(null);
 	const [mockProfiles, setMockProfiles] = (0, import_react.useState)(MOCK_USERS);
 	const [suspendedUserIds, setSuspendedUserIds] = (0, import_react.useState)([]);
+	const [currentUser, setCurrentUser] = (0, import_react.useState)(null);
+	const [currentUserRole, setCurrentUserRole] = (0, import_react.useState)("viewer");
+	(0, import_react.useEffect)(() => {
+		supabase.auth.getUser().then(({ data: { user } }) => {
+			if (user) {
+				setCurrentUser(user);
+				supabase.from("user_roles").select("role").eq("user_id", user.id).maybeSingle().then(({ data }) => {
+					if (data) setCurrentUserRole(data.role);
+				});
+			}
+		});
+	}, []);
 	const [modalOpen, setModalOpen] = (0, import_react.useState)(false);
 	const [isEditing, setIsEditing] = (0, import_react.useState)(false);
 	const [editingCompanyId, setEditingCompanyId] = (0, import_react.useState)(null);
@@ -301,7 +313,8 @@ function Page() {
 			toast.error("Company name is required");
 			return;
 		}
-		const generatedSlug = formSlug.trim() || formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+		const baseSlug = formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+		const generatedSlug = formSlug.trim() || (isEditing ? baseSlug : `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`);
 		const payload = {
 			name: formName.trim(),
 			slug: generatedSlug,
@@ -329,7 +342,7 @@ function Page() {
 			refetchCompanies();
 		} catch (e) {
 			console.error("Save failed:", e);
-			toast.error(e.message || "Failed to save company details");
+			toast.error(e.message || e.details || "Failed to save company details due to Supabase RLS policy or format issue");
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -339,6 +352,49 @@ function Page() {
 				eyebrow: "System",
 				title: "Admin Panel",
 				description: "Manage company verification, user roles, and platform audit logs."
+			}),
+			currentUserRole !== "admin" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "p-4 rounded-lg border border-warning/30 bg-warning/5 text-warning text-xs flex flex-col gap-2 font-mono",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-start gap-2",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(OctagonAlert, { className: "h-4 w-4 shrink-0 mt-0.5 text-warning" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "font-bold uppercase tracking-wider text-amber-500",
+								children: "Security Access Alert:"
+							}),
+							" Your current session ",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("strong", { children: [
+								"(",
+								currentUser?.email || "anonymous",
+								")"
+							] }),
+							" has database role ",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: "underline font-bold",
+								children: [
+									"\"",
+									currentUserRole,
+									"\""
+								]
+							}),
+							"."
+						] })]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "Supabase Row Level Security (RLS) policies prevent non-admin accounts from writing to the companies registry table." }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "mt-1 text-[11px] bg-background/80 p-2.5 rounded border border-border font-mono select-all",
+						children: [
+							"INSERT INTO public.user_roles (user_id, role) VALUES ('",
+							currentUser?.id || "your-user-id",
+							"', 'admin') ON CONFLICT (user_id, role) DO UPDATE SET role = 'admin';"
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "text-[10px] text-muted-foreground",
+						children: "👉 Copy and run the SQL query above in your Supabase Dashboard SQL Editor to grant yourself Admin rights!"
+					})
+				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "grid grid-cols-2 md:grid-cols-4 gap-3",
