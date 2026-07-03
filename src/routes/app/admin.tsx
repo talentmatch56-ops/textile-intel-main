@@ -73,7 +73,6 @@ function Page() {
   const [isBypassActive, setIsBypassActive] = useState<boolean>(false);
   const [localCompanies, setLocalCompanies] = useState<any[]>([]);
   const [localRoles, setLocalRoles] = useState<Record<string, string>>({});
-  const [hasLoadedFromStorage, setHasLoadedFromStorage] = useState<boolean>(false);
 
   // Load from localStorage on mount (client-side only to avoid hydration mismatch with SSR)
   useEffect(() => {
@@ -85,8 +84,6 @@ function Page() {
       if (storedBypass) setIsBypassActive(true);
       if (storedCompanies) setLocalCompanies(JSON.parse(storedCompanies));
       if (storedRoles) setLocalRoles(JSON.parse(storedRoles));
-      
-      setHasLoadedFromStorage(true);
     }
   }, []);
 
@@ -118,27 +115,6 @@ function Page() {
       }
     }
   }, [isBypassActive, currentUser]);
-
-  // Persist local companies
-  useEffect(() => {
-    if (hasLoadedFromStorage && localCompanies.length > 0) {
-      localStorage.setItem("gmintel_local_companies", JSON.stringify(localCompanies));
-    }
-  }, [localCompanies, hasLoadedFromStorage]);
-
-  // Persist local roles
-  useEffect(() => {
-    if (hasLoadedFromStorage) {
-      localStorage.setItem("gmintel_local_roles", JSON.stringify(localRoles));
-    }
-  }, [localRoles, hasLoadedFromStorage]);
-
-  // Persist bypass status
-  useEffect(() => {
-    if (hasLoadedFromStorage) {
-      localStorage.setItem("gmintel_admin_bypass", String(isBypassActive));
-    }
-  }, [isBypassActive, hasLoadedFromStorage]);
 
   // CRUD modal states
   const [modalOpen, setModalOpen] = useState(false);
