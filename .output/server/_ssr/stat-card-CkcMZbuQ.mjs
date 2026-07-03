@@ -1,6 +1,6 @@
 import { t as cn } from "./utils-C_uf36nf.mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
-import { X as ArrowDownRight, q as ArrowUpRight } from "../_libs/lucide-react.mjs";
+import { J as ArrowUpRight, Z as ArrowDownRight } from "../_libs/lucide-react.mjs";
 //#region node_modules/.nitro/vite/services/ssr/assets/stat-card-CkcMZbuQ.js
 var import_jsx_runtime = require_jsx_runtime();
 function StatCard({ label, value, delta, hint, icon }) {

@@ -2,7 +2,7 @@ import { i as __toESM } from "../_runtime.mjs";
 import { t as supabase } from "./client-BST6wkjw.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
-import { O as GitCompare, _ as Plus, n as X } from "../_libs/lucide-react.mjs";
+import { k as GitCompare, n as X, v as Plus } from "../_libs/lucide-react.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
 import { t as RiskBadge } from "./risk-badge-kdjMzVg8.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";

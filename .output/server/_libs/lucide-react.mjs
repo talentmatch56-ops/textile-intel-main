@@ -228,6 +228,28 @@ var CircleCheckBig = createLucideIcon("circle-check-big", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var CircleX = createLucideIcon("circle-x", [
+	["circle", {
+		cx: "12",
+		cy: "12",
+		r: "10",
+		key: "1mglay"
+	}],
+	["path", {
+		d: "m15 9-6 6",
+		key: "1uzhvr"
+	}],
+	["path", {
+		d: "m9 9 6 6",
+		key: "z0biqf"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Earth = createLucideIcon("earth", [
 	["path", {
 		d: "M21.54 15H17a2 2 0 0 0-2 2v4.54",
@@ -246,6 +268,32 @@ var Earth = createLucideIcon("earth", [
 		cy: "12",
 		r: "10",
 		key: "1mglay"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var EllipsisVertical = createLucideIcon("ellipsis-vertical", [
+	["circle", {
+		cx: "12",
+		cy: "12",
+		r: "1",
+		key: "41hilf"
+	}],
+	["circle", {
+		cx: "12",
+		cy: "5",
+		r: "1",
+		key: "gxeob9"
+	}],
+	["circle", {
+		cx: "12",
+		cy: "19",
+		r: "1",
+		key: "lyex9k"
 	}]
 ]);
 /**
@@ -308,6 +356,19 @@ var OctagonAlert = createLucideIcon("octagon-alert", [
 		key: "1fd625"
 	}]
 ]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var PenLine = createLucideIcon("pen-line", [["path", {
+	d: "M13 21h8",
+	key: "1jsn5i"
+}], ["path", {
+	d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
+	key: "1a8usu"
+}]]);
 /**
 * @license lucide-react v0.575.0 - ISC
 *
@@ -1193,6 +1254,34 @@ var Star = createLucideIcon("star", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var Trash2 = createLucideIcon("trash-2", [
+	["path", {
+		d: "M10 11v6",
+		key: "nco0om"
+	}],
+	["path", {
+		d: "M14 11v6",
+		key: "outv1u"
+	}],
+	["path", {
+		d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6",
+		key: "miytrc"
+	}],
+	["path", {
+		d: "M3 6h18",
+		key: "d0wm0j"
+	}],
+	["path", {
+		d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
+		key: "e791ji"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var TrendingDown = createLucideIcon("trending-down", [["path", {
 	d: "M16 17h6v-6",
 	key: "t6n2it"
@@ -1324,4 +1413,4 @@ var Zap = createLucideIcon("zap", [["path", {
 	key: "1xq2db"
 }]]);
 //#endregion
-export { Sparkles as $, Factory as A, ChevronUp as B, Map as C, Globe as D, LayoutDashboard as E, DollarSign as F, Bot as G, ChevronDown as H, Command as I, ArrowUpDown as J, Bell as K, Clock as L, EyeOff as M, ExternalLink as N, GitCompare as O, Download as P, TriangleAlert as Q, ClipboardList as R, Menu as S, Lock as T, Check as U, ChevronRight as V, Building2 as W, ArrowDownRight as X, ArrowRight as Y, Activity as Z, Plus as _, Users as a, CircleCheckBig as at, MicOff as b, TrendingDown as c, ChartNoAxesColumn as ct, ShieldAlert as d, OctagonAlert as et, Settings as f, Radar as g, RefreshCw as h, Volume2 as i, Earth as it, Eye as j, FileText as k, Star as l, ChartLine as lt, Search as m, X as n, Layers as nt, User as o, CircleCheck as ot, Send as p, ArrowUpRight as q, VolumeX as r, Funnel as rt, TrendingUp as s, CircleAlert as st, Zap as t, LoaderCircle as tt, ShieldCheck as u, ChartColumn as ut, Newspaper as v, MapPin as w, MessageSquare as x, Mic as y, Circle as z };
+export { TriangleAlert as $, FileText as A, Circle as B, Menu as C, LayoutDashboard as D, Lock as E, Download as F, Building2 as G, ChevronRight as H, DollarSign as I, ArrowUpRight as J, Bot as K, Command as L, Eye as M, EyeOff as N, Globe as O, ExternalLink as P, Activity as Q, Clock as R, MessageSquare as S, MapPin as T, ChevronDown as U, ChevronUp as V, Check as W, ArrowRight as X, ArrowUpDown as Y, ArrowDownRight as Z, Radar as _, Users as a, Funnel as at, Mic as b, TrendingDown as c, CircleX as ct, ShieldCheck as d, CircleAlert as dt, Sparkles as et, ShieldAlert as f, ChartNoAxesColumn as ft, RefreshCw as g, Search as h, Volume2 as i, Layers as it, Factory as j, GitCompare as k, Trash2 as l, CircleCheckBig as lt, Send as m, ChartColumn as mt, X as n, OctagonAlert as nt, User as o, EllipsisVertical as ot, Settings as p, ChartLine as pt, Bell as q, VolumeX as r, LoaderCircle as rt, TrendingUp as s, Earth as st, Zap as t, PenLine as tt, Star as u, CircleCheck as ut, Plus as v, Map as w, MicOff as x, Newspaper as y, ClipboardList as z };

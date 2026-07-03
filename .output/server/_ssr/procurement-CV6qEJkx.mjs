@@ -3,7 +3,7 @@ import { t as supabase } from "./client-BST6wkjw.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
-import { $ as Sparkles, B as ChevronUp, H as ChevronDown, R as ClipboardList, _ as Plus, n as X, p as Send } from "../_libs/lucide-react.mjs";
+import { U as ChevronDown, V as ChevronUp, et as Sparkles, m as Send, n as X, v as Plus, z as ClipboardList } from "../_libs/lucide-react.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
 import { t as StatCard } from "./stat-card-CkcMZbuQ.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";

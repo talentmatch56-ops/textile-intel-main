@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { Settings, Users, Building2, ShieldCheck, ClipboardList, CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp, AlertOctagon } from "lucide-react";
+import { useState, useMemo } from "react";
+import { 
+  Settings, Users, Building2, ShieldCheck, ClipboardList, 
+  CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp, 
+  AlertOctagon, MoreVertical, Edit3, Trash2, Plus 
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/app/page-header";
 import { StatCard } from "@/components/app/stat-card";
@@ -12,7 +16,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/admin")({ component: Page });
@@ -39,10 +53,10 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 const STATUS_ACTIONS: Record<string, { label: string; nextStatus: string; cls: string }> = {
-  pending_review: { label: "Verify", nextStatus: "verified", cls: "text-success border-success/30 hover:bg-success/10" },
-  verified: { label: "Archive", nextStatus: "archived", cls: "text-muted-foreground border-border hover:bg-muted/40" },
-  rejected: { label: "Re-review", nextStatus: "pending_review", cls: "text-warning border-warning/30 hover:bg-warning/10" },
-  archived: { label: "Restore", nextStatus: "pending_review", cls: "text-info border-info/30 hover:bg-info/10" },
+  pending_review: { label: "Verify", nextStatus: "verified", cls: "text-success" },
+  verified: { label: "Archive", nextStatus: "archived", cls: "text-muted-foreground" },
+  rejected: { label: "Re-review", nextStatus: "pending_review", cls: "text-warning" },
+  archived: { label: "Restore", nextStatus: "pending_review", cls: "text-info" },
 };
 
 function Page() {
@@ -52,11 +66,36 @@ function Page() {
   const [mockProfiles, setMockProfiles] = useState(MOCK_USERS);
   const [suspendedUserIds, setSuspendedUserIds] = useState<string[]>([]);
 
-  const { data: companies, refetch: refetchCompanies } = useQuery({
+  // CRUD modal states
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null);
+
+  // Form states
+  const [formName, setFormName] = useState("");
+  const [formSlug, setFormSlug] = useState("");
+  const [formCountry, setFormCountry] = useState("IN");
+  const [formCity, setFormCity] = useState("");
+  const [formBusinessType, setFormBusinessType] = useState("manufacturer");
+  const [formTrustScore, setFormTrustScore] = useState("85");
+  const [formRiskLevel, setFormRiskLevel] = useState<"low" | "medium" | "high">("low");
+  const [formCapacity, setFormCapacity] = useState("");
+  const [formMOQ, setFormMOQ] = useState("");
+  const [formLeadTime, setFormLeadTime] = useState("");
+  const [formStatus, setFormStatus] = useState("pending_review");
+
+  // Query companies and countries
+  const { data: queryData, refetch: refetchCompanies } = useQuery({
     queryKey: ["admin-companies"],
     queryFn: async () => {
-      const res = await supabase.from("companies").select("id,name,country_code,city,business_type,status,ai_risk_level,ai_trust_score,created_at").order("created_at", { ascending: false });
-      return res.data ?? [];
+      const [compRes, countRes] = await Promise.all([
+        supabase.from("companies").select("id,slug,name,country_code,city,business_type,status,ai_risk_level,ai_trust_score,monthly_capacity,moq,lead_time_days,created_at").order("created_at", { ascending: false }),
+        supabase.from("countries").select("code,name").order("name")
+      ]);
+      return {
+        companies: compRes.data ?? [],
+        countries: countRes.data ?? []
+      };
     },
   });
 
@@ -72,7 +111,9 @@ function Page() {
     },
   });
 
-  const allCompanies = companies ?? [];
+  const allCompanies = queryData?.companies ?? [];
+  const countries = queryData?.countries ?? [];
+
   const allProfiles = [
     ...(profiles ?? []),
     ...mockProfiles.filter(m => !profiles?.some(p => p.email === m.email))
@@ -88,8 +129,14 @@ function Page() {
   };
 
   const updateStatus = async (id: string, status: string) => {
-    await supabase.from("companies").update({ status } as any).eq("id", id);
-    refetchCompanies();
+    try {
+      const { error } = await supabase.from("companies").update({ status } as any).eq("id", id);
+      if (error) throw error;
+      toast.success(`Status updated successfully`);
+      refetchCompanies();
+    } catch (e: any) {
+      toast.error(e.message || "Failed to update status");
+    }
   };
 
   const handleUpdateRole = async (userId: string, newRole: string) => {
@@ -126,6 +173,96 @@ function Page() {
     }
   };
 
+  // Open modals
+  const handleOpenAddModal = () => {
+    setIsEditing(false);
+    setEditingCompanyId(null);
+    setFormName("");
+    setFormSlug("");
+    setFormCountry(countries[0]?.code || "IN");
+    setFormCity("");
+    setFormBusinessType("manufacturer");
+    setFormTrustScore("85");
+    setFormRiskLevel("low");
+    setFormCapacity("");
+    setFormMOQ("");
+    setFormLeadTime("");
+    setFormStatus("pending_review");
+    setModalOpen(true);
+  };
+
+  const handleOpenEditModal = (c: any) => {
+    setIsEditing(true);
+    setEditingCompanyId(c.id);
+    setFormName(c.name || "");
+    setFormSlug(c.slug || "");
+    setFormCountry(c.country_code || "IN");
+    setFormCity(c.city || "");
+    setFormBusinessType(c.business_type || "manufacturer");
+    setFormTrustScore(String(c.ai_trust_score ?? 85));
+    setFormRiskLevel(c.ai_risk_level || "low");
+    setFormCapacity(c.monthly_capacity ? String(c.monthly_capacity) : "");
+    setFormMOQ(c.moq ? String(c.moq) : "");
+    setFormLeadTime(c.lead_time_days ? String(c.lead_time_days) : "");
+    setFormStatus(c.status || "pending_review");
+    setModalOpen(true);
+  };
+
+  const handleDeleteCompany = async (id: string, name: string) => {
+    if (window.confirm(`Are you sure you want to permanently delete "${name}"?`)) {
+      try {
+        const { error } = await supabase.from("companies").delete().eq("id", id);
+        if (error) throw error;
+        toast.success(`Successfully deleted "${name}"`);
+        refetchCompanies();
+      } catch (e: any) {
+        console.error("Delete failed:", e);
+        toast.error(e.message || "Delete rejected by RLS. Ensure you have the companies delete policy.");
+      }
+    }
+  };
+
+  const handleSaveCompany = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formName.trim()) {
+      toast.error("Company name is required");
+      return;
+    }
+
+    const generatedSlug = formSlug.trim() || formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+    const payload = {
+      name: formName.trim(),
+      slug: generatedSlug,
+      country_code: formCountry,
+      city: formCity.trim() || null,
+      business_type: formBusinessType,
+      ai_trust_score: Number(formTrustScore) || 85,
+      ai_risk_level: formRiskLevel,
+      monthly_capacity: formCapacity ? Number(formCapacity) : null,
+      moq: formMOQ ? Number(formMOQ) : null,
+      lead_time_days: formLeadTime ? Number(formLeadTime) : null,
+      status: formStatus,
+    };
+
+    try {
+      if (isEditing && editingCompanyId) {
+        const { error } = await supabase.from("companies").update(payload as any).eq("id", editingCompanyId);
+        if (error) throw error;
+        toast.success(`Successfully updated "${formName}"`);
+      } else {
+        const { error } = await supabase.from("companies").insert([payload] as any);
+        if (error) throw error;
+        toast.success(`Successfully added "${formName}"`);
+      }
+      setModalOpen(false);
+      refetchCompanies();
+    } catch (e: any) {
+      console.error("Save failed:", e);
+      toast.error(e.message || "Failed to save company details");
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -154,20 +291,27 @@ function Page() {
       {/* Company Management */}
       {activeTab === "companies" && (
         <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border gap-3">
-          <div>
-            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Company Registry</div>
-            <div className="font-display font-semibold">Verification queue</div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border gap-3 bg-muted/10">
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Company Registry</div>
+              <div className="font-display font-semibold">Verification queue</div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="flex flex-wrap gap-1.5">
+                {["all", "pending_review", "verified", "rejected", "archived"].map((s) => (
+                  <button key={s} onClick={() => setStatusFilter(s)}
+                    className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}>
+                    {s === "pending_review" ? "Pending" : s}
+                  </button>
+                ))}
+              </div>
+              <Button size="sm" onClick={handleOpenAddModal} className="gap-1.5 text-xs font-mono">
+                <Plus className="h-3.5 w-3.5" /> Add Company
+              </Button>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {["all", "pending_review", "verified", "rejected", "archived"].map((s) => (
-              <button key={s} onClick={() => setStatusFilter(s)}
-                className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}>
-                {s === "pending_review" ? "Pending" : s}
-              </button>
-            ))}
-          </div>
-        </div>
+
           <div className="divide-y divide-border">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground bg-muted/30">
               <div className="col-span-5 sm:col-span-4">Company</div>
@@ -175,11 +319,13 @@ function Page() {
               <div className="hidden md:block col-span-2">Type</div>
               <div className="col-span-2 sm:col-span-1 text-right">Trust</div>
               <div className="hidden sm:block col-span-1 text-right">Risk</div>
-              <div className="col-span-5 sm:col-span-2 text-right">Action</div>
+              <div className="col-span-5 sm:col-span-2 text-right">Actions</div>
             </div>
+            
             {filteredCompanies.length === 0 && (
               <div className="p-8 text-center text-sm text-muted-foreground">No companies in this status.</div>
             )}
+            
             {filteredCompanies.map((c) => {
               const action = STATUS_ACTIONS[c.status ?? "pending_review"];
               return (
@@ -195,12 +341,50 @@ function Page() {
                   <div className="col-span-2 sm:col-span-1 text-right font-mono tabular-nums">{c.ai_trust_score ?? "—"}</div>
                   <div className="hidden sm:block col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
                   <div className="col-span-5 sm:col-span-2 text-right">
-                    {action && (
-                      <button onClick={() => updateStatus(c.id, action.nextStatus)}
-                        className={`text-[10px] font-mono px-2 py-1 rounded border transition-colors ${action.cls} truncate`}>
-                        {action.label}
-                      </button>
-                    )}
+                    <div className="flex items-center justify-end gap-1.5">
+                      {action && (
+                        <button 
+                          onClick={() => updateStatus(c.id, action.nextStatus)}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded border border-border/80 hover:bg-muted transition-colors ${action.cls}`}
+                        >
+                          {action.label}
+                        </button>
+                      )}
+                      
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-7 w-7 p-0 rounded-md hover:bg-muted">
+                            <MoreVertical className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40 font-sans">
+                          <DropdownMenuItem onClick={() => handleOpenEditModal(c)} className="gap-2 text-xs cursor-pointer">
+                            <Edit3 className="h-3.5 w-3.5" /> Edit Details
+                          </DropdownMenuItem>
+                          
+                          {action && (
+                            <DropdownMenuItem onClick={() => updateStatus(c.id, action.nextStatus)} className="gap-2 text-xs cursor-pointer text-success">
+                              <CheckCircle2 className="h-3.5 w-3.5" /> {action.label}
+                            </DropdownMenuItem>
+                          )}
+                          
+                          {c.status !== 'rejected' && (
+                            <DropdownMenuItem onClick={() => updateStatus(c.id, 'rejected')} className="gap-2 text-xs cursor-pointer text-warning">
+                              <XCircle className="h-3.5 w-3.5" /> Reject
+                            </DropdownMenuItem>
+                          )}
+                          
+                          <DropdownMenuSeparator />
+                          
+                          <DropdownMenuItem 
+                            onClick={() => handleDeleteCompany(c.id, c.name)} 
+                            className="gap-2 text-xs text-destructive focus:bg-destructive/10 cursor-pointer"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" /> Delete Company
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                 </div>
               );
@@ -231,22 +415,22 @@ function Page() {
                     <div className="font-medium truncate">{u.full_name || "—"}</div>
                     <div className="text-xs text-muted-foreground font-mono truncate">{u.email}</div>
                     <div className="text-xs text-muted-foreground sm:hidden truncate mt-0.5">
-                      {(u as Record<string, unknown>).company as string || "No Company"}
+                      {(u as any).company || "No Company"}
                     </div>
                   </div>
-                  <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">{(u as Record<string, unknown>).company as string || "—"}</div>
+                  <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">{(u as any).company || "—"}</div>
                   <div className="col-span-4 sm:col-span-2">
                     {suspendedUserIds.includes(u.id) ? (
                       <span className="inline-flex items-center gap-1 rounded border border-destructive/30 bg-destructive/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide text-destructive">
                         <AlertOctagon className="h-2.5 w-2.5" /> Suspended
                       </span>
                     ) : (
-                      <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as Record<string, unknown>).role as string] ?? ROLE_COLORS.viewer}`}>
-                        <ShieldCheck className="h-2.5 w-2.5" />{(u as Record<string, unknown>).role as string || "viewer"}
+                      <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as any).role] ?? ROLE_COLORS.viewer}`}>
+                        <ShieldCheck className="h-2.5 w-2.5" />{(u as any).role || "viewer"}
                       </span>
                     )}
                   </div>
-                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString("en-US", { timeZone: "UTC" })}</div>
+                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString("en-US")}</div>
                   <div className="col-span-1 text-right">
                     <button onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)} className="text-muted-foreground hover:text-foreground">
                       {expandedUser === u.id ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -266,7 +450,7 @@ function Page() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="start">
                             {["admin", "analyst", "viewer"].map((r) => (
-                              <DropdownMenuItem key={r} onClick={() => handleUpdateRole(u.id, r)}>
+                              <DropdownMenuItem key={r} onClick={() => handleUpdateRole(u.id, r)} className="cursor-pointer">
                                 {r.charAt(0).toUpperCase() + r.slice(1)}
                               </DropdownMenuItem>
                             ))}
@@ -326,6 +510,165 @@ function Page() {
           </div>
         </div>
       )}
+
+      {/* CRUD dialog modal for Create and Update */}
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto bg-card border border-border p-6 font-sans">
+          <DialogHeader>
+            <DialogTitle className="font-display text-lg font-bold text-foreground">
+              {isEditing ? "Edit Company Registry Profile" : "Add New Verified Company"}
+            </DialogTitle>
+          </DialogHeader>
+
+          <form onSubmit={handleSaveCompany} className="space-y-4 py-3 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="c-name" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Company Name *</Label>
+                <Input 
+                  id="c-name" 
+                  value={formName} 
+                  onChange={(e) => setFormName(e.target.value)} 
+                  placeholder="e.g. Arvind Mills Ltd" 
+                  required 
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-slug" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Slug (Optional URL segment)</Label>
+                <Input 
+                  id="c-slug" 
+                  value={formSlug} 
+                  onChange={(e) => setFormSlug(e.target.value)} 
+                  placeholder="e.g. arvind-mills-ltd" 
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-country" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Country Hub *</Label>
+                <select 
+                  id="c-country"
+                  value={formCountry}
+                  onChange={(e) => setFormCountry(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  {countries.map((cnt: any) => (
+                    <option key={cnt.code} value={cnt.code}>{cnt.name} ({cnt.code})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-city" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">City</Label>
+                <Input 
+                  id="c-city" 
+                  value={formCity} 
+                  onChange={(e) => setFormCity(e.target.value)} 
+                  placeholder="e.g. Ahmedabad" 
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-type" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Business Category</Label>
+                <select 
+                  id="c-type"
+                  value={formBusinessType}
+                  onChange={(e) => setFormBusinessType(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="manufacturer">Manufacturer</option>
+                  <option value="supplier">Supplier / Trading House</option>
+                  <option value="exporter">Exporter</option>
+                  <option value="brand">Brand</option>
+                  <option value="organic supplier">Organic Fiber Supplier</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-status" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">System Status</Label>
+                <select 
+                  id="c-status"
+                  value={formStatus}
+                  onChange={(e) => setFormStatus(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="pending_review">Pending Review</option>
+                  <option value="verified">Verified (Active)</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="archived">Archived</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-trust" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">AI Trust Score (1-100)</Label>
+                <Input 
+                  id="c-trust" 
+                  type="number"
+                  min="1"
+                  max="100"
+                  value={formTrustScore} 
+                  onChange={(e) => setFormTrustScore(e.target.value)} 
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-risk" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">AI Risk Level</Label>
+                <select 
+                  id="c-risk"
+                  value={formRiskLevel}
+                  onChange={(e) => setFormRiskLevel(e.target.value as any)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="low">Low Risk</option>
+                  <option value="medium">Medium Risk</option>
+                  <option value="high">High Risk</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-capacity" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Monthly Capacity (meters/month)</Label>
+                <Input 
+                  id="c-capacity" 
+                  type="number" 
+                  value={formCapacity} 
+                  onChange={(e) => setFormCapacity(e.target.value)} 
+                  placeholder="e.g. 1000000" 
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="c-moq" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Minimum Order Qty (MOQ)</Label>
+                <Input 
+                  id="c-moq" 
+                  type="number" 
+                  value={formMOQ} 
+                  onChange={(e) => setFormMOQ(e.target.value)} 
+                  placeholder="e.g. 500" 
+                />
+              </div>
+
+              <div className="space-y-1.5 sm:col-span-2">
+                <Label htmlFor="c-lead" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Lead Time (Days)</Label>
+                <Input 
+                  id="c-lead" 
+                  type="number" 
+                  value={formLeadTime} 
+                  onChange={(e) => setFormLeadTime(e.target.value)} 
+                  placeholder="e.g. 45" 
+                />
+              </div>
+            </div>
+
+            <DialogFooter className="mt-6 flex justify-end gap-2 border-t border-border pt-4">
+              <Button type="button" variant="outline" size="sm" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" size="sm">
+                Save Profile
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

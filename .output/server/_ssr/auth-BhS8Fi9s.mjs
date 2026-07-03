@@ -1,32 +1,14 @@
 import { i as __toESM } from "../_runtime.mjs";
 import { t as supabase } from "./client-BST6wkjw.mjs";
-import { t as cva } from "../_libs/class-variance-authority+clsx.mjs";
-import { t as cn } from "./utils-C_uf36nf.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
-import { M as EyeOff, j as Eye, ot as CircleCheck, st as CircleAlert } from "../_libs/lucide-react.mjs";
+import { M as Eye, N as EyeOff, dt as CircleAlert, ut as CircleCheck } from "../_libs/lucide-react.mjs";
+import { n as Label, t as Input } from "./label-B7oQAA24.mjs";
 import { N as useNavigate, g as Link } from "../_libs/@tanstack/react-router+[...].mjs";
-import { t as Root } from "../_libs/radix-ui__react-label.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/auth-BwsD3Ykb.js
+//#region node_modules/.nitro/vite/services/ssr/assets/auth-BhS8Fi9s.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var Input = import_react.forwardRef(({ className, type, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-		type,
-		className: cn("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className),
-		ref,
-		...props
-	});
-});
-Input.displayName = "Input";
-var labelVariants = cva("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70");
-var Label = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root, {
-	ref,
-	className: cn(labelVariants(), className),
-	...props
-}));
-Label.displayName = Root.displayName;
 function AuthPage() {
 	const nav = useNavigate();
 	const [mode, setMode] = (0, import_react.useState)("signin");

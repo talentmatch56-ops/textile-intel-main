@@ -1,10 +1,10 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { t as supabase } from "./client-BST6wkjw.mjs";
 import { t as cn } from "./utils-C_uf36nf.mjs";
+import { t as supabase } from "./client-BST6wkjw.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
-import { $ as Sparkles, G as Bot, _ as Plus, b as MicOff, i as Volume2, o as User, p as Send, r as VolumeX, tt as LoaderCircle, x as MessageSquare, y as Mic } from "../_libs/lucide-react.mjs";
+import { K as Bot, S as MessageSquare, b as Mic, et as Sparkles, i as Volume2, m as Send, o as User, r as VolumeX, rt as LoaderCircle, v as Plus, x as MicOff } from "../_libs/lucide-react.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
