@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%">
+  <!-- Circle background -->
+  <circle cx="16" cy="16" r="15" fill="#141312"/>
+  <circle cx="16" cy="16" r="15" fill="none" stroke="#ff983d" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- "GM" typography design -->
+  <text x="16" y="21.5" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle" letter-spacing="-0.5">
+    G<tspan fill="#ff983d">M</tspan>
+  </text>
+</svg>
