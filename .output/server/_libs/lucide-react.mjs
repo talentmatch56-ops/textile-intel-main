@@ -944,6 +944,62 @@ var MessageSquare = createLucideIcon("message-square", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var MicOff = createLucideIcon("mic-off", [
+	["path", {
+		d: "M12 19v3",
+		key: "npa21l"
+	}],
+	["path", {
+		d: "M15 9.34V5a3 3 0 0 0-5.68-1.33",
+		key: "1gzdoj"
+	}],
+	["path", {
+		d: "M16.95 16.95A7 7 0 0 1 5 12v-2",
+		key: "cqa7eg"
+	}],
+	["path", {
+		d: "M18.89 13.23A7 7 0 0 0 19 12v-2",
+		key: "16hl24"
+	}],
+	["path", {
+		d: "m2 2 20 20",
+		key: "1ooewy"
+	}],
+	["path", {
+		d: "M9 9v3a3 3 0 0 0 5.12 2.12",
+		key: "r2i35w"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Mic = createLucideIcon("mic", [
+	["path", {
+		d: "M12 19v3",
+		key: "npa21l"
+	}],
+	["path", {
+		d: "M19 10v2a7 7 0 0 1-14 0v-2",
+		key: "1vc78b"
+	}],
+	["rect", {
+		x: "9",
+		y: "2",
+		width: "6",
+		height: "13",
+		rx: "3",
+		key: "s6n7sd"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Newspaper = createLucideIcon("newspaper", [
 	["path", {
 		d: "M15 18h-5",
@@ -1127,6 +1183,16 @@ var ShieldCheck = createLucideIcon("shield-check", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var Star = createLucideIcon("star", [["path", {
+	d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
+	key: "r04s7s"
+}]]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var TrendingDown = createLucideIcon("trending-down", [["path", {
 	d: "M16 17h6v-6",
 	key: "t6n2it"
@@ -1194,6 +1260,52 @@ var Users = createLucideIcon("users", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var Volume2 = createLucideIcon("volume-2", [
+	["path", {
+		d: "M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z",
+		key: "uqj9uw"
+	}],
+	["path", {
+		d: "M16 9a5 5 0 0 1 0 6",
+		key: "1q6k2b"
+	}],
+	["path", {
+		d: "M19.364 18.364a9 9 0 0 0 0-12.728",
+		key: "ijwkga"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var VolumeX = createLucideIcon("volume-x", [
+	["path", {
+		d: "M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z",
+		key: "uqj9uw"
+	}],
+	["line", {
+		x1: "22",
+		x2: "16",
+		y1: "9",
+		y2: "15",
+		key: "1ewh16"
+	}],
+	["line", {
+		x1: "16",
+		x2: "22",
+		y1: "9",
+		y2: "15",
+		key: "5ykzw1"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var X = createLucideIcon("x", [["path", {
 	d: "M18 6 6 18",
 	key: "1bl5f8"
@@ -1212,4 +1324,4 @@ var Zap = createLucideIcon("zap", [["path", {
 	key: "1xq2db"
 }]]);
 //#endregion
-export { Earth as $, DollarSign as A, Bot as B, GitCompare as C, EyeOff as D, Eye as E, ChevronUp as F, ArrowDownRight as G, ArrowUpRight as H, ChevronRight as I, Sparkles as J, Activity as K, ChevronDown as L, Clock as M, ClipboardList as N, ExternalLink as O, Circle as P, Funnel as Q, Check as R, Globe as S, Factory as T, ArrowUpDown as U, Bell as V, ArrowRight as W, LoaderCircle as X, OctagonAlert as Y, Layers as Z, Menu as _, TrendingUp as a, ChartColumn as at, Lock as b, ShieldAlert as c, Search as d, CircleCheckBig as et, RefreshCw as f, MessageSquare as g, Newspaper as h, User as i, ChartLine as it, Command as j, Download as k, Settings as l, Plus as m, X as n, CircleAlert as nt, TrendingDown as o, Radar as p, TriangleAlert as q, Users as r, ChartNoAxesColumn as rt, ShieldCheck as s, Zap as t, CircleCheck as tt, Send as u, Map as v, FileText as w, LayoutDashboard as x, MapPin as y, Building2 as z };
+export { Sparkles as $, Factory as A, ChevronUp as B, Map as C, Globe as D, LayoutDashboard as E, DollarSign as F, Bot as G, ChevronDown as H, Command as I, ArrowUpDown as J, Bell as K, Clock as L, EyeOff as M, ExternalLink as N, GitCompare as O, Download as P, TriangleAlert as Q, ClipboardList as R, Menu as S, Lock as T, Check as U, ChevronRight as V, Building2 as W, ArrowDownRight as X, ArrowRight as Y, Activity as Z, Plus as _, Users as a, CircleCheckBig as at, MicOff as b, TrendingDown as c, ChartNoAxesColumn as ct, ShieldAlert as d, OctagonAlert as et, Settings as f, Radar as g, RefreshCw as h, Volume2 as i, Earth as it, Eye as j, FileText as k, Star as l, ChartLine as lt, Search as m, X as n, Layers as nt, User as o, CircleCheck as ot, Send as p, ArrowUpRight as q, VolumeX as r, Funnel as rt, TrendingUp as s, CircleAlert as st, Zap as t, LoaderCircle as tt, ShieldCheck as u, ChartColumn as ut, Newspaper as v, MapPin as w, MessageSquare as x, Mic as y, Circle as z };

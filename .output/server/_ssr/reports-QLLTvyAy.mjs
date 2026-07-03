@@ -3,12 +3,12 @@ import { t as supabase } from "./client-BST6wkjw.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
+import { $ as Sparkles, L as Clock, P as Download, _ as Plus, k as FileText, ot as CircleCheck, st as CircleAlert, tt as LoaderCircle } from "../_libs/lucide-react.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
-import { J as Sparkles, M as Clock, X as LoaderCircle, k as Download, m as Plus, nt as CircleAlert, tt as CircleCheck, w as FileText } from "../_libs/lucide-react.mjs";
 import { t as StatCard } from "./stat-card-CkcMZbuQ.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/reports-BBeFsqnc.js
+//#region node_modules/.nitro/vite/services/ssr/assets/reports-QLLTvyAy.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var REPORT_TYPES = [
@@ -137,12 +137,15 @@ function Page() {
 		};
 		setLocalReports((prev) => [newReport, ...prev]);
 		toast.info(`Generating ${title}...`);
-		supabase.from("reports").insert({
-			kind,
-			title: newReport.title,
-			status: "generating"
-		}).then(({ error }) => {
-			if (error) console.warn("Supabase report insert skipped:", error.message);
+		supabase.auth.getUser().then(({ data: { user } }) => {
+			if (user) supabase.from("reports").insert({
+				user_id: user.id,
+				kind,
+				title: newReport.title,
+				status: "generating"
+			}).then(({ error }) => {
+				if (error) console.warn("Supabase report insert skipped:", error.message);
+			});
 		});
 		setTimeout(() => {
 			setLocalReports((prev) => prev.map((r) => r.id === newId ? {

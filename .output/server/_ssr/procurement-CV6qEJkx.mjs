@@ -3,11 +3,11 @@ import { t as supabase } from "./client-BST6wkjw.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
+import { $ as Sparkles, B as ChevronUp, H as ChevronDown, R as ClipboardList, _ as Plus, n as X, p as Send } from "../_libs/lucide-react.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
-import { F as ChevronUp, J as Sparkles, L as ChevronDown, N as ClipboardList, m as Plus, n as X, u as Send } from "../_libs/lucide-react.mjs";
 import { t as StatCard } from "./stat-card-CkcMZbuQ.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/procurement-xFA3vUGo.js
+//#region node_modules/.nitro/vite/services/ssr/assets/procurement-CV6qEJkx.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var CERT_OPTIONS = [
@@ -127,7 +127,13 @@ function Page() {
 	}));
 	const submitRfq = async () => {
 		if (!form.product || !form.quantity) return;
-		await supabase.from("rfqs").insert({
+		const { data: { user } } = await supabase.auth.getUser();
+		if (!user) {
+			toast.error("Please sign in to submit an RFQ");
+			return;
+		}
+		const { error } = await supabase.from("rfqs").insert({
+			user_id: user.id,
 			product: form.product,
 			quantity: Number(form.quantity),
 			target_price: Number(form.target_price),
@@ -137,6 +143,10 @@ function Page() {
 			notes: form.notes,
 			status: "draft"
 		});
+		if (error) {
+			toast.error(`Failed to submit RFQ: ${error.message}`);
+			return;
+		}
 		setShowForm(false);
 		setForm({
 			product: "",

@@ -1,14 +1,14 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { t as cva } from "../_libs/class-variance-authority+clsx.mjs";
-import { t as cn } from "./utils-C_uf36nf.mjs";
-import { a as DialogOverlay, c as DialogTrigger, i as DialogDescription, n as DialogClose, o as DialogPortal, r as DialogContent, s as DialogTitle, t as Dialog } from "../_libs/@radix-ui/react-dialog+[...].mjs";
 import { t as supabase } from "./client-BST6wkjw.mjs";
+import { t as cn } from "./utils-C_uf36nf.mjs";
 import { u as require_react } from "../_libs/@floating-ui/react-dom+[...].mjs";
 import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].mjs";
 import { t as Button } from "./button-Bq5vK6RO.mjs";
-import { C as GitCompare, J as Sparkles, N as ClipboardList, V as Bell, _ as Menu, a as TrendingUp, at as ChartColumn, c as ShieldAlert, d as Search, g as MessageSquare, h as Newspaper, j as Command, k as Download, l as Settings, n as X, p as Radar, v as Map, w as FileText, x as LayoutDashboard, z as Building2 } from "../_libs/lucide-react.mjs";
+import { $ as Sparkles, C as Map, E as LayoutDashboard, I as Command, K as Bell, O as GitCompare, P as Download, R as ClipboardList, S as Menu, W as Building2, d as ShieldAlert, f as Settings, g as Radar, k as FileText, m as Search, s as TrendingUp, ut as ChartColumn, v as Newspaper, x as MessageSquare } from "../_libs/lucide-react.mjs";
+import { a as DropdownMenuTrigger, i as DropdownMenuSeparator, n as DropdownMenuContent, r as DropdownMenuItem, t as DropdownMenu } from "./dropdown-menu-lm0fXf4o.mjs";
+import { n as SheetContent, o as SheetTrigger, t as Sheet } from "./sheet-C1vjnj_d.mjs";
 import { N as useNavigate, f as Outlet, g as Link, l as useRouterState } from "../_libs/@tanstack/react-router+[...].mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/app-DvvkgGz6.js
+//#region node_modules/.nitro/vite/services/ssr/assets/app-dNjO_crD.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var NAV_ITEMS = [
@@ -260,59 +260,6 @@ function useAuth() {
 		signOut: () => supabase.auth.signOut()
 	};
 }
-var Sheet = Dialog;
-var SheetTrigger = DialogTrigger;
-var SheetPortal = DialogPortal;
-var SheetOverlay = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogOverlay, {
-	className: cn("fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0", className),
-	...props,
-	ref
-}));
-SheetOverlay.displayName = DialogOverlay.displayName;
-var sheetVariants = cva("fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out", {
-	variants: { side: {
-		top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
-		bottom: "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-		left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
-		right: "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm"
-	} },
-	defaultVariants: { side: "right" }
-});
-var SheetContent = import_react.forwardRef(({ side = "right", className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SheetPortal, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SheetOverlay, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogContent, {
-	ref,
-	className: cn(sheetVariants({ side }), className),
-	...props,
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogClose, {
-		className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background cursor-pointer transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary",
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "h-4 w-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "sr-only",
-			children: "Close"
-		})]
-	}), children]
-})] }));
-SheetContent.displayName = DialogContent.displayName;
-var SheetHeader = ({ className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	className: cn("flex flex-col space-y-2 text-center sm:text-left", className),
-	...props
-});
-SheetHeader.displayName = "SheetHeader";
-var SheetFooter = ({ className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-	className: cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className),
-	...props
-});
-SheetFooter.displayName = "SheetFooter";
-var SheetTitle = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogTitle, {
-	ref,
-	className: cn("text-lg font-semibold text-foreground", className),
-	...props
-}));
-SheetTitle.displayName = DialogTitle.displayName;
-var SheetDescription = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogDescription, {
-	ref,
-	className: cn("text-sm text-muted-foreground", className),
-	...props
-}));
-SheetDescription.displayName = DialogDescription.displayName;
 var MOBILE_BREAKPOINT = 768;
 function useIsMobile() {
 	const [isMobile, setIsMobile] = import_react.useState(void 0);
@@ -331,6 +278,35 @@ function AppTopbar() {
 	const { user, signOut } = useAuth();
 	const [open, setOpen] = (0, import_react.useState)(false);
 	const isMobile = useIsMobile();
+	const [notifications, setNotifications] = (0, import_react.useState)([]);
+	const loadNotifications = () => {
+		if (typeof window !== "undefined") {
+			const stored = localStorage.getItem("gmintel_notifications");
+			setNotifications(stored ? JSON.parse(stored) : []);
+		}
+	};
+	(0, import_react.useEffect)(() => {
+		loadNotifications();
+		window.addEventListener("storage", loadNotifications);
+		window.addEventListener("gmintel_new_notification", loadNotifications);
+		return () => {
+			window.removeEventListener("storage", loadNotifications);
+			window.removeEventListener("gmintel_new_notification", loadNotifications);
+		};
+	}, []);
+	const unreadCount = notifications.filter((n) => !n.read).length;
+	const markAllAsRead = () => {
+		const next = notifications.map((n) => ({
+			...n,
+			read: true
+		}));
+		setNotifications(next);
+		localStorage.setItem("gmintel_notifications", JSON.stringify(next));
+	};
+	const clearAll = () => {
+		setNotifications([]);
+		localStorage.setItem("gmintel_notifications", JSON.stringify([]));
+	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 		className: "h-14 border-b border-border bg-card/50 backdrop-blur flex items-center gap-3 px-4",
 		children: [
@@ -395,13 +371,70 @@ function AppTopbar() {
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex-1" }),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-				variant: "ghost",
-				size: "icon",
-				className: "text-muted-foreground",
-				"aria-label": "Notifications",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Bell, { className: "h-4 w-4" })
-			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenu, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuTrigger, {
+				asChild: true,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+					variant: "ghost",
+					size: "icon",
+					className: "text-muted-foreground relative",
+					"aria-label": "Notifications",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Bell, { className: "h-4 w-4" }), unreadCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary animate-pulse" })]
+				})
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenuContent, {
+				align: "end",
+				className: "w-80 bg-popover border border-border p-2",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center justify-between px-2 py-1.5 text-xs",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: "font-semibold text-foreground",
+							children: [
+								"Announcements (",
+								unreadCount,
+								" unread)"
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "flex gap-2",
+							children: notifications.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: markAllAsRead,
+								className: "text-[10px] text-primary hover:underline",
+								children: "Mark read"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: clearAll,
+								className: "text-[10px] text-muted-foreground hover:underline",
+								children: "Clear"
+							})] })
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DropdownMenuSeparator, { className: "my-1" }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "max-h-64 overflow-y-auto space-y-1 py-1",
+						children: notifications.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "text-center py-6 text-xs text-muted-foreground",
+							children: "No followed announcements."
+						}) : notifications.map((n) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DropdownMenuItem, {
+							className: "flex flex-col items-start gap-1 p-2 rounded cursor-pointer hover:bg-muted/50",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center justify-between w-full text-[10px]",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: cn("font-semibold text-primary", n.read && "text-muted-foreground"),
+									children: n.company_name
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-muted-foreground/60",
+									children: new Date(n.timestamp).toLocaleTimeString("en-US", {
+										hour: "numeric",
+										minute: "numeric",
+										hour12: true
+									})
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: cn("text-xs text-foreground leading-normal", n.read && "text-muted-foreground"),
+								children: n.message
+							})]
+						}, n.id))
+					})
+				]
+			})] }),
 			user ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "flex items-center gap-2",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {

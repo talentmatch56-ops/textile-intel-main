@@ -60,11 +60,11 @@ function Dashboard() {
   // Sync state
   const [syncing, setSyncing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState("Never");
-  const [watchlist, setWatchlist] = useState<string[]>([]);
+  const [watchlist, setWatchlist] = useState([]);
   const [syncedNewsCount, setSyncedNewsCount] = useState(0);
 
   // Drawer states
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useMemo(() => {
@@ -107,9 +107,9 @@ function Dashboard() {
       const storedNews = localStorage.getItem("gmintel_synced_news");
       const currentSynced = storedNews ? JSON.parse(storedNews) : [];
 
-      const newlySynced: any[] = [];
+      const newlySynced = [];
       PENDING_NEWS_SIMULATION.forEach((item) => {
-        if (!currentSynced.some((news: any) => news.id === item.id)) {
+        if (!currentSynced.some((news) => news.id === item.id)) {
           newlySynced.push(item);
         }
       });
@@ -129,7 +129,7 @@ function Dashboard() {
         const storedNotifications = localStorage.getItem("gmintel_notifications");
         const currentNotifications = storedNotifications ? JSON.parse(storedNotifications) : [];
 
-        const newNotifications: any[] = [];
+        const newNotifications = [];
         newlySynced.forEach((news) => {
           if (activeWatchlist.includes(news.company_slug)) {
             newNotifications.push({
@@ -186,12 +186,7 @@ function Dashboard() {
     },
   });
 
-  const dbCompanies = useMemo<any[]>(() => {
-    if (!data) return [];
-    if (Array.isArray(data.companies)) return data.companies;
-    if (data.companies && Array.isArray((data.companies as any).data)) return (data.companies as any).data;
-    return [];
-  }, [data]);
+  const dbCompanies = data?.companies ?? [];
   const companies = useMemo(() => {
     const list = [...dbCompanies];
     MOCK_COMPANIES.forEach((mock) => {
@@ -214,7 +209,7 @@ function Dashboard() {
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const newToday = companies.filter((c) => c.created_at && new Date(c.created_at) >= today).length;
 
-  const byCountry: Record<string, number> = {};
+  const byCountry = {};
   companies.forEach((c) => { if (c.country_code) byCountry[c.country_code] = (byCountry[c.country_code] ?? 0) + 1; });
   const topCountries = Object.entries(byCountry)
     .map(([code, count]) => ({ code, name: countries.find((k) => k.code === code)?.name ?? code, count }))
@@ -260,7 +255,7 @@ function Dashboard() {
     return summaryText;
   }, [selectedCompany, activeCompanyNews]);
 
-  const toggleWatchlist = (slug: string, e: React.MouseEvent) => {
+  const toggleWatchlist = (slug, e) => {
     e.stopPropagation();
     const next = watchlist.includes(slug)
       ? watchlist.filter((s) => s !== slug)
@@ -721,10 +716,15 @@ function Dashboard() {
   );
 }
 
-function Legend({ swatch, label }: { swatch: string; label: string }) {
+function Legend({ swatch, label }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-muted-foreground">
       <span className="h-2 w-2 rounded-sm" style={{ background: swatch }} />{label}
     </span>
   );
 }
+`;
+
+fs.writeFileSync(path.join(__dirname, 'src', 'routes', 'app', 'index.tsx'), content, 'utf8');
+console.log('Success');
+fs.unlinkSync(__filename);

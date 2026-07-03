@@ -61,13 +61,17 @@ function Page() {
     setLocalReports((prev) => [newReport, ...prev]);
     toast.info(`Generating ${title}...`);
     
-    // Perform database write in background without blocking the UI simulation
-    supabase.from("reports").insert({ kind, title: newReport.title, status: "generating" })
-      .then(({ error }) => {
-        if (error) {
-          console.warn("Supabase report insert skipped:", error.message);
-        }
-      });
+    // Perform database write in background with authenticated user ID to satisfy RLS policy
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        supabase.from("reports").insert({ user_id: user.id, kind, title: newReport.title, status: "generating" } as any)
+          .then(({ error }) => {
+            if (error) {
+              console.warn("Supabase report insert skipped:", error.message);
+            }
+          });
+      }
+    });
     
     setTimeout(() => {
       setLocalReports((prev) => prev.map((r) => r.id === newId ? { ...r, status: "ready" } : r));

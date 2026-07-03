@@ -47,7 +47,26 @@ function Page() {
 
   const submitRfq = async () => {
     if (!form.product || !form.quantity) return;
-    await supabase.from("rfqs").insert({ product: form.product, quantity: Number(form.quantity), target_price: Number(form.target_price), country_code: form.country_code || null, lead_time_days: Number(form.lead_time_days), certifications: form.certs, notes: form.notes, status: "draft" } as any);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error("Please sign in to submit an RFQ");
+      return;
+    }
+    const { error } = await supabase.from("rfqs").insert({
+      user_id: user.id,
+      product: form.product,
+      quantity: Number(form.quantity),
+      target_price: Number(form.target_price),
+      country_code: form.country_code || null,
+      lead_time_days: Number(form.lead_time_days),
+      certifications: form.certs,
+      notes: form.notes,
+      status: "draft"
+    } as any);
+    if (error) {
+      toast.error(`Failed to submit RFQ: ${error.message}`);
+      return;
+    }
     setShowForm(false);
     setForm({ product: "", quantity: "", unit: "kg", target_price: "", country_code: "", lead_time_days: "30", certs: [], notes: "" });
     refetch();
