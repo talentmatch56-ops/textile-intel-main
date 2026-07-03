@@ -7,7 +7,7 @@ import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
 import { F as ChevronUp, J as Sparkles, L as ChevronDown, N as ClipboardList, m as Plus, n as X, u as Send } from "../_libs/lucide-react.mjs";
 import { t as StatCard } from "./stat-card-CkcMZbuQ.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/procurement-CT83iR2n.js
+//#region node_modules/.nitro/vite/services/ssr/assets/procurement-xFA3vUGo.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var CERT_OPTIONS = [
@@ -381,7 +381,7 @@ function Page() {
 								className: "flex items-center gap-2 shrink-0",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									className: "text-[10px] font-mono text-muted-foreground",
-									children: new Date(rfq.created_at).toLocaleDateString()
+									children: new Date(rfq.created_at).toLocaleDateString("en-US", { timeZone: "UTC" })
 								}), expandedRfq === rfq.id ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronUp, { className: "h-4 w-4 text-muted-foreground" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "h-4 w-4 text-muted-foreground" })]
 							})]
 						})

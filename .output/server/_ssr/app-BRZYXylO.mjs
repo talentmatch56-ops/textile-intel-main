@@ -11,7 +11,7 @@ import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
 import { a as YAxis, l as CartesianGrid, m as Tooltip, o as XAxis, p as ResponsiveContainer, r as BarChart, s as Area, t as AreaChart, u as Bar } from "../_libs/recharts+[...].mjs";
 import { t as MOCK_COMPANIES } from "./mock-companies-B_80WWwW.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/app-DL_cGegf.js
+//#region node_modules/.nitro/vite/services/ssr/assets/app-BRZYXylO.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var MOCK_NEWS_ITEMS = [
@@ -58,17 +58,9 @@ var MOCK_NEWS_ITEMS = [
 		published_at: (/* @__PURE__ */ new Date(Date.now() - 432e6)).toISOString()
 	}
 ];
-var now = /* @__PURE__ */ new Date();
 var BRIEFING_CONTENT = {
-	title: `GMIntel AI Briefing — ${now.toLocaleDateString("en-US", {
-		month: "long",
-		year: "numeric"
-	})}`,
-	date: now.toLocaleDateString("en-US", {
-		month: "long",
-		day: "numeric",
-		year: "numeric"
-	}),
+	title: "GMIntel AI Briefing",
+	date: "July 3, 2026",
 	sections: [
 		{
 			title: "1. Global Supply Chain & Logistics",
@@ -91,6 +83,37 @@ var BRIEFING_CONTENT = {
 function Dashboard() {
 	const [briefingOpen, setBriefingOpen] = (0, import_react.useState)(false);
 	const [briefingLoading, setBriefingLoading] = (0, import_react.useState)(false);
+	const [mounted, setMounted] = (0, import_react.useState)(false);
+	const [briefingTitle, setBriefingTitle] = (0, import_react.useState)(BRIEFING_CONTENT.title);
+	const [briefingDate, setBriefingDate] = (0, import_react.useState)(BRIEFING_CONTENT.date);
+	(0, import_react.useMemo)(() => {
+		if (typeof window !== "undefined") {
+			const d = /* @__PURE__ */ new Date();
+			BRIEFING_CONTENT.title = `GMIntel AI Briefing — ${d.toLocaleDateString("en-US", {
+				month: "long",
+				year: "numeric"
+			})}`;
+			BRIEFING_CONTENT.date = d.toLocaleDateString("en-US", {
+				month: "long",
+				day: "numeric",
+				year: "numeric"
+			});
+		}
+	}, []);
+	(0, import_react.useState)(() => {
+		if (typeof window !== "undefined") {
+			const d = /* @__PURE__ */ new Date();
+			setBriefingTitle(`GMIntel AI Briefing — ${d.toLocaleDateString("en-US", {
+				month: "long",
+				year: "numeric"
+			})}`);
+			setBriefingDate(d.toLocaleDateString("en-US", {
+				month: "long",
+				day: "numeric",
+				year: "numeric"
+			}));
+		}
+	});
 	const handleGenerateBriefing = () => {
 		setBriefingLoading(true);
 		toast.info("Analyzing platform intelligence and compiling your executive briefing...");
@@ -494,7 +517,7 @@ function Dashboard() {
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "text-[10px] font-mono uppercase text-muted-foreground flex items-center justify-between",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: n.category ?? "News" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: n.published_at ? new Date(n.published_at).toLocaleDateString() : "" })]
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: n.category ?? "News" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: n.published_at ? new Date(n.published_at).toLocaleDateString("en-US", { timeZone: "UTC" }) : "" })]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									className: "text-sm font-medium mt-1 leading-snug",
@@ -554,14 +577,14 @@ function Dashboard() {
 							className: "flex items-center gap-2 mb-2",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Sparkles, { className: "h-5 w-5 text-primary animate-pulse" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 								className: "font-display text-lg font-bold text-foreground",
-								children: BRIEFING_CONTENT.title
+								children: briefingTitle
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "text-[10px] font-mono text-muted-foreground mb-4 uppercase tracking-widest border-b border-border pb-2",
 							children: [
 								"Compiled on ",
-								BRIEFING_CONTENT.date,
+								briefingDate,
 								" · Live Market Intelligence"
 							]
 						}),
@@ -584,7 +607,7 @@ function Dashboard() {
 								variant: "outline",
 								size: "sm",
 								onClick: () => {
-									const text = `${BRIEFING_CONTENT.title}\nDate: ${BRIEFING_CONTENT.date}\n\n` + BRIEFING_CONTENT.sections.map((s) => `${s.title}\n${s.content}`).join("\n\n");
+									const text = `${briefingTitle}\nDate: ${briefingDate}\n\n` + BRIEFING_CONTENT.sections.map((s) => `${s.title}\n${s.content}`).join("\n\n");
 									const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
 									const url = URL.createObjectURL(blob);
 									const link = document.createElement("a");

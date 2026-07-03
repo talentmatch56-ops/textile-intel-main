@@ -24,8 +24,9 @@ export const Route = createFileRoute("/app/")({ component: Dashboard });
 
 const now = new Date();
 const BRIEFING_CONTENT = {
-  title: `GMIntel AI Briefing — ${now.toLocaleDateString("en-US", { month: "long", year: "numeric" })}`,
-  date: now.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+  // SSR fallback defaults
+  title: "GMIntel AI Briefing",
+  date: "July 3, 2026",
   sections: [
     {
       title: "1. Global Supply Chain & Logistics",
@@ -49,6 +50,28 @@ const BRIEFING_CONTENT = {
 function Dashboard() {
   const [briefingOpen, setBriefingOpen] = useState(false);
   const [briefingLoading, setBriefingLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const [briefingTitle, setBriefingTitle] = useState(BRIEFING_CONTENT.title);
+  const [briefingDate, setBriefingDate] = useState(BRIEFING_CONTENT.date);
+
+  useMemo(() => {
+    // Run early but only matches on client mount to update values
+    if (typeof window !== "undefined") {
+      const d = new Date();
+      BRIEFING_CONTENT.title = `GMIntel AI Briefing — ${d.toLocaleDateString("en-US", { month: "long", year: "numeric" })}`;
+      BRIEFING_CONTENT.date = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    }
+  }, []);
+
+  useState(() => {
+    // Stable on server, evaluates on client mount to refresh layout
+    if (typeof window !== "undefined") {
+      const d = new Date();
+      setBriefingTitle(`GMIntel AI Briefing — ${d.toLocaleDateString("en-US", { month: "long", year: "numeric" })}`);
+      setBriefingDate(d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }));
+    }
+  });
 
   const handleGenerateBriefing = () => {
     setBriefingLoading(true);
@@ -233,7 +256,7 @@ function Dashboard() {
               <div key={n.id} className="p-4 hover:bg-muted/40">
                 <div className="text-[10px] font-mono uppercase text-muted-foreground flex items-center justify-between">
                   <span>{n.category ?? "News"}</span>
-                  <span>{n.published_at ? new Date(n.published_at).toLocaleDateString() : ""}</span>
+                  <span>{n.published_at ? new Date(n.published_at).toLocaleDateString("en-US", { timeZone: "UTC" }) : ""}</span>
                 </div>
                 <div className="text-sm font-medium mt-1 leading-snug">{n.title}</div>
                 <div className="text-xs text-muted-foreground mt-1">{n.source}</div>
@@ -275,11 +298,11 @@ function Dashboard() {
             
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-              <h3 className="font-display text-lg font-bold text-foreground">{BRIEFING_CONTENT.title}</h3>
+              <h3 className="font-display text-lg font-bold text-foreground">{briefingTitle}</h3>
             </div>
             
             <div className="text-[10px] font-mono text-muted-foreground mb-4 uppercase tracking-widest border-b border-border pb-2">
-              Compiled on {BRIEFING_CONTENT.date} · Live Market Intelligence
+              Compiled on {briefingDate} · Live Market Intelligence
             </div>
             
             <div className="flex-1 overflow-y-auto space-y-4 pr-1 text-sm text-muted-foreground leading-relaxed">
@@ -296,7 +319,7 @@ function Dashboard() {
                 variant="outline" 
                 size="sm"
                 onClick={() => {
-                  const text = `${BRIEFING_CONTENT.title}\nDate: ${BRIEFING_CONTENT.date}\n\n` + 
+                  const text = `${briefingTitle}\nDate: ${briefingDate}\n\n` + 
                     BRIEFING_CONTENT.sections.map(s => `${s.title}\n${s.content}`).join("\n\n");
                   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
                   const url = URL.createObjectURL(blob);

@@ -72,7 +72,7 @@ function MessageBubble({ msg }: { msg: Message }) {
           )}
         </div>
         <div className="text-[10px] font-mono text-muted-foreground px-1">
-          {msg.ts.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+          {msg.ts.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" })}
         </div>
       </div>
     </div>
@@ -153,7 +153,7 @@ function Page() {
                   <span className="text-xs truncate">{t.title}</span>
                 </div>
                 <div className="text-[10px] font-mono text-muted-foreground/60 mt-0.5 pl-5">
-                  {t.ts.toLocaleDateString()}
+                  {t.ts.toLocaleDateString("en-US", { timeZone: "UTC" })}
                 </div>
               </button>
             ))}

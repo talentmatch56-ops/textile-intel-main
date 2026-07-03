@@ -47,7 +47,7 @@ function Page() {
 
   const submitRfq = async () => {
     if (!form.product || !form.quantity) return;
-    await supabase.from("rfqs").insert({ product: form.product, quantity: Number(form.quantity), target_price: Number(form.target_price), country_code: form.country_code || null, lead_time_days: Number(form.lead_time_days), certifications: form.certs, notes: form.notes, status: "draft" });
+    await supabase.from("rfqs").insert({ product: form.product, quantity: Number(form.quantity), target_price: Number(form.target_price), country_code: form.country_code || null, lead_time_days: Number(form.lead_time_days), certifications: form.certs, notes: form.notes, status: "draft" } as any);
     setShowForm(false);
     setForm({ product: "", quantity: "", unit: "kg", target_price: "", country_code: "", lead_time_days: "30", certs: [], notes: "" });
     refetch();
@@ -169,7 +169,7 @@ function Page() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] font-mono text-muted-foreground">{new Date(rfq.created_at).toLocaleDateString()}</span>
+                    <span className="text-[10px] font-mono text-muted-foreground">{new Date(rfq.created_at).toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
                     {expandedRfq === rfq.id ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                   </div>
                 </div>

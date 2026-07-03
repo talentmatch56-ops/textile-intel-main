@@ -88,7 +88,7 @@ function Page() {
   };
 
   const updateStatus = async (id: string, status: string) => {
-    await supabase.from("companies").update({ status } as Record<string, string>).eq("id", id);
+    await supabase.from("companies").update({ status } as any).eq("id", id);
     refetchCompanies();
   };
 
@@ -102,9 +102,9 @@ function Page() {
       const { data } = await supabase.from("user_roles").select("id").eq("user_id", userId).maybeSingle();
       let res;
       if (data) {
-        res = await supabase.from("user_roles").update({ role: newRole } as Record<string, string>).eq("user_id", userId);
+        res = await supabase.from("user_roles").update({ role: newRole } as any).eq("user_id", userId);
       } else {
-        res = await supabase.from("user_roles").insert({ user_id: userId, role: newRole } as Record<string, string>);
+        res = await supabase.from("user_roles").insert({ user_id: userId, role: newRole } as any);
       }
       if (res.error) throw res.error;
       toast.success(`Role updated to ${newRole} successfully`);
@@ -246,7 +246,7 @@ function Page() {
                       </span>
                     )}
                   </div>
-                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString()}</div>
+                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString("en-US", { timeZone: "UTC" })}</div>
                   <div className="col-span-1 text-right">
                     <button onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)} className="text-muted-foreground hover:text-foreground">
                       {expandedUser === u.id ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}

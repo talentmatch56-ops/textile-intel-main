@@ -4,7 +4,7 @@ import { s as require_jsx_runtime } from "../_libs/@radix-ui/react-arrow+[...].m
 import { t as Button } from "./button-Bq5vK6RO.mjs";
 import { t as PageHeader } from "./page-header-CWLuQCbF.mjs";
 import { B as Bot, J as Sparkles, X as LoaderCircle, g as MessageSquare, i as User, m as Plus, u as Send } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/chat-n9WUWGKt.js
+//#region node_modules/.nitro/vite/services/ssr/assets/chat-D3RfH60i.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var AI_RESPONSES = {
@@ -67,9 +67,10 @@ function MessageBubble({ msg }) {
 				})
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "text-[10px] font-mono text-muted-foreground px-1",
-				children: msg.ts.toLocaleTimeString([], {
+				children: msg.ts.toLocaleTimeString("en-US", {
 					hour: "2-digit",
-					minute: "2-digit"
+					minute: "2-digit",
+					timeZone: "UTC"
 				})
 			})]
 		})]
@@ -207,7 +208,7 @@ function Page() {
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "text-[10px] font-mono text-muted-foreground/60 mt-0.5 pl-5",
-							children: t.ts.toLocaleDateString()
+							children: t.ts.toLocaleDateString("en-US", { timeZone: "UTC" })
 						})]
 					}, t.id))
 				})]

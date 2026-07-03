@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CcND5kHX.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-V1UA8KWY.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/__root.tsx",
@@ -8,21 +8,21 @@ var tsrStartManifest = () => ({ routes: {
 			"/auth"
 		],
 		preloads: [
-			"/assets/index-bg4q4NoJ.js",
+			"/assets/index-CUTK6iDg.js",
 			"/assets/jsx-runtime-n5LQ9ujS.js",
 			"/assets/react-dom-CQmWuZA8.js"
 		],
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-bg4q4NoJ.js"
+			src: "/assets/index-CUTK6iDg.js"
 		} }]
 	},
 	"/": {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/index.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/routes-CLayKZrM.js",
+			"/assets/routes-Blyt6pbQ.js",
 			"/assets/utils-DbbrEv-p.js",
 			"/assets/chart-column-eROrQ7Tt.js",
 			"/assets/circle-check-DRsrF1f6.js",
@@ -58,7 +58,7 @@ var tsrStartManifest = () => ({ routes: {
 			"/app/"
 		],
 		preloads: [
-			"/assets/app-BBhbPUwL.js",
+			"/assets/app-6UnsXanW.js",
 			"/assets/utils-DbbrEv-p.js",
 			"/assets/chart-column-eROrQ7Tt.js",
 			"/assets/sparkles-D9JfmPPi.js",
@@ -75,7 +75,7 @@ var tsrStartManifest = () => ({ routes: {
 			"/assets/trending-up-B4RhHAzP.js",
 			"/assets/x-COcS-5IT.js",
 			"/assets/button-CoQ0AAlw.js",
-			"/assets/es2015-DYD6kN3_.js",
+			"/assets/es2015-wNFy25QO.js",
 			"/assets/dist-C1qB0g71.js"
 		]
 	},
@@ -83,7 +83,7 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/auth.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/auth-MWyQpfwr.js",
+			"/assets/auth-VmozrNar.js",
 			"/assets/utils-DbbrEv-p.js",
 			"/assets/circle-alert-D6OZZXPz.js",
 			"/assets/circle-check-DRsrF1f6.js",
@@ -95,8 +95,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/admin.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/admin-BkusAXlW.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/admin-BBbXfP2U.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/circle-check-DRsrF1f6.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/chevron-up-CFj-K4KU.js",
@@ -112,8 +112,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/analytics.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/analytics-CcZRoJBT.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/analytics-CQPMPf66.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/earth-DnUaiYk8.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/page-header-KBYaDscd.js",
@@ -126,7 +126,7 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/chat.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/chat-Ddc2vNO6.js",
+			"/assets/chat-DaKVV0RY.js",
 			"/assets/loader-circle-Bl7wwTNN.js",
 			"/assets/plus-DnfuNtW7.js",
 			"/assets/send-3HqKDgXM.js",
@@ -137,8 +137,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/companies.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/companies-ByhrHTxa.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/companies-ZMSuyG0i.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/arrow-up-down-meuA2MCD.js",
 			"/assets/users-CMoH1Sms.js",
@@ -151,8 +151,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/compare.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/compare-Bbdckj9L.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/compare-BXWrWuzV.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/plus-DnfuNtW7.js",
 			"/assets/page-header-KBYaDscd.js",
 			"/assets/risk-badge-3U59-BfT.js"
@@ -162,8 +162,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/discovery.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/discovery-BgA3RTge.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/discovery-CiEnWj1s.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/circle-alert-D6OZZXPz.js",
 			"/assets/circle-check-DRsrF1f6.js",
 			"/assets/stat-card-D9N0zewM.js",
@@ -177,8 +177,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/map.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/map-rhCSjouZ.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/map-BM5ZWKJr.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/earth-DnUaiYk8.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/page-header-KBYaDscd.js"
@@ -199,8 +199,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/news.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/news-zCd0gpbm.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/news-B1MoTCIY.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/factory-CJ5GuEGl.js",
 			"/assets/page-header-KBYaDscd.js"
@@ -210,8 +210,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/prices.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/prices-ClMTKZzG.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/prices-Vt_FYrk2.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/trending-down-CVd78YMv.js",
 			"/assets/page-header-KBYaDscd.js",
@@ -224,8 +224,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/procurement.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/procurement-C3qgeMGu.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/procurement-e1KFP7Db.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/chevron-up-CFj-K4KU.js",
 			"/assets/plus-DnfuNtW7.js",
@@ -237,8 +237,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/reports.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/reports-Bm2QaUm6.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/reports-BmWaEcty.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/circle-alert-D6OZZXPz.js",
 			"/assets/circle-check-DRsrF1f6.js",
 			"/assets/loader-circle-Bl7wwTNN.js",
@@ -253,8 +253,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/risk.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/risk-Cs9cC0bM.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/risk-BqI_W__g.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/stat-card-D9N0zewM.js",
 			"/assets/arrow-up-down-meuA2MCD.js",
 			"/assets/trending-down-CVd78YMv.js",
@@ -268,8 +268,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/search.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/search-Bwf_Rk2s.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/search-o1VMI2PF.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/earth-DnUaiYk8.js",
 			"/assets/shield-check-RJOI63us.js",
 			"/assets/page-header-KBYaDscd.js",
@@ -280,8 +280,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "C:/Users/indianic/Downloads/project-bolt-sb1-rrzehkzc/project/GMintel/textile-intel-main/src/routes/app/index.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/app-DkTl8kuE.js",
-			"/assets/useQuery-Bn_InlVv.js",
+			"/assets/app-jpv-DrUt.js",
+			"/assets/useQuery-CcJrfdPq.js",
 			"/assets/earth-DnUaiYk8.js",
 			"/assets/loader-circle-Bl7wwTNN.js",
 			"/assets/stat-card-D9N0zewM.js",

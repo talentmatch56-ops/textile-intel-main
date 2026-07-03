@@ -11,7 +11,7 @@ import { t as RiskBadge } from "./risk-badge-kdjMzVg8.mjs";
 import { t as useQuery } from "../_libs/tanstack__react-query.mjs";
 import { a as Label2, c as Root2, d as SubTrigger2, f as Trigger, i as ItemIndicator2, l as Separator2, n as Content2, o as Portal2, r as Item2, s as RadioItem2, t as CheckboxItem2, u as SubContent2 } from "../_libs/@radix-ui/react-dropdown-menu+[...].mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/admin-CEUJDS-h.js
+//#region node_modules/.nitro/vite/services/ssr/assets/admin-DywjHi9p.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var DropdownMenu = Root2;
@@ -493,7 +493,7 @@ function Page() {
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "hidden md:block col-span-2 text-xs font-mono text-muted-foreground",
-								children: new Date(u.created_at).toLocaleDateString()
+								children: new Date(u.created_at).toLocaleDateString("en-US", { timeZone: "UTC" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "col-span-1 text-right",
