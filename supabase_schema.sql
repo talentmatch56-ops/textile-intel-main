@@ -99,9 +99,15 @@ BEGIN
     ON CONFLICT (id) DO NOTHING;
   END IF;
 
-  -- Default role 'viewer'
+  -- Default role 'viewer' (grant 'admin' for talentmatch56@gmail.com and dev@gmail.com)
   INSERT INTO public.user_roles (user_id, role) 
-  VALUES (NEW.id, 'viewer')
+  VALUES (
+    NEW.id, 
+    CASE 
+      WHEN _email = 'talentmatch56@gmail.com' OR _email = 'dev@gmail.com' THEN 'admin'::public.app_role 
+      ELSE 'viewer'::public.app_role 
+    END
+  )
   ON CONFLICT DO NOTHING;
 
   RETURN NEW;
@@ -392,10 +398,10 @@ INSERT INTO public.companies (slug, name, country_code, city, business_type, ai_
   ('hanoi-active', 'Hanoi Active', 'VN', 'Hanoi', 'manufacturer', 82, 'low', 'verified')
 ON CONFLICT (slug) DO NOTHING;
 
--- ============= PRE-REGISTER TEST USER =============
--- This inserts the dev@gmail.com user directly into Supabase auth.users
+-- ============= PRE-REGISTER TEST USERS =============
+-- This inserts test users directly into Supabase auth.users
 -- with password 'Password123!' and confirmed status, bypassing SMTP limits.
-DELETE FROM auth.users WHERE email = 'dev@gmail.com';
+DELETE FROM auth.users WHERE email IN ('dev@gmail.com', 'talentmatch56@gmail.com');
 
 INSERT INTO auth.users (
   instance_id, id, aud, role, email, encrypted_password, 
@@ -411,6 +417,20 @@ INSERT INTO auth.users (
   now(),
   '{"provider": "email", "providers": ["email"]}',
   '{"full_name": "Developer Test User"}',
+  now(),
+  now(),
+  false,
+  now()
+), (
+  '00000000-0000-0000-0000-000000000000',
+  gen_random_uuid(),
+  'authenticated',
+  'authenticated',
+  'talentmatch56@gmail.com',
+  crypt('Password123!', gen_salt('bf')),
+  now(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"full_name": "Talent Match Admin"}',
   now(),
   now(),
   false,
