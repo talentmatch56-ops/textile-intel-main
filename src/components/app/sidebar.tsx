@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { NAV_ITEMS, SECTIONS, type NavItem } from "./nav-items";
 import { cn } from "@/lib/utils";
 import { Download } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 import { usePwa } from "@/hooks/use-pwa";
 
 export function AppSidebar() {
@@ -28,11 +29,15 @@ export function AppSidebar() {
 export function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isInstallable, install } = usePwa();
-  const grouped = (["core", "intel", "workflow", "admin"] as const).map((k) => ({
-    key: k,
-    label: SECTIONS[k],
-    items: NAV_ITEMS.filter((i) => i.section === k),
-  }));
+  const { role } = useAuth();
+  
+  const grouped = (["core", "intel", "workflow", "admin"] as const)
+    .filter((k) => k !== "admin" || role === "admin")
+    .map((k) => ({
+      key: k,
+      label: SECTIONS[k],
+      items: NAV_ITEMS.filter((i) => i.section === k),
+    }));
 
   return (
     <div className="flex-1 flex flex-col justify-between overflow-hidden">

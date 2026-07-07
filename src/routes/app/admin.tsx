@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
 import { 
@@ -379,6 +379,50 @@ function Page() {
     }
   };
 
+  if (currentUserRole !== "admin") {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          eyebrow="System"
+          title="Admin Panel"
+          description="Manage company verification, user roles, and platform audit logs."
+        />
+
+        <div className="p-8 rounded-lg border border-destructive/30 bg-destructive/5 text-center max-w-xl mx-auto my-12 space-y-4">
+          <AlertOctagon className="h-12 w-12 mx-auto text-destructive animate-bounce" />
+          <h3 className="font-display font-semibold text-lg text-foreground">Access Denied</h3>
+          <p className="text-sm text-muted-foreground">
+            You do not have the required administrator privileges to view this page. If you believe this is an error, please contact your system administrator.
+          </p>
+          <div className="pt-4 flex flex-col gap-3 items-center">
+            <div className="p-3 rounded border border-warning/20 bg-warning/5 text-xs text-warning font-mono w-full text-left">
+              <strong>Current User:</strong> {currentUser?.email || "anonymous"}<br />
+              <strong>Current Role:</strong> {currentUserRole}
+            </div>
+            
+            <div className="flex gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setCurrentUserRole("admin");
+                  setIsBypassActive(true);
+                  toast.success("Local Admin Bypass activated! You can now verify, edit, and add companies locally.");
+                }}
+                className="text-xs font-mono border-warning/30 bg-warning/10 hover:bg-warning/20 text-warning"
+              >
+                🔑 Enable Local Admin Bypass
+              </Button>
+              <Button asChild size="sm">
+                <Link to="/app">Go to Dashboard</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -386,41 +430,6 @@ function Page() {
         title="Admin Panel"
         description="Manage company verification, user roles, and platform audit logs."
       />
-
-      {currentUserRole !== "admin" && (
-        <div className="p-4 rounded-lg border border-warning/30 bg-warning/5 text-warning text-xs flex flex-col gap-2 font-mono">
-          <div className="flex items-start gap-2">
-            <AlertOctagon className="h-4 w-4 shrink-0 mt-0.5 text-warning" />
-            <div>
-              <span className="font-bold uppercase tracking-wider text-amber-500">Security Access Alert:</span> Your current session <strong>({currentUser?.email || "anonymous"})</strong> has database role <span className="underline font-bold">"{currentUserRole}"</span>.
-            </div>
-          </div>
-          <div>
-            Supabase Row Level Security (RLS) policies prevent non-admin accounts from writing to the companies registry table.
-          </div>
-          <div className="mt-1 text-[11px] bg-background/80 p-2.5 rounded border border-border font-mono select-all">
-            INSERT INTO public.user_roles (user_id, role) VALUES ('{currentUser?.id || "your-user-id"}', 'admin') ON CONFLICT (user_id, role) DO UPDATE SET role = 'admin';
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-between mt-1 pt-1 border-t border-warning/10">
-            <div className="text-[10px] text-muted-foreground">
-              👉 Copy and run the SQL query above in your Supabase Dashboard SQL Editor to grant yourself Admin rights!
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setCurrentUserRole("admin");
-                setIsBypassActive(true);
-                toast.success("Local Admin Bypass activated! You can now verify, edit, and add companies locally (simulating database writes).");
-              }}
-              className="h-7 text-[10px] tracking-wide uppercase font-mono border-warning/30 bg-warning/10 hover:bg-warning/20 text-warning"
-            >
-              🔑 Enable Local Admin Bypass
-            </Button>
-          </div>
-        </div>
-      )}
 
       {isBypassActive && (
         <div className="p-3 rounded-lg border border-info/30 bg-info/5 text-info text-xs flex items-center justify-between font-mono">
