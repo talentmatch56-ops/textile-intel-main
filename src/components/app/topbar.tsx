@@ -16,7 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export function AppTopbar() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, role } = useAuth();
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
@@ -142,7 +142,7 @@ export function AppTopbar() {
         <div className="flex items-center gap-2">
           <div className="text-right hidden sm:block">
             <div className="text-xs font-medium leading-none">{user.email}</div>
-            <div className="text-[10px] text-muted-foreground mt-0.5 font-mono">VIEWER</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5 font-mono uppercase">{role}</div>
           </div>
           <Button size="sm" variant="outline" onClick={() => signOut()}>Sign out</Button>
         </div>
