@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   Sparkles,
@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/app/page-header";
 import { RiskBadge } from "@/components/app/risk-badge";
 import { Button } from "@/components/ui/button";
+import { MOCK_COMPANIES } from "@/utils/mock-companies";
 
 export const Route = createFileRoute("/app/search")({ component: Page });
 
@@ -40,6 +41,17 @@ function Page() {
   const [countryFilter, setCountryFilter] = useState("");
   const [moqMax, setMoqMax] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+  const [localCompanies, setLocalCompanies] = useState<any[]>([]);
+
+  // Load local companies from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("gmintel_local_companies");
+      if (stored) {
+        setLocalCompanies(JSON.parse(stored));
+      }
+    }
+  }, []);
 
   const { data } = useQuery({
     queryKey: ["search-companies"],
@@ -48,7 +60,7 @@ function Page() {
         supabase
           .from("companies")
           .select(
-            "id,name,country_code,city,business_type,ai_risk_level,ai_trust_score,certifications,moq,lead_time_days,employees_range,products",
+            "id,slug,name,country_code,city,business_type,ai_risk_level,ai_trust_score,certifications,moq,lead_time_days,employees_range,products",
           ),
         supabase.from("countries").select("code,name"),
       ]);
@@ -59,7 +71,40 @@ function Page() {
     },
   });
 
-  const companies = data?.companies ?? [];
+  const dbCompanies = data?.companies ?? [];
+  const companies = useMemo(() => {
+    const list = [...dbCompanies];
+    
+    // Add local companies
+    localCompanies.forEach((local) => {
+      if (!list.some((c) => c.id === local.id)) {
+        list.push(local);
+      }
+    });
+
+    // Add mock companies with generated certifications/products for searching
+    MOCK_COMPANIES.forEach((mock, idx) => {
+      if (!list.some((c) => c.slug === mock.slug)) {
+        const mockCerts = idx % 2 === 0 ? ["GOTS", "ISO 9001"] : ["OEKO-TEX", "SA8000", "BSCI"];
+        if (idx % 3 === 0) mockCerts.push("Fair Trade");
+        
+        const mockProducts = idx % 2 === 0 
+          ? ["cotton fabric", "yarn", "knitted fabric"] 
+          : ["denim", "jeans", "cotton greige", "organic fibers"];
+
+        list.push({
+          ...mock,
+          certifications: (mock as any).certifications ?? mockCerts,
+          products: (mock as any).products ?? mockProducts,
+          moq: (mock as any).moq ?? (100 + (idx * 150) % 900),
+          lead_time_days: (mock as any).lead_time_days ?? (20 + (idx * 4) % 40),
+        } as any);
+      }
+    });
+
+    return list;
+  }, [dbCompanies, localCompanies]);
+
   const countries = data?.countries ?? [];
   const countryMap = Object.fromEntries(countries.map((c) => [c.code, c.name]));
   const availableCountries = useMemo(
