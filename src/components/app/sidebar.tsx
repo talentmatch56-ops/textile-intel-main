@@ -9,10 +9,18 @@ export function AppSidebar() {
   return (
     <aside className="hidden md:flex w-60 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
       <div className="h-14 flex items-center gap-2.5 px-4 border-b border-sidebar-border">
-        <img src="/gmintel_logo.png" alt="GMIntel Logo" className="h-7 w-7 rounded-md object-cover border border-border/50" />
+        <img
+          src="/gmintel_logo.png"
+          alt="GMIntel Logo"
+          className="h-7 w-7 rounded-md object-cover border border-border/50"
+        />
         <div>
-          <div className="font-display text-sm font-bold leading-none">GMIntel</div>
-          <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Textile · AI</div>
+          <div className="font-display text-sm font-bold leading-none">
+            GMIntel
+          </div>
+          <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">
+            Textile · AI
+          </div>
         </div>
       </div>
       <SidebarContent />
@@ -30,7 +38,7 @@ export function SidebarContent({ onItemClick }: { onItemClick?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isInstallable, install } = usePwa();
   const { role } = useAuth();
-  
+
   const grouped = (["core", "intel", "workflow", "admin"] as const)
     .filter((k) => k !== "admin" || role === "admin")
     .map((k) => ({
@@ -107,7 +115,12 @@ function SidebarLink({
           : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
       )}
     >
-      <Icon className={cn("h-4 w-4", active ? "text-primary" : "text-muted-foreground")} />
+      <Icon
+        className={cn(
+          "h-4 w-4",
+          active ? "text-primary" : "text-muted-foreground",
+        )}
+      />
       <span className="flex-1">{item.label}</span>
       {item.badge && (
         <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-primary/15 text-primary font-semibold">

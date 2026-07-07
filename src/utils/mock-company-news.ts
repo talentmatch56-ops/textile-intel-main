@@ -4,9 +4,17 @@ export interface CompanyAnnouncement {
   company_name: string;
   title: string;
   summary: string;
-  category: 'press_release' | 'leadership' | 'expansion' | 'merger' | 'financial' | 'sustainability' | 'regulatory' | 'market';
-  sentiment: 'positive' | 'negative' | 'neutral';
-  importance: 'high' | 'medium' | 'low';
+  category:
+    | "press_release"
+    | "leadership"
+    | "expansion"
+    | "merger"
+    | "financial"
+    | "sustainability"
+    | "regulatory"
+    | "market";
+  sentiment: "positive" | "negative" | "neutral";
+  importance: "high" | "medium" | "low";
   published_at: string;
   source: string;
 }
@@ -16,146 +24,165 @@ export const MOCK_COMPANY_NEWS: CompanyAnnouncement[] = [
     id: "cn1",
     company_slug: "arvind-mills",
     company_name: "Arvind Mills Ltd",
-    title: "Arvind Mills achieves 100% GOTS compliance across main spinning mills",
-    summary: "Ahmedabad — Arvind Mills announced that all cotton spinning lines at its main facility are now fully GOTS certified. This ensures complete organic authenticity for their premium cotton blends.",
+    title:
+      "Arvind Mills achieves 100% GOTS compliance across main spinning mills",
+    summary:
+      "Ahmedabad — Arvind Mills announced that all cotton spinning lines at its main facility are now fully GOTS certified. This ensures complete organic authenticity for their premium cotton blends.",
     category: "sustainability",
     sentiment: "positive",
     importance: "high",
     published_at: new Date(Date.now() - 3600000 * 2).toISOString(), // 2 hours ago
-    source: "Textile World"
+    source: "Textile World",
   },
   {
     id: "cn2",
     company_slug: "dhaka-denim",
     company_name: "Dhaka Denim Works",
-    title: "Dhaka Denim announces Q2 profits down 4.2% due to local energy shortages",
-    summary: "Dhaka — Local gas supply disruptions led to a minor reduction in quarterly output, dragging down Q2 margins. Net profit slipped 4.2% YoY, though export order books remain filled.",
+    title:
+      "Dhaka Denim announces Q2 profits down 4.2% due to local energy shortages",
+    summary:
+      "Dhaka — Local gas supply disruptions led to a minor reduction in quarterly output, dragging down Q2 margins. Net profit slipped 4.2% YoY, though export order books remain filled.",
     category: "financial",
     sentiment: "negative",
     importance: "medium",
     published_at: new Date(Date.now() - 3600000 * 5).toISOString(), // 5 hours ago
-    source: "Daily Star Bangladesh"
+    source: "Daily Star Bangladesh",
   },
   {
     id: "cn3",
     company_slug: "mumbai-organic",
     company_name: "Mumbai Organic Mills",
-    title: "Mumbai Organic Mills signs green agreement with European apparel brands",
-    summary: "Mumbai — The company signed long-term supply agreements with three key EU sustainable fashion labels to deliver GOTS-certified linen-cotton mixes through 2028.",
+    title:
+      "Mumbai Organic Mills signs green agreement with European apparel brands",
+    summary:
+      "Mumbai — The company signed long-term supply agreements with three key EU sustainable fashion labels to deliver GOTS-certified linen-cotton mixes through 2028.",
     category: "press_release",
     sentiment: "positive",
     importance: "high",
     published_at: new Date(Date.now() - 3600000 * 12).toISOString(), // 12 hours ago
-    source: "Fibre2Fashion"
+    source: "Fibre2Fashion",
   },
   {
     id: "cn4",
     company_slug: "hanoi-active",
     company_name: "Hanoi Active Apparel",
     title: "Hanoi Active installs new solar arrays to offset grid emission",
-    summary: "Hanoi — Vietnam's leading activewear producer installed a 2.4MW rooftop solar network, projected to cover 35% of energy demands at their Binh Duong stitching cluster.",
+    summary:
+      "Hanoi — Vietnam's leading activewear producer installed a 2.4MW rooftop solar network, projected to cover 35% of energy demands at their Binh Duong stitching cluster.",
     category: "sustainability",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date(Date.now() - 86400000 * 1).toISOString(), // 1 day ago
-    source: "Vietnam Business News"
+    source: "Vietnam Business News",
   },
   {
     id: "cn5",
     company_slug: "pacific-jeans",
     company_name: "Pacific Jeans Group",
     title: "Pacific Jeans launches recycling hub for post-consumer waste",
-    summary: "Chittagong — Pacific Jeans opened a specialized fiber recycling plant capable of processing 8,000 tonnes of post-consumer garment waste annually into high-grade denim yarn.",
+    summary:
+      "Chittagong — Pacific Jeans opened a specialized fiber recycling plant capable of processing 8,000 tonnes of post-consumer garment waste annually into high-grade denim yarn.",
     category: "expansion",
     sentiment: "positive",
     importance: "high",
     published_at: new Date(Date.now() - 86400000 * 1.5).toISOString(),
-    source: "Apparel Resources"
+    source: "Apparel Resources",
   },
   {
     id: "cn6",
     company_slug: "kordsa-global",
     company_name: "Kordsa Global Sourcing",
     title: "Kordsa Sourcing names new Chief Sustainability Officer",
-    summary: "Istanbul — Industry veteran Leyla Demirel has been appointed CSO to lead the firm's transition to fully traceable synthetic and hybrid high-performance fibers by 2029.",
+    summary:
+      "Istanbul — Industry veteran Leyla Demirel has been appointed CSO to lead the firm's transition to fully traceable synthetic and hybrid high-performance fibers by 2029.",
     category: "leadership",
     sentiment: "neutral",
     importance: "low",
     published_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-    source: "Textile Insight Turkey"
+    source: "Textile Insight Turkey",
   },
   {
     id: "cn7",
     company_slug: "shenzhou-intl",
     company_name: "Shenzhou International",
     title: "Shenzhou International upgrades Vietnam factory capacity by 20%",
-    summary: "Ningbo — The board approved an additional $45M capital allocation to expand synthetic filament knitting lines at its Tay Ninh hub, adding 15,000 tonnes of annual output.",
+    summary:
+      "Ningbo — The board approved an additional $45M capital allocation to expand synthetic filament knitting lines at its Tay Ninh hub, adding 15,000 tonnes of annual output.",
     category: "expansion",
     sentiment: "positive",
     importance: "high",
     published_at: new Date(Date.now() - 86400000 * 3).toISOString(),
-    source: "China Textile Net"
+    source: "China Textile Net",
   },
   {
     id: "cn8",
     company_slug: "esquel-group",
     company_name: "Esquel Group CN",
-    title: "Esquel Group shifts supply chain sourcing to domestic organic cotton hubs",
-    summary: "Guangdong — Esquel Group announced a major policy shift, sourcing all organic cotton fabrics from local certified cooperatives in western China to streamline transport logs.",
+    title:
+      "Esquel Group shifts supply chain sourcing to domestic organic cotton hubs",
+    summary:
+      "Guangdong — Esquel Group announced a major policy shift, sourcing all organic cotton fabrics from local certified cooperatives in western China to streamline transport logs.",
     category: "market",
     sentiment: "neutral",
     importance: "medium",
     published_at: new Date(Date.now() - 86400000 * 4).toISOString(),
-    source: "EcoTextile News"
+    source: "EcoTextile News",
   },
   {
     id: "cn9",
     company_slug: "vardhman-textiles",
     company_name: "Vardhman Textiles",
-    title: "Vardhman Textiles registers 12.8% net profit increase in fiscal audit",
-    summary: "Ludhiana — Upgraded automation technology and improved raw cotton supply chain agreements led to a solid 12.8% profit increase, beating market expectations.",
+    title:
+      "Vardhman Textiles registers 12.8% net profit increase in fiscal audit",
+    summary:
+      "Ludhiana — Upgraded automation technology and improved raw cotton supply chain agreements led to a solid 12.8% profit increase, beating market expectations.",
     category: "financial",
     sentiment: "positive",
     importance: "high",
     published_at: new Date(Date.now() - 86400000 * 5).toISOString(),
-    source: "BSE India News Feed"
+    source: "BSE India News Feed",
   },
   {
     id: "cn10",
     company_slug: "apex-spinning",
     company_name: "Apex Spinning & Knitting",
-    title: "Apex Spinning cleared of compliance allegations after independent audit",
-    summary: "Gazipur — Independent compliance auditing confirmed that all labor standards at the Gazipur factory match statutory codes, resolving previous compliance complaints.",
+    title:
+      "Apex Spinning cleared of compliance allegations after independent audit",
+    summary:
+      "Gazipur — Independent compliance auditing confirmed that all labor standards at the Gazipur factory match statutory codes, resolving previous compliance complaints.",
     category: "regulatory",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date(Date.now() - 86400000 * 7).toISOString(),
-    source: "Textile Standard"
+    source: "Textile Standard",
   },
   {
     id: "cn11",
     company_slug: "welspun-india",
     company_name: "Welspun India Home Textiles",
-    title: "Welspun India consolidates logistics network to curb freight delays",
-    summary: "Anjar — Welspun signed exclusive partnerships with regional shipping carriers to secure H2 transport slots, hedging against expected global route logjams.",
+    title:
+      "Welspun India consolidates logistics network to curb freight delays",
+    summary:
+      "Anjar — Welspun signed exclusive partnerships with regional shipping carriers to secure H2 transport slots, hedging against expected global route logjams.",
     category: "market",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date(Date.now() - 86400000 * 9).toISOString(),
-    source: "Supply Chain Asia"
+    source: "Supply Chain Asia",
   },
   {
     id: "cn12",
     company_slug: "viet-tien",
     company_name: "Viet Tien Garment Corp",
     title: "Viet Tien launches new smart automation stitching lines",
-    summary: "Ho Chi Minh — Viet Tien commissioned 15 smart CAD stitching stations, improving material utilisation by 3.5% and reducing manual trimming defects.",
+    summary:
+      "Ho Chi Minh — Viet Tien commissioned 15 smart CAD stitching stations, improving material utilisation by 3.5% and reducing manual trimming defects.",
     category: "press_release",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date(Date.now() - 86400000 * 12).toISOString(),
-    source: "Vietnam Garment Hub"
-  }
+    source: "Vietnam Garment Hub",
+  },
 ];
 
 // Additional pending updates for background synchronization simulation
@@ -165,35 +192,39 @@ export const PENDING_NEWS_SIMULATION: CompanyAnnouncement[] = [
     company_slug: "arvind-mills",
     company_name: "Arvind Mills Ltd",
     title: "Arvind Mills partners with waste-to-fiber recycling startup",
-    summary: "Ahmedabad — Arvind Mills has signed a joint venture to build a circular cotton processing line, aiming to recycle up to 5,000 tonnes of post-industrial denim cuts yearly.",
+    summary:
+      "Ahmedabad — Arvind Mills has signed a joint venture to build a circular cotton processing line, aiming to recycle up to 5,000 tonnes of post-industrial denim cuts yearly.",
     category: "sustainability",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date().toISOString(),
-    source: "Fibre2Fashion"
+    source: "Fibre2Fashion",
   },
   {
     id: "sync_news_2",
     company_slug: "dhaka-denim",
     company_name: "Dhaka Denim Works",
-    title: "Dhaka Denim secures secondary energy grid connection to resolve gas cuts",
-    summary: "Dhaka — Dhaka Denim signed an emergency power agreement with the regional industrial electricity board to secure auxiliary supply and recover production volumes.",
+    title:
+      "Dhaka Denim secures secondary energy grid connection to resolve gas cuts",
+    summary:
+      "Dhaka — Dhaka Denim signed an emergency power agreement with the regional industrial electricity board to secure auxiliary supply and recover production volumes.",
     category: "expansion",
     sentiment: "positive",
     importance: "high",
     published_at: new Date().toISOString(),
-    source: "Daily Star Bangladesh"
+    source: "Daily Star Bangladesh",
   },
   {
     id: "sync_news_3",
     company_slug: "mumbai-organic",
     company_name: "Mumbai Organic Mills",
     title: "Mumbai Organic Mills expands warehouse footprint near JNPT port",
-    summary: "Mumbai — To meet rising demand from European brands, the company has completed construction of a new 50,000 sq ft logistics depot, slashing transit delay risk by 3 days.",
+    summary:
+      "Mumbai — To meet rising demand from European brands, the company has completed construction of a new 50,000 sq ft logistics depot, slashing transit delay risk by 3 days.",
     category: "expansion",
     sentiment: "positive",
     importance: "medium",
     published_at: new Date().toISOString(),
-    source: "Cargo India"
-  }
+    source: "Cargo India",
+  },
 ];

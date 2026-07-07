@@ -1,10 +1,81 @@
-import{a as e,n as t,t as n}from"./jsx-runtime-n5LQ9ujS.js";import{t as r}from"./useQuery-BB0wjU-m.js";import{C as i}from"./index-B8EwVZTI.js";import{r as a,t as o}from"./utils-DbbrEv-p.js";import{t as s}from"./loader-circle-Bl7wwTNN.js";import{t as c}from"./sparkles-D9JfmPPi.js";import{t as l}from"./message-square-B20EOjmZ.js";import{t as u}from"./plus-DnfuNtW7.js";import{t as d}from"./send-3HqKDgXM.js";import{t as f}from"./button-CoQ0AAlw.js";import{t as p}from"./page-header-KBYaDscd.js";import{t as m}from"./dist-ByBcCr1c.js";import{t as h}from"./mock-companies-DOsMh2YD.js";var g=a(`bot`,[[`path`,{d:`M12 8V4H8`,key:`hb8ula`}],[`rect`,{width:`16`,height:`12`,x:`4`,y:`8`,rx:`2`,key:`enze0r`}],[`path`,{d:`M2 14h2`,key:`vft8re`}],[`path`,{d:`M20 14h2`,key:`4cs60a`}],[`path`,{d:`M15 13v2`,key:`1xurst`}],[`path`,{d:`M9 13v2`,key:`rq6x2g`}]]),_=a(`mic-off`,[[`path`,{d:`M12 19v3`,key:`npa21l`}],[`path`,{d:`M15 9.34V5a3 3 0 0 0-5.68-1.33`,key:`1gzdoj`}],[`path`,{d:`M16.95 16.95A7 7 0 0 1 5 12v-2`,key:`cqa7eg`}],[`path`,{d:`M18.89 13.23A7 7 0 0 0 19 12v-2`,key:`16hl24`}],[`path`,{d:`m2 2 20 20`,key:`1ooewy`}],[`path`,{d:`M9 9v3a3 3 0 0 0 5.12 2.12`,key:`r2i35w`}]]),v=a(`mic`,[[`path`,{d:`M12 19v3`,key:`npa21l`}],[`path`,{d:`M19 10v2a7 7 0 0 1-14 0v-2`,key:`1vc78b`}],[`rect`,{x:`9`,y:`2`,width:`6`,height:`13`,rx:`3`,key:`s6n7sd`}]]),y=a(`user`,[[`path`,{d:`M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2`,key:`975kel`}],[`circle`,{cx:`12`,cy:`7`,r:`4`,key:`17ys0d`}]]),b=a(`volume-2`,[[`path`,{d:`M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z`,key:`uqj9uw`}],[`path`,{d:`M16 9a5 5 0 0 1 0 6`,key:`1q6k2b`}],[`path`,{d:`M19.364 18.364a9 9 0 0 0 0-12.728`,key:`ijwkga`}]]),x=a(`volume-x`,[[`path`,{d:`M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z`,key:`uqj9uw`}],[`line`,{x1:`22`,x2:`16`,y1:`9`,y2:`15`,key:`1ewh16`}],[`line`,{x1:`16`,x2:`22`,y1:`9`,y2:`15`,key:`5ykzw1`}]]),S=e(t()),C=n(),w={default:`I'm GMIntel AI, your textile intelligence copilot. I can help you find suppliers, analyze markets, compare companies, assess risks, and generate sourcing reports. What would you like to know?`,supplier:`Based on your requirements, here are the top matches from our database:
+import { a as e, n as t, t as n } from "./jsx-runtime-n5LQ9ujS.js";
+import { t as r } from "./useQuery-BB0wjU-m.js";
+import { C as i } from "./index-B8EwVZTI.js";
+import { r as a, t as o } from "./utils-DbbrEv-p.js";
+import { t as s } from "./loader-circle-Bl7wwTNN.js";
+import { t as c } from "./sparkles-D9JfmPPi.js";
+import { t as l } from "./message-square-B20EOjmZ.js";
+import { t as u } from "./plus-DnfuNtW7.js";
+import { t as d } from "./send-3HqKDgXM.js";
+import { t as f } from "./button-CoQ0AAlw.js";
+import { t as p } from "./page-header-KBYaDscd.js";
+import { t as m } from "./dist-ByBcCr1c.js";
+import { t as h } from "./mock-companies-DOsMh2YD.js";
+var g = a(`bot`, [
+    [`path`, { d: `M12 8V4H8`, key: `hb8ula` }],
+    [
+      `rect`,
+      { width: `16`, height: `12`, x: `4`, y: `8`, rx: `2`, key: `enze0r` },
+    ],
+    [`path`, { d: `M2 14h2`, key: `vft8re` }],
+    [`path`, { d: `M20 14h2`, key: `4cs60a` }],
+    [`path`, { d: `M15 13v2`, key: `1xurst` }],
+    [`path`, { d: `M9 13v2`, key: `rq6x2g` }],
+  ]),
+  _ = a(`mic-off`, [
+    [`path`, { d: `M12 19v3`, key: `npa21l` }],
+    [`path`, { d: `M15 9.34V5a3 3 0 0 0-5.68-1.33`, key: `1gzdoj` }],
+    [`path`, { d: `M16.95 16.95A7 7 0 0 1 5 12v-2`, key: `cqa7eg` }],
+    [`path`, { d: `M18.89 13.23A7 7 0 0 0 19 12v-2`, key: `16hl24` }],
+    [`path`, { d: `m2 2 20 20`, key: `1ooewy` }],
+    [`path`, { d: `M9 9v3a3 3 0 0 0 5.12 2.12`, key: `r2i35w` }],
+  ]),
+  v = a(`mic`, [
+    [`path`, { d: `M12 19v3`, key: `npa21l` }],
+    [`path`, { d: `M19 10v2a7 7 0 0 1-14 0v-2`, key: `1vc78b` }],
+    [
+      `rect`,
+      { x: `9`, y: `2`, width: `6`, height: `13`, rx: `3`, key: `s6n7sd` },
+    ],
+  ]),
+  y = a(`user`, [
+    [`path`, { d: `M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2`, key: `975kel` }],
+    [`circle`, { cx: `12`, cy: `7`, r: `4`, key: `17ys0d` }],
+  ]),
+  b = a(`volume-2`, [
+    [
+      `path`,
+      {
+        d: `M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z`,
+        key: `uqj9uw`,
+      },
+    ],
+    [`path`, { d: `M16 9a5 5 0 0 1 0 6`, key: `1q6k2b` }],
+    [`path`, { d: `M19.364 18.364a9 9 0 0 0 0-12.728`, key: `ijwkga` }],
+  ]),
+  x = a(`volume-x`, [
+    [
+      `path`,
+      {
+        d: `M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z`,
+        key: `uqj9uw`,
+      },
+    ],
+    [`line`, { x1: `22`, x2: `16`, y1: `9`, y2: `15`, key: `1ewh16` }],
+    [`line`, { x1: `16`, x2: `22`, y1: `9`, y2: `15`, key: `5ykzw1` }],
+  ]),
+  S = e(t()),
+  C = n(),
+  w = {
+    default: `I'm GMIntel AI, your textile intelligence copilot. I can help you find suppliers, analyze markets, compare companies, assess risks, and generate sourcing reports. What would you like to know?`,
+    supplier: `Based on your requirements, here are the top matches from our database:
 
 - **Arvind Mills Ltd** (India) — Trust: 94 | Risk: Low | MOQ: 200 units | GOTS certified
 - **Vardhman Textiles** (India) — Trust: 91 | Risk: Low | MOQ: 500 units | ISO 9001
 - **Raymond UCO Denim** (India) — Trust: 88 | Risk: Med | MOQ: 1,000 units | BSCI
 
-Would you like a detailed comparison or help drafting an RFQ?`,price:`Current cotton index (COTTON·US): **$0.74/lb** (+1.8% MoM)
+Would you like a detailed comparison or help drafting an RFQ?`,
+    price: `Current cotton index (COTTON·US): **$0.74/lb** (+1.8% MoM)
 
 Country price comparison for cotton fabric:
 - India: $1.20–$1.80/m²
@@ -12,7 +83,8 @@ Country price comparison for cotton fabric:
 - Pakistan: $1.10–$1.70/m²
 - Turkey: $1.45–$2.10/m²
 
-Prices are AI-estimated and sourced from public trade data. Shall I generate a full pricing report?`,risk:`Risk analysis for South Asia textile sector:
+Prices are AI-estimated and sourced from public trade data. Shall I generate a full pricing report?`,
+    risk: `Risk analysis for South Asia textile sector:
 
 **Bangladesh** — Overall: Medium
 - Labour regulation compliance: improving
@@ -24,26 +96,30 @@ Prices are AI-estimated and sourced from public trade data. Shall I generate a f
 - GST clarity improving
 - Diversified manufacturing base
 
-Want a full risk report for a specific country or supplier?`,sustainability:`Sustainability intelligence summary:
+Want a full risk report for a specific country or supplier?`,
+    sustainability: `Sustainability intelligence summary:
 
 - **Key certifications in demand:** GOTS 7.0 (updated 2026), OEKO-TEX MADE IN GREEN, Bluesign
 - **Regulatory alerts:** EU Eco-Design Regulation effective Jan 2027 — requires full Tier-2 traceability
 - **Carbon border fees:** CBAM carbon border adjustment now covers synthetic fibres
 - **Top certified hubs:** India (23% GOTS coverage), Turkey (18%), Portugal (14%)
 
-Would you like to filter suppliers by certification?`,market:`Global textile market intelligence — Q2 2026:
+Would you like to filter suppliers by certification?`,
+    market: `Global textile market intelligence — Q2 2026:
 
 - **Trending segments:** Technical textiles (+22% demand growth), sustainable fabrics (+18% GOTS premium pricing)
 - **Watch list:** Bangladesh (order book at 94% capacity through Q3), Turkey (denim exports hit 5-year high)
 
-Want a full market report for a specific category?`,report:`I can generate the following reports instantly:
+Want a full market report for a specific category?`,
+    report: `I can generate the following reports instantly:
 
 - **Supplier Reports:** Company deep-dive, trust/risk scores, certifications, contact info
 - **Market Reports:** Category trends, country rankings, demand forecasts
 - **Price Reports:** Historical charts, country comparisons, forward estimates
 - **Competitor Reports:** Brand-to-brand sourcing comparison
 
-Which report type would you like? Just tell me the company, country, or product.`,compare:`**Supplier comparison — India Cotton Mills:**
+Which report type would you like? Just tell me the company, country, or product.`,
+    compare: `**Supplier comparison — India Cotton Mills:**
 
 | Supplier | Trust | Risk | MOQ | Lead Time |
 |---|---|---|---|---|
@@ -51,19 +127,118 @@ Which report type would you like? Just tell me the company, country, or product.
 | Vardhman | 91 | Low | 500 | 38 days |
 | Welspun | 87 | Low | 1,000 | 52 days |
 
-Arvind Mills scores highest on trust and has the lowest MOQ. Vardhman offers the fastest lead time. Shall I include certifications or export history in this comparison?`};function T(e,t,n,r,i){let a=e.toLowerCase().trim(),o=e=>{let t=n.find(t=>t.code?.toLowerCase()===e?.toLowerCase());return t?t.name:e};if(i){let e=i.toLowerCase();if(e.includes(`would you like a detailed comparison or help drafting an rfq?`)){if(a===`yes`||a===`yes please`||a===`sure`||a===`ok`||a.includes(`comparison`)||a.includes(`compare`)){let e=t.slice(0,3),n=`Here is a detailed comparison of the top matches:
+Arvind Mills scores highest on trust and has the lowest MOQ. Vardhman offers the fastest lead time. Shall I include certifications or export history in this comparison?`,
+  };
+function T(e, t, n, r, i) {
+  let a = e.toLowerCase().trim(),
+    o = (e) => {
+      let t = n.find((t) => t.code?.toLowerCase() === e?.toLowerCase());
+      return t ? t.name : e;
+    };
+  if (i) {
+    let e = i.toLowerCase();
+    if (
+      e.includes(
+        `would you like a detailed comparison or help drafting an rfq?`,
+      )
+    ) {
+      if (
+        a === `yes` ||
+        a === `yes please` ||
+        a === `sure` ||
+        a === `ok` ||
+        a.includes(`comparison`) ||
+        a.includes(`compare`)
+      ) {
+        let e = t.slice(0, 3),
+          n = `Here is a detailed comparison of the top matches:
 
-`;return e.forEach((e,t)=>{n+=`${t+1}. **${e.name}** (${o(e.country_code)}) — Trust Score: **${e.ai_trust_score??85}/100** | Risk: **${(e.ai_risk_level??`Low`).toUpperCase()}** | MOQ: **${e.moq??200}** units | Lead Time: **${e.lead_time_days??45}** days\n`}),n+=`
-Would you like me to draft a Request for Quote (RFQ) email template for `+(e[0]?.name??`the top supplier`)+`?`,n}if(a.includes(`rfq`)||a.includes(`draft`)||a.includes(`email`)||a.includes(`request`)){let e=t[0]||{name:`Arvind Mills Ltd`};return`Here is a drafted Request for Quote (RFQ) template for **${e.name}**:\n\n\`\`\`text\nSubject: RFQ: Premium Textile Material Sourcing inquiry\n\nDear Sourcing Team at ${e.name},\n\nWe are looking to source high-quality textile materials for our upcoming apparel collection. Please find our specifications below:\n- Target Quantity: 5,000 units\n- Required Certifications: GOTS / OEKO-TEX Standard 100\n- Target Delivery: Within 45-60 days\n\nPlease let us know your standard lead times, pricing metrics, and available capacities.\n\nBest regards,\n[Your Name]\n\`\`\`\n\nWould you like me to customize this draft or download it?`}}if((e.includes(`email template for arvind mills?`)||e.includes(`email template for`))&&(a===`yes`||a===`yes please`||a===`sure`||a===`ok`||a.includes(`rfq`)||a.includes(`draft`)||a.includes(`email`))){let e=t[0]||{name:`Arvind Mills Ltd`};return`Here is a drafted Request for Quote (RFQ) template for **${e.name}**:\n\n\`\`\`text\nSubject: RFQ: Premium Textile Material Sourcing inquiry\n\nDear Sourcing Team at ${e.name},\n\nWe are looking to source high-quality textile materials for our upcoming apparel collection. Please find our specifications below:\n- Target Quantity: 5,000 units\n- Required Certifications: GOTS / OEKO-TEX Standard 100\n- Target Delivery: Within 45-60 days\n\nPlease let us know your standard lead times, pricing metrics, and available capacities.\n\nBest regards,\n[Your Name]\n\`\`\`\n\nWould you like me to customize this draft or download it?`}if(e.includes(`want a full risk report for a specific country or supplier?`)&&(a===`yes`||a===`yes please`||a===`sure`||a===`ok`||a.includes(`bangladesh`)||a.includes(`india`)))return`Generating South Asia Risk Intelligence Report:
+`;
+        return (
+          e.forEach((e, t) => {
+            n += `${t + 1}. **${e.name}** (${o(e.country_code)}) — Trust Score: **${e.ai_trust_score ?? 85}/100** | Risk: **${(e.ai_risk_level ?? `Low`).toUpperCase()}** | MOQ: **${e.moq ?? 200}** units | Lead Time: **${e.lead_time_days ?? 45}** days\n`;
+          }),
+          (n +=
+            `
+Would you like me to draft a Request for Quote (RFQ) email template for ` +
+            (e[0]?.name ?? `the top supplier`) +
+            `?`),
+          n
+        );
+      }
+      if (
+        a.includes(`rfq`) ||
+        a.includes(`draft`) ||
+        a.includes(`email`) ||
+        a.includes(`request`)
+      ) {
+        let e = t[0] || { name: `Arvind Mills Ltd` };
+        return `Here is a drafted Request for Quote (RFQ) template for **${e.name}**:\n\n\`\`\`text\nSubject: RFQ: Premium Textile Material Sourcing inquiry\n\nDear Sourcing Team at ${e.name},\n\nWe are looking to source high-quality textile materials for our upcoming apparel collection. Please find our specifications below:\n- Target Quantity: 5,000 units\n- Required Certifications: GOTS / OEKO-TEX Standard 100\n- Target Delivery: Within 45-60 days\n\nPlease let us know your standard lead times, pricing metrics, and available capacities.\n\nBest regards,\n[Your Name]\n\`\`\`\n\nWould you like me to customize this draft or download it?`;
+      }
+    }
+    if (
+      (e.includes(`email template for arvind mills?`) ||
+        e.includes(`email template for`)) &&
+      (a === `yes` ||
+        a === `yes please` ||
+        a === `sure` ||
+        a === `ok` ||
+        a.includes(`rfq`) ||
+        a.includes(`draft`) ||
+        a.includes(`email`))
+    ) {
+      let e = t[0] || { name: `Arvind Mills Ltd` };
+      return `Here is a drafted Request for Quote (RFQ) template for **${e.name}**:\n\n\`\`\`text\nSubject: RFQ: Premium Textile Material Sourcing inquiry\n\nDear Sourcing Team at ${e.name},\n\nWe are looking to source high-quality textile materials for our upcoming apparel collection. Please find our specifications below:\n- Target Quantity: 5,000 units\n- Required Certifications: GOTS / OEKO-TEX Standard 100\n- Target Delivery: Within 45-60 days\n\nPlease let us know your standard lead times, pricing metrics, and available capacities.\n\nBest regards,\n[Your Name]\n\`\`\`\n\nWould you like me to customize this draft or download it?`;
+    }
+    if (
+      e.includes(
+        `want a full risk report for a specific country or supplier?`,
+      ) &&
+      (a === `yes` ||
+        a === `yes please` ||
+        a === `sure` ||
+        a === `ok` ||
+        a.includes(`bangladesh`) ||
+        a.includes(`india`))
+    )
+      return `Generating South Asia Risk Intelligence Report:
 
 - **Arvind Mills Ltd**: Risk Level: **Low**. Stable energy grid connectivity, OEKO-TEX audited, zero industrial dispute flags in last 12 months.
 - **Logistics routing**: Bangladesh ports currently face a 4.2-day average anchorage delay, whereas Indian western ports (Mundra/Pipavav) are clearing cargo within 36 hours.
 
-Would you like to draft a risk mitigation plan for your supply chain?`;if(e.includes(`would you like to check compliance for one of these suppliers?`)&&(a===`yes`||a===`yes please`||a===`sure`||a===`ok`||a.includes(`check`)||a.includes(`want to check`))){let e=t[0]||{name:`Arvind Mills Ltd`},n=t[1]||{name:`Vardhman Textiles`};return`### EU Green Deal Compliance Audit - Sourcing Report
+Would you like to draft a risk mitigation plan for your supply chain?`;
+    if (
+      e.includes(
+        `would you like to check compliance for one of these suppliers?`,
+      ) &&
+      (a === `yes` ||
+        a === `yes please` ||
+        a === `sure` ||
+        a === `ok` ||
+        a.includes(`check`) ||
+        a.includes(`want to check`))
+    ) {
+      let e = t[0] || { name: `Arvind Mills Ltd` },
+        n = t[1] || { name: `Vardhman Textiles` };
+      return `### EU Green Deal Compliance Audit - Sourcing Report
 
 Here is the compliance report for our top organic suppliers:
 
-- **${e.name}**:\n  - **GOTS Certification:** Valid (ID: GOTS-IN-88392, expires Oct 2026).\n  - **Tier-2 material traceability:** **100% Mapped**. Cotton fibers traced back to cotton growers cooperatives in Gujarat, India.\n  - **Carbon footprint estimate:** 2.15 kg CO2e / kg of fabric (Exceeds EU target limit of 3.0).\n  - **Chemical compliance:** ZDHC Level 3 certified.\n  - **Status:** **FULLY COMPLIANT** (Low compliance risk).\n\n- **${n.name}**:\n  - **GOTS Certification:** Valid (ID: GOTS-IN-90211, expires Dec 2026).\n  - **Tier-2 material traceability:** **85% Mapped**. Traced back to spinning mills in Punjab, India. Ginning stage documentation pending.\n  - **Carbon footprint estimate:** 2.65 kg CO2e / kg of fabric.\n  - **Status:** **PROVISIONALLY COMPLIANT** (Minor audit update requested).\n\nWould you like to draft an inquiry to Arvind Mills for their Tier-2 certificate verification or run a risk report?`}if(e.includes(`draft an inquiry to arvind mills for their tier-2 certificate verification`)&&(a===`yes`||a===`yes please`||a===`sure`||a===`ok`||a.includes(`inquiry`)||a.includes(`draft`)||a.includes(`email`)))return`Here is a drafted compliance audit inquiry for **Arvind Mills Ltd**:
+- **${e.name}**:\n  - **GOTS Certification:** Valid (ID: GOTS-IN-88392, expires Oct 2026).\n  - **Tier-2 material traceability:** **100% Mapped**. Cotton fibers traced back to cotton growers cooperatives in Gujarat, India.\n  - **Carbon footprint estimate:** 2.15 kg CO2e / kg of fabric (Exceeds EU target limit of 3.0).\n  - **Chemical compliance:** ZDHC Level 3 certified.\n  - **Status:** **FULLY COMPLIANT** (Low compliance risk).\n\n- **${n.name}**:\n  - **GOTS Certification:** Valid (ID: GOTS-IN-90211, expires Dec 2026).\n  - **Tier-2 material traceability:** **85% Mapped**. Traced back to spinning mills in Punjab, India. Ginning stage documentation pending.\n  - **Carbon footprint estimate:** 2.65 kg CO2e / kg of fabric.\n  - **Status:** **PROVISIONALLY COMPLIANT** (Minor audit update requested).\n\nWould you like to draft an inquiry to Arvind Mills for their Tier-2 certificate verification or run a risk report?`;
+    }
+    if (
+      e.includes(
+        `draft an inquiry to arvind mills for their tier-2 certificate verification`,
+      ) &&
+      (a === `yes` ||
+        a === `yes please` ||
+        a === `sure` ||
+        a === `ok` ||
+        a.includes(`inquiry`) ||
+        a.includes(`draft`) ||
+        a.includes(`email`))
+    )
+      return `Here is a drafted compliance audit inquiry for **Arvind Mills Ltd**:
 
 \`\`\`text
 Subject: URGENT: Tier-2 Material Traceability Verification (EU Green Deal Compliance)
@@ -80,24 +255,684 @@ Best regards,
 [Your Name]
 \`\`\`
 
-Would you like me to customize this template or would you like to run a risk report?`}for(let e of t){let t=e.name.toLowerCase();if(a.includes(t)||e.slug&&a.includes(e.slug.replace(`-`,` `)))return`Here is the current intelligence profile for **${e.name}**:\n\n- **Location:** ${e.city??`Primary Hub`}, ${o(e.country_code)}\n- **Business Type:** ${e.business_type??`Manufacturer`}\n- **AI Trust Score:** **${e.ai_trust_score??85}/100**\n- **AI Risk Level:** **${(e.ai_risk_level??`Low`).toUpperCase()}**\n- **Monthly Capacity:** ${e.monthly_capacity?e.monthly_capacity.toLocaleString()+` meters/month`:`150,000 meters/month`}\n- **Minimum Order Quantity (MOQ):** ${e.moq?e.moq.toLocaleString()+` units`:`500 units`}\n- **Sourcing Certification:** GOTS Certified / ISO 9001 compliant\n\nWould you like to compare ${e.name} with another supplier or draft an RFQ?`}if(a.includes(`highest trust`)||a.includes(`best trust`)||a.includes(`top trust`)||a.includes(`most trusted`)){let e=[...t].sort((e,t)=>(t.ai_trust_score??0)-(e.ai_trust_score??0)),n=e[0];if(n)return`The supplier with the highest AI Trust Score in our database is **${n.name}** with a score of **${n.ai_trust_score}/100** (Location: ${n.city??`Primary Hub`}, ${o(n.country_code)}).\n\nOther high trust suppliers include:\n`+e.slice(1,4).map(e=>`- **${e.name}**: Trust ${e.ai_trust_score}/100`).join(`
-`)+`
+Would you like me to customize this template or would you like to run a risk report?`;
+  }
+  for (let e of t) {
+    let t = e.name.toLowerCase();
+    if (a.includes(t) || (e.slug && a.includes(e.slug.replace(`-`, ` `))))
+      return `Here is the current intelligence profile for **${e.name}**:\n\n- **Location:** ${e.city ?? `Primary Hub`}, ${o(e.country_code)}\n- **Business Type:** ${e.business_type ?? `Manufacturer`}\n- **AI Trust Score:** **${e.ai_trust_score ?? 85}/100**\n- **AI Risk Level:** **${(e.ai_risk_level ?? `Low`).toUpperCase()}**\n- **Monthly Capacity:** ${e.monthly_capacity ? e.monthly_capacity.toLocaleString() + ` meters/month` : `150,000 meters/month`}\n- **Minimum Order Quantity (MOQ):** ${e.moq ? e.moq.toLocaleString() + ` units` : `500 units`}\n- **Sourcing Certification:** GOTS Certified / ISO 9001 compliant\n\nWould you like to compare ${e.name} with another supplier or draft an RFQ?`;
+  }
+  if (
+    a.includes(`highest trust`) ||
+    a.includes(`best trust`) ||
+    a.includes(`top trust`) ||
+    a.includes(`most trusted`)
+  ) {
+    let e = [...t].sort(
+        (e, t) => (t.ai_trust_score ?? 0) - (e.ai_trust_score ?? 0),
+      ),
+      n = e[0];
+    if (n)
+      return (
+        `The supplier with the highest AI Trust Score in our database is **${n.name}** with a score of **${n.ai_trust_score}/100** (Location: ${n.city ?? `Primary Hub`}, ${o(n.country_code)}).\n\nOther high trust suppliers include:\n` +
+        e
+          .slice(1, 4)
+          .map((e) => `- **${e.name}**: Trust ${e.ai_trust_score}/100`).join(`
+`) +
+        `
 
-Would you like me to compare these top trusted suppliers?`}if(a.includes(`how many companies`)||a.includes(`total companies`)||a.includes(`how many suppliers`))return`We are currently tracking **${t.length} companies** in the GMIntel system:\n- **Manufacturers:** ${t.filter(e=>(e.business_type??``).toLowerCase().includes(`manufactur`)).length}\n- **Suppliers / Traders:** ${t.filter(e=>(e.business_type??``).toLowerCase().includes(`supplier`)).length}\n- **Tracked Sourcing Hubs:** ${new Set(t.map(e=>e.country_code).filter(Boolean)).size} countries\n\nYou can filter this list by country or ask me for details on a specific supplier.`;if(a.includes(`gots`)||a.includes(`organic`)||a.includes(`sustainab`))return`Here are the key GOTS-certified/organic manufacturers in our registry:
+Would you like me to compare these top trusted suppliers?`
+      );
+  }
+  if (
+    a.includes(`how many companies`) ||
+    a.includes(`total companies`) ||
+    a.includes(`how many suppliers`)
+  )
+    return `We are currently tracking **${t.length} companies** in the GMIntel system:\n- **Manufacturers:** ${t.filter((e) => (e.business_type ?? ``).toLowerCase().includes(`manufactur`)).length}\n- **Suppliers / Traders:** ${t.filter((e) => (e.business_type ?? ``).toLowerCase().includes(`supplier`)).length}\n- **Tracked Sourcing Hubs:** ${new Set(t.map((e) => e.country_code).filter(Boolean)).size} countries\n\nYou can filter this list by country or ask me for details on a specific supplier.`;
+  if (a.includes(`gots`) || a.includes(`organic`) || a.includes(`sustainab`))
+    return (
+      `Here are the key GOTS-certified/organic manufacturers in our registry:
 
-`+t.filter(e=>e.name.toLowerCase().includes(`arvind`)||e.name.toLowerCase().includes(`vardhman`)||e.name.toLowerCase().includes(`envoy`)||(e.business_type??``).toLowerCase().includes(`organic`)).slice(0,4).map(e=>`- **${e.name}** (${o(e.country_code)}) — Trust: ${e.ai_trust_score}/100 | Specializes in certified organic fiber.`).join(`
-`)+`
+` +
+      t
+        .filter(
+          (e) =>
+            e.name.toLowerCase().includes(`arvind`) ||
+            e.name.toLowerCase().includes(`vardhman`) ||
+            e.name.toLowerCase().includes(`envoy`) ||
+            (e.business_type ?? ``).toLowerCase().includes(`organic`),
+        )
+        .slice(0, 4)
+        .map(
+          (e) =>
+            `- **${e.name}** (${o(e.country_code)}) — Trust: ${e.ai_trust_score}/100 | Specializes in certified organic fiber.`,
+        ).join(`
+`) +
+      `
 
-Starting January 2027, the EU Green Deal regulation requires complete Tier-2 material transparency. Would you like to check compliance for one of these suppliers?`;if(a.includes(`india`)||a.includes(`indian`)){let e=t.filter(e=>e.country_code===`IN`);if(e.length>0)return`We track **${e.length} suppliers in India**:\n\n`+e.slice(0,5).map(e=>`- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`).join(`
-`)+(e.length>5?`\n...and ${e.length-5} more.`:``)+`
+Starting January 2027, the EU Green Deal regulation requires complete Tier-2 material transparency. Would you like to check compliance for one of these suppliers?`
+    );
+  if (a.includes(`india`) || a.includes(`indian`)) {
+    let e = t.filter((e) => e.country_code === `IN`);
+    if (e.length > 0)
+      return (
+        `We track **${e.length} suppliers in India**:\n\n` +
+        e
+          .slice(0, 5)
+          .map(
+            (e) =>
+              `- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`,
+          ).join(`
+`) +
+        (e.length > 5 ? `\n...and ${e.length - 5} more.` : ``) +
+        `
 
-Would you like to compare their capacities and Minimum Order Quantities?`}if(a.includes(`bangladesh`)||a.includes(`bangladeshi`)){let e=t.filter(e=>e.country_code===`BD`);if(e.length>0)return`We track **${e.length} suppliers in Bangladesh**:\n\n`+e.slice(0,5).map(e=>`- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`).join(`
-`)+(e.length>5?`\n...and ${e.length-5} more.`:``)+`
+Would you like to compare their capacities and Minimum Order Quantities?`
+      );
+  }
+  if (a.includes(`bangladesh`) || a.includes(`bangladeshi`)) {
+    let e = t.filter((e) => e.country_code === `BD`);
+    if (e.length > 0)
+      return (
+        `We track **${e.length} suppliers in Bangladesh**:\n\n` +
+        e
+          .slice(0, 5)
+          .map(
+            (e) =>
+              `- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`,
+          ).join(`
+`) +
+        (e.length > 5 ? `\n...and ${e.length - 5} more.` : ``) +
+        `
 
-Would you like to analyze logisitcs or port delays for these Bangladesh mills?`}if(a.includes(`turkey`)||a.includes(`turkish`)){let e=t.filter(e=>e.country_code===`TR`);if(e.length>0)return`We track **${e.length} suppliers in Turkey**:\n\n`+e.slice(0,5).map(e=>`- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`).join(`
-`)+(e.length>5?`\n...and ${e.length-5} more.`:``)+`
+Would you like to analyze logisitcs or port delays for these Bangladesh mills?`
+      );
+  }
+  if (a.includes(`turkey`) || a.includes(`turkish`)) {
+    let e = t.filter((e) => e.country_code === `TR`);
+    if (e.length > 0)
+      return (
+        `We track **${e.length} suppliers in Turkey**:\n\n` +
+        e
+          .slice(0, 5)
+          .map(
+            (e) =>
+              `- **${e.name}** (Trust: ${e.ai_trust_score}/100 | Risk: ${e.ai_risk_level})`,
+          ).join(`
+`) +
+        (e.length > 5 ? `\n...and ${e.length - 5} more.` : ``) +
+        `
 
-Turkey mills are popular due to short lead times for Europe. Shall we review their lead times?`}return a===`hello`||a===`hi`||a===`hey`||a===`greetings`?`Hello! I am your GMIntel AI Copilot. I can help you search verified suppliers, fetch live fabric prices, or compile risk alerts. What are you sourcing today?`:a===`thanks`||a===`thank you`||a===`great`||a===`awesome`||a===`thanks!`?`You're very welcome! Let me know if you need help generating a PDF supplier report or analyzing more price index points.`:a===`no`||a===`no thanks`||a===`clear`||a===`stop`||a===`nope`?`Understood. Let me know when you are ready to start a new sourcing run.`:a.includes(`supplier`)||a.includes(`manufacturer`)||a.includes(`factory`)||a.includes(`source`)||a.includes(`find`)?w.supplier:a.includes(`price`)||a.includes(`cost`)||a.includes(`cotton`)||a.includes(`polyester`)||a.includes(`yarn`)?w.price:a.includes(`risk`)||a.includes(`compliance`)||a.includes(`safe`)||a.includes(`audit`)?w.risk:a.includes(`market`)||a.includes(`trend`)||a.includes(`demand`)||a.includes(`growth`)?w.market:a.includes(`report`)||a.includes(`generat`)||a.includes(`export`)||a.includes(`analysis`)?w.report:a.includes(`compare`)||a.includes(`versus`)||a.includes(`vs`)||a.includes(`difference`)?w.compare:`I've noted your input: "${e}". Let me assist you by finding manufacturers, tracking textile price sheets, drafting RFQs, or reviewing sustainability targets. What is the main fiber or supplier name you are searching for?`}function E(e){return e.includes("```text")?e.split("```text").map((e,t)=>{if(t%2==1){let n=e.split("```")[0];return(0,C.jsx)(`pre`,{className:`my-2 p-3 bg-muted/60 border border-border rounded font-mono text-xs overflow-x-auto whitespace-pre text-foreground`,children:n.trim()},t)}else return D(e)}):D(e)}function D(e){return e.split(`
-`).map((e,t)=>{let n=/^[-•]\s/.test(e),r=e.replace(/\*\*(.*?)\*\*/g,`<strong>$1</strong>`);return n?(0,C.jsx)(`li`,{className:`ml-2 list-disc`,dangerouslySetInnerHTML:{__html:r.replace(/^[-•]\s/,``)}},t):e.trim()===``?(0,C.jsx)(`div`,{className:`h-2`},t):(0,C.jsx)(`p`,{dangerouslySetInnerHTML:{__html:r}},t)})}function O({msg:e,onSpeak:t,playingVoiceId:n}){let r=e.role===`user`,i=e.content.includes(`
-- `)||e.content.includes(`
-• `),a=n===e.id;return(0,C.jsxs)(`div`,{className:`flex gap-3 ${r?`flex-row-reverse`:``}`,children:[(0,C.jsx)(`div`,{className:`h-7 w-7 rounded-md flex items-center justify-center shrink-0 mt-0.5 ${r?`bg-primary/20 text-primary`:`bg-muted border border-border text-primary`}`,children:r?(0,C.jsx)(y,{className:`h-4 w-4`}):(0,C.jsx)(g,{className:`h-4 w-4`})}),(0,C.jsxs)(`div`,{className:`max-w-[80%] ${r?`items-end`:`items-start`} flex flex-col gap-1`,children:[(0,C.jsxs)(`div`,{className:`rounded-lg px-4 py-3 text-sm leading-relaxed relative group ${r?`bg-primary text-primary-foreground`:`bg-card border border-border text-foreground`}`,children:[r?(0,C.jsx)(`span`,{className:`whitespace-pre-wrap`,children:e.content}):(0,C.jsxs)(`div`,{className:`prose-chat space-y-1 pr-4`,children:[i?(0,C.jsx)(`ul`,{className:`list-disc pl-4 space-y-0.5`,children:E(e.content)}):(0,C.jsx)(`div`,{className:`space-y-1`,children:E(e.content)}),e.isStreaming&&(0,C.jsx)(`span`,{className:`inline-block h-3.5 w-1.5 ml-0.5 bg-primary animate-pulse`})]}),!r&&!e.isStreaming&&(0,C.jsx)(`button`,{onClick:()=>t(e.id,e.content),className:o(`absolute bottom-2.5 right-2.5 p-1 rounded hover:bg-muted text-muted-foreground hover:text-primary transition-all opacity-0 group-hover:opacity-100 cursor-pointer`,a&&`opacity-100 text-primary bg-primary/10`),title:a?`Mute speech`:`Read response aloud`,children:a?(0,C.jsx)(x,{className:`h-3 w-3`}):(0,C.jsx)(b,{className:`h-3 w-3`})})]}),(0,C.jsx)(`div`,{className:`text-[10px] font-mono text-muted-foreground px-1`,children:e.ts.toLocaleTimeString(`en-US`,{hour:`2-digit`,minute:`2-digit`})})]})]})}function k(){let[e,t]=(0,S.useState)([{id:`1`,title:`Cotton supplier search — India`,ts:new Date(Date.now()-864e5)},{id:`2`,title:`Bangladesh risk assessment`,ts:new Date(Date.now()-36e5*5)}]),[n,a]=(0,S.useState)(`1`),[y,b]=(0,S.useState)({1:[{id:`a1`,role:`assistant`,content:w.default,ts:new Date(Date.now()-864e5)},{id:`a2`,role:`user`,content:`Find me cotton manufacturers in India with GOTS certification`,ts:new Date(Date.now()-864e5+6e4)},{id:`a3`,role:`assistant`,content:w.supplier,ts:new Date(Date.now()-864e5+9e4)}],2:[{id:`b1`,role:`assistant`,content:w.default,ts:new Date}]}),[x,E]=(0,S.useState)(``),[D,k]=(0,S.useState)(!1),[A,j]=(0,S.useState)(!1),[M,N]=(0,S.useState)(null),P=(0,S.useRef)(null),F=(0,S.useRef)(null),{data:I}=r({queryKey:[`dashboard`],queryFn:async()=>{let[e,t,n]=await Promise.all([i.from(`companies`).select(`id, name, country_code, city, ai_risk_level, ai_trust_score, business_type, employees_range, created_at, slug, monthly_capacity, moq, lead_time_days`),i.from(`countries`).select(`code, name`),i.from(`news_items`).select(`id, title, source, published_at, category`).order(`published_at`,{ascending:!1}).limit(6)]);return{companies:e.data??[],countries:t.data??[],news:n.data??[]}}}),L=I?.companies??[],R=(0,S.useMemo)(()=>{let e=[...L];return h.forEach(t=>{e.some(e=>e.slug===t.slug)||e.push(t)}),e},[L]),z=I?.countries??[],B=I?.news??[];(0,S.useEffect)(()=>{P.current?.scrollIntoView({behavior:`smooth`})},[y,n,D]);let V=(e,t)=>{if(typeof window<`u`){if(M===e){window.speechSynthesis.cancel(),N(null);return}window.speechSynthesis.cancel();let n=t.replace(/\*\*/g,``),r=new SpeechSynthesisUtterance(n);r.onend=()=>N(null),r.onerror=()=>N(null),N(e),window.speechSynthesis.speak(r)}},H=()=>{if(typeof window<`u`){let e=window.SpeechRecognition||window.webkitSpeechRecognition;if(!e){m.error(`Voice dictation is not supported by your current browser. Use Google Chrome.`);return}window.speechSynthesis.cancel(),N(null);let t=new e;t.continuous=!1,t.interimResults=!1,t.lang=`en-US`,t.onstart=()=>{j(!0),m.info(`Listening... Speak your question.`)},t.onresult=e=>{let t=e.results[0][0].transcript;E(t),j(!1)},t.onerror=e=>{console.warn(`Speech recognition error:`,e),j(!1)},t.onend=()=>{j(!1)},F.current=t,t.start()}},U=()=>{F.current?.stop(),j(!1)},W=e=>{let t=crypto.randomUUID(),r={id:t,role:`assistant`,content:``,ts:new Date,isStreaming:!0};b(e=>({...e,[n]:[...e[n]??[],r]}));let i=e.split(` `),a=0,o=setInterval(()=>{if(a>=i.length){clearInterval(o),b(e=>{let r=e[n]??[];return{...e,[n]:r.map(e=>e.id===t?{...e,isStreaming:!1}:e)}});return}let e=i[a]+(a===i.length-1?``:` `);b(r=>{let i=r[n]??[];return{...r,[n]:i.map(n=>n.id===t?{...n,content:n.content+e}:n)}}),a++},45)},G=y[n]??[],K=()=>{let e=x.trim();if(!e||D)return;typeof window<`u`&&(window.speechSynthesis.cancel(),N(null));let r={id:crypto.randomUUID(),role:`user`,content:e,ts:new Date};b(e=>({...e,[n]:[...e[n]??[],r]})),E(``),k(!0),t(t=>t.map(t=>t.id===n&&t.title.startsWith(`New`)?{...t,title:e.slice(0,40)}:t));let i=[...G].reverse().find(e=>e.role===`assistant`)?.content;setTimeout(()=>{k(!1),W(T(e,R,z,B,i))},1200)};return(0,C.jsxs)(`div`,{className:`space-y-0 -m-6 md:-m-8 h-[calc(100vh-3.5rem)] flex flex-col`,children:[(0,C.jsx)(`div`,{className:`px-6 md:px-8 pt-6 md:pt-8 pb-4 border-b border-border flex-none`,children:(0,C.jsx)(p,{eyebrow:`Command Center · AI`,title:`AI Assistant`,description:`Your GMIntel sourcing copilot. Ask about suppliers, prices, risks, and market trends.`})}),(0,C.jsxs)(`div`,{className:`flex flex-1 min-h-0`,children:[(0,C.jsxs)(`aside`,{className:`hidden md:flex w-64 flex-col border-r border-border bg-card/30`,children:[(0,C.jsx)(`div`,{className:`p-3 border-b border-border`,children:(0,C.jsxs)(f,{variant:`outline`,size:`sm`,className:`w-full gap-2`,onClick:()=>{typeof window<`u`&&(window.speechSynthesis.cancel(),N(null));let e=crypto.randomUUID();t(t=>[{id:e,title:`New conversation`,ts:new Date},...t]),b(t=>({...t,[e]:[{id:crypto.randomUUID(),role:`assistant`,content:w.default,ts:new Date}]})),a(e)},children:[(0,C.jsx)(u,{className:`h-3.5 w-3.5`}),` New conversation`]})}),(0,C.jsx)(`div`,{className:`flex-1 overflow-y-auto p-2 space-y-0.5`,children:e.map(e=>(0,C.jsxs)(`button`,{onClick:()=>{typeof window<`u`&&(window.speechSynthesis.cancel(),N(null)),a(e.id)},className:`w-full text-left rounded-md px-3 py-2.5 transition-colors ${n===e.id?`bg-sidebar-accent text-sidebar-accent-foreground`:`text-muted-foreground hover:bg-muted/60`}`,children:[(0,C.jsxs)(`div`,{className:`flex items-center gap-2`,children:[(0,C.jsx)(l,{className:`h-3.5 w-3.5 shrink-0`}),(0,C.jsx)(`span`,{className:`text-xs truncate`,children:e.title})]}),(0,C.jsx)(`div`,{className:`text-[10px] font-mono text-muted-foreground/60 mt-0.5 pl-5`,children:e.ts.toLocaleDateString(`en-US`)})]},e.id))})]}),(0,C.jsxs)(`div`,{className:`flex-1 flex flex-col min-w-0`,children:[(0,C.jsxs)(`div`,{className:`flex-1 overflow-y-auto p-6 space-y-4 bg-muted/5`,children:[G.map(e=>(0,C.jsx)(O,{msg:e,onSpeak:V,playingVoiceId:M},e.id)),D&&(0,C.jsxs)(`div`,{className:`flex gap-3`,children:[(0,C.jsx)(`div`,{className:`h-7 w-7 rounded-md bg-muted border border-border flex items-center justify-center shrink-0`,children:(0,C.jsx)(g,{className:`h-4 w-4 text-primary animate-pulse`})}),(0,C.jsxs)(`div`,{className:`bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-2 text-sm text-muted-foreground shadow-sm`,children:[(0,C.jsx)(s,{className:`h-4 w-4 animate-spin text-primary`}),`Analyzing market signals…`]})]}),(0,C.jsx)(`div`,{ref:P})]}),(0,C.jsxs)(`div`,{className:`p-4 border-t border-border bg-card/30`,children:[G.length<=1&&(0,C.jsx)(`div`,{className:`flex flex-wrap gap-1.5 mb-3`,children:[`Find cotton suppliers in India with GOTS`,`What are current polyester yarn prices?`,`Assess risk for Bangladesh manufacturers`,`Compare top denim mills in Turkey`,`Sustainability certifications overview`,`Generate a market trend report`].map(e=>(0,C.jsx)(`button`,{onClick:()=>{E(e)},className:`text-[11px] font-mono px-2.5 py-1 rounded-full border border-border text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors`,children:e},e))}),(0,C.jsxs)(`div`,{className:`flex gap-3`,children:[(0,C.jsxs)(`div`,{className:`flex-1 relative`,children:[(0,C.jsx)(c,{className:`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/60`}),(0,C.jsx)(`input`,{value:x,onChange:e=>E(e.target.value),onKeyDown:e=>e.key===`Enter`&&!e.shiftKey&&K(),placeholder:A?`Listening...`:`Ask about suppliers, prices, risks, markets…`,disabled:A,className:o(`w-full h-10 pl-9 pr-10 rounded-lg border border-border bg-background text-sm outline-none focus:border-primary transition-all`,A&&`border-red-500/50 bg-red-50/5 ring-1 ring-red-500/30 placeholder:text-red-400`)}),(0,C.jsx)(`button`,{type:`button`,onClick:A?U:H,className:o(`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-muted-foreground hover:text-primary transition-all cursor-pointer`,A&&`text-red-500 hover:text-red-600 bg-red-100/10 animate-pulse`),title:A?`Stop listening`:`Dictate your query`,children:A?(0,C.jsx)(_,{className:`h-4 w-4`}):(0,C.jsx)(v,{className:`h-4 w-4`})})]}),(0,C.jsx)(f,{onClick:K,disabled:!x.trim()||D||A,size:`sm`,className:`h-10 px-4`,children:(0,C.jsx)(d,{className:`h-4 w-4`})})]}),(0,C.jsx)(`div`,{className:`mt-2 text-[10px] font-mono text-muted-foreground text-center`,children:`AI responses are estimates and intelligence summaries · Connected to verified company databases`})]})]})]})]})}export{k as component};
+Turkey mills are popular due to short lead times for Europe. Shall we review their lead times?`
+      );
+  }
+  return a === `hello` || a === `hi` || a === `hey` || a === `greetings`
+    ? `Hello! I am your GMIntel AI Copilot. I can help you search verified suppliers, fetch live fabric prices, or compile risk alerts. What are you sourcing today?`
+    : a === `thanks` ||
+        a === `thank you` ||
+        a === `great` ||
+        a === `awesome` ||
+        a === `thanks!`
+      ? `You're very welcome! Let me know if you need help generating a PDF supplier report or analyzing more price index points.`
+      : a === `no` ||
+          a === `no thanks` ||
+          a === `clear` ||
+          a === `stop` ||
+          a === `nope`
+        ? `Understood. Let me know when you are ready to start a new sourcing run.`
+        : a.includes(`supplier`) ||
+            a.includes(`manufacturer`) ||
+            a.includes(`factory`) ||
+            a.includes(`source`) ||
+            a.includes(`find`)
+          ? w.supplier
+          : a.includes(`price`) ||
+              a.includes(`cost`) ||
+              a.includes(`cotton`) ||
+              a.includes(`polyester`) ||
+              a.includes(`yarn`)
+            ? w.price
+            : a.includes(`risk`) ||
+                a.includes(`compliance`) ||
+                a.includes(`safe`) ||
+                a.includes(`audit`)
+              ? w.risk
+              : a.includes(`market`) ||
+                  a.includes(`trend`) ||
+                  a.includes(`demand`) ||
+                  a.includes(`growth`)
+                ? w.market
+                : a.includes(`report`) ||
+                    a.includes(`generat`) ||
+                    a.includes(`export`) ||
+                    a.includes(`analysis`)
+                  ? w.report
+                  : a.includes(`compare`) ||
+                      a.includes(`versus`) ||
+                      a.includes(`vs`) ||
+                      a.includes(`difference`)
+                    ? w.compare
+                    : `I've noted your input: "${e}". Let me assist you by finding manufacturers, tracking textile price sheets, drafting RFQs, or reviewing sustainability targets. What is the main fiber or supplier name you are searching for?`;
+}
+function E(e) {
+  return e.includes("```text")
+    ? e.split("```text").map((e, t) => {
+        if (t % 2 == 1) {
+          let n = e.split("```")[0];
+          return (0, C.jsx)(
+            `pre`,
+            {
+              className: `my-2 p-3 bg-muted/60 border border-border rounded font-mono text-xs overflow-x-auto whitespace-pre text-foreground`,
+              children: n.trim(),
+            },
+            t,
+          );
+        } else return D(e);
+      })
+    : D(e);
+}
+function D(e) {
+  return e
+    .split(
+      `
+`,
+    )
+    .map((e, t) => {
+      let n = /^[-•]\s/.test(e),
+        r = e.replace(/\*\*(.*?)\*\*/g, `<strong>$1</strong>`);
+      return n
+        ? (0, C.jsx)(
+            `li`,
+            {
+              className: `ml-2 list-disc`,
+              dangerouslySetInnerHTML: { __html: r.replace(/^[-•]\s/, ``) },
+            },
+            t,
+          )
+        : e.trim() === ``
+          ? (0, C.jsx)(`div`, { className: `h-2` }, t)
+          : (0, C.jsx)(`p`, { dangerouslySetInnerHTML: { __html: r } }, t);
+    });
+}
+function O({ msg: e, onSpeak: t, playingVoiceId: n }) {
+  let r = e.role === `user`,
+    i =
+      e.content.includes(`
+- `) ||
+      e.content.includes(`
+• `),
+    a = n === e.id;
+  return (0, C.jsxs)(`div`, {
+    className: `flex gap-3 ${r ? `flex-row-reverse` : ``}`,
+    children: [
+      (0, C.jsx)(`div`, {
+        className: `h-7 w-7 rounded-md flex items-center justify-center shrink-0 mt-0.5 ${r ? `bg-primary/20 text-primary` : `bg-muted border border-border text-primary`}`,
+        children: r
+          ? (0, C.jsx)(y, { className: `h-4 w-4` })
+          : (0, C.jsx)(g, { className: `h-4 w-4` }),
+      }),
+      (0, C.jsxs)(`div`, {
+        className: `max-w-[80%] ${r ? `items-end` : `items-start`} flex flex-col gap-1`,
+        children: [
+          (0, C.jsxs)(`div`, {
+            className: `rounded-lg px-4 py-3 text-sm leading-relaxed relative group ${r ? `bg-primary text-primary-foreground` : `bg-card border border-border text-foreground`}`,
+            children: [
+              r
+                ? (0, C.jsx)(`span`, {
+                    className: `whitespace-pre-wrap`,
+                    children: e.content,
+                  })
+                : (0, C.jsxs)(`div`, {
+                    className: `prose-chat space-y-1 pr-4`,
+                    children: [
+                      i
+                        ? (0, C.jsx)(`ul`, {
+                            className: `list-disc pl-4 space-y-0.5`,
+                            children: E(e.content),
+                          })
+                        : (0, C.jsx)(`div`, {
+                            className: `space-y-1`,
+                            children: E(e.content),
+                          }),
+                      e.isStreaming &&
+                        (0, C.jsx)(`span`, {
+                          className: `inline-block h-3.5 w-1.5 ml-0.5 bg-primary animate-pulse`,
+                        }),
+                    ],
+                  }),
+              !r &&
+                !e.isStreaming &&
+                (0, C.jsx)(`button`, {
+                  onClick: () => t(e.id, e.content),
+                  className: o(
+                    `absolute bottom-2.5 right-2.5 p-1 rounded hover:bg-muted text-muted-foreground hover:text-primary transition-all opacity-0 group-hover:opacity-100 cursor-pointer`,
+                    a && `opacity-100 text-primary bg-primary/10`,
+                  ),
+                  title: a ? `Mute speech` : `Read response aloud`,
+                  children: a
+                    ? (0, C.jsx)(x, { className: `h-3 w-3` })
+                    : (0, C.jsx)(b, { className: `h-3 w-3` }),
+                }),
+            ],
+          }),
+          (0, C.jsx)(`div`, {
+            className: `text-[10px] font-mono text-muted-foreground px-1`,
+            children: e.ts.toLocaleTimeString(`en-US`, {
+              hour: `2-digit`,
+              minute: `2-digit`,
+            }),
+          }),
+        ],
+      }),
+    ],
+  });
+}
+function k() {
+  let [e, t] = (0, S.useState)([
+      {
+        id: `1`,
+        title: `Cotton supplier search — India`,
+        ts: new Date(Date.now() - 864e5),
+      },
+      {
+        id: `2`,
+        title: `Bangladesh risk assessment`,
+        ts: new Date(Date.now() - 36e5 * 5),
+      },
+    ]),
+    [n, a] = (0, S.useState)(`1`),
+    [y, b] = (0, S.useState)({
+      1: [
+        {
+          id: `a1`,
+          role: `assistant`,
+          content: w.default,
+          ts: new Date(Date.now() - 864e5),
+        },
+        {
+          id: `a2`,
+          role: `user`,
+          content: `Find me cotton manufacturers in India with GOTS certification`,
+          ts: new Date(Date.now() - 864e5 + 6e4),
+        },
+        {
+          id: `a3`,
+          role: `assistant`,
+          content: w.supplier,
+          ts: new Date(Date.now() - 864e5 + 9e4),
+        },
+      ],
+      2: [{ id: `b1`, role: `assistant`, content: w.default, ts: new Date() }],
+    }),
+    [x, E] = (0, S.useState)(``),
+    [D, k] = (0, S.useState)(!1),
+    [A, j] = (0, S.useState)(!1),
+    [M, N] = (0, S.useState)(null),
+    P = (0, S.useRef)(null),
+    F = (0, S.useRef)(null),
+    { data: I } = r({
+      queryKey: [`dashboard`],
+      queryFn: async () => {
+        let [e, t, n] = await Promise.all([
+          i
+            .from(`companies`)
+            .select(
+              `id, name, country_code, city, ai_risk_level, ai_trust_score, business_type, employees_range, created_at, slug, monthly_capacity, moq, lead_time_days`,
+            ),
+          i.from(`countries`).select(`code, name`),
+          i
+            .from(`news_items`)
+            .select(`id, title, source, published_at, category`)
+            .order(`published_at`, { ascending: !1 })
+            .limit(6),
+        ]);
+        return {
+          companies: e.data ?? [],
+          countries: t.data ?? [],
+          news: n.data ?? [],
+        };
+      },
+    }),
+    L = I?.companies ?? [],
+    R = (0, S.useMemo)(() => {
+      let e = [...L];
+      return (
+        h.forEach((t) => {
+          e.some((e) => e.slug === t.slug) || e.push(t);
+        }),
+        e
+      );
+    }, [L]),
+    z = I?.countries ?? [],
+    B = I?.news ?? [];
+  (0, S.useEffect)(() => {
+    P.current?.scrollIntoView({ behavior: `smooth` });
+  }, [y, n, D]);
+  let V = (e, t) => {
+      if (typeof window < `u`) {
+        if (M === e) {
+          (window.speechSynthesis.cancel(), N(null));
+          return;
+        }
+        window.speechSynthesis.cancel();
+        let n = t.replace(/\*\*/g, ``),
+          r = new SpeechSynthesisUtterance(n);
+        ((r.onend = () => N(null)),
+          (r.onerror = () => N(null)),
+          N(e),
+          window.speechSynthesis.speak(r));
+      }
+    },
+    H = () => {
+      if (typeof window < `u`) {
+        let e = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!e) {
+          m.error(
+            `Voice dictation is not supported by your current browser. Use Google Chrome.`,
+          );
+          return;
+        }
+        (window.speechSynthesis.cancel(), N(null));
+        let t = new e();
+        ((t.continuous = !1),
+          (t.interimResults = !1),
+          (t.lang = `en-US`),
+          (t.onstart = () => {
+            (j(!0), m.info(`Listening... Speak your question.`));
+          }),
+          (t.onresult = (e) => {
+            let t = e.results[0][0].transcript;
+            (E(t), j(!1));
+          }),
+          (t.onerror = (e) => {
+            (console.warn(`Speech recognition error:`, e), j(!1));
+          }),
+          (t.onend = () => {
+            j(!1);
+          }),
+          (F.current = t),
+          t.start());
+      }
+    },
+    U = () => {
+      (F.current?.stop(), j(!1));
+    },
+    W = (e) => {
+      let t = crypto.randomUUID(),
+        r = {
+          id: t,
+          role: `assistant`,
+          content: ``,
+          ts: new Date(),
+          isStreaming: !0,
+        };
+      b((e) => ({ ...e, [n]: [...(e[n] ?? []), r] }));
+      let i = e.split(` `),
+        a = 0,
+        o = setInterval(() => {
+          if (a >= i.length) {
+            (clearInterval(o),
+              b((e) => {
+                let r = e[n] ?? [];
+                return {
+                  ...e,
+                  [n]: r.map((e) =>
+                    e.id === t ? { ...e, isStreaming: !1 } : e,
+                  ),
+                };
+              }));
+            return;
+          }
+          let e = i[a] + (a === i.length - 1 ? `` : ` `);
+          (b((r) => {
+            let i = r[n] ?? [];
+            return {
+              ...r,
+              [n]: i.map((n) =>
+                n.id === t ? { ...n, content: n.content + e } : n,
+              ),
+            };
+          }),
+            a++);
+        }, 45);
+    },
+    G = y[n] ?? [],
+    K = () => {
+      let e = x.trim();
+      if (!e || D) return;
+      typeof window < `u` && (window.speechSynthesis.cancel(), N(null));
+      let r = {
+        id: crypto.randomUUID(),
+        role: `user`,
+        content: e,
+        ts: new Date(),
+      };
+      (b((e) => ({ ...e, [n]: [...(e[n] ?? []), r] })),
+        E(``),
+        k(!0),
+        t((t) =>
+          t.map((t) =>
+            t.id === n && t.title.startsWith(`New`)
+              ? { ...t, title: e.slice(0, 40) }
+              : t,
+          ),
+        ));
+      let i = [...G].reverse().find((e) => e.role === `assistant`)?.content;
+      setTimeout(() => {
+        (k(!1), W(T(e, R, z, B, i)));
+      }, 1200);
+    };
+  return (0, C.jsxs)(`div`, {
+    className: `space-y-0 -m-6 md:-m-8 h-[calc(100vh-3.5rem)] flex flex-col`,
+    children: [
+      (0, C.jsx)(`div`, {
+        className: `px-6 md:px-8 pt-6 md:pt-8 pb-4 border-b border-border flex-none`,
+        children: (0, C.jsx)(p, {
+          eyebrow: `Command Center · AI`,
+          title: `AI Assistant`,
+          description: `Your GMIntel sourcing copilot. Ask about suppliers, prices, risks, and market trends.`,
+        }),
+      }),
+      (0, C.jsxs)(`div`, {
+        className: `flex flex-1 min-h-0`,
+        children: [
+          (0, C.jsxs)(`aside`, {
+            className: `hidden md:flex w-64 flex-col border-r border-border bg-card/30`,
+            children: [
+              (0, C.jsx)(`div`, {
+                className: `p-3 border-b border-border`,
+                children: (0, C.jsxs)(f, {
+                  variant: `outline`,
+                  size: `sm`,
+                  className: `w-full gap-2`,
+                  onClick: () => {
+                    typeof window < `u` &&
+                      (window.speechSynthesis.cancel(), N(null));
+                    let e = crypto.randomUUID();
+                    (t((t) => [
+                      { id: e, title: `New conversation`, ts: new Date() },
+                      ...t,
+                    ]),
+                      b((t) => ({
+                        ...t,
+                        [e]: [
+                          {
+                            id: crypto.randomUUID(),
+                            role: `assistant`,
+                            content: w.default,
+                            ts: new Date(),
+                          },
+                        ],
+                      })),
+                      a(e));
+                  },
+                  children: [
+                    (0, C.jsx)(u, { className: `h-3.5 w-3.5` }),
+                    ` New conversation`,
+                  ],
+                }),
+              }),
+              (0, C.jsx)(`div`, {
+                className: `flex-1 overflow-y-auto p-2 space-y-0.5`,
+                children: e.map((e) =>
+                  (0, C.jsxs)(
+                    `button`,
+                    {
+                      onClick: () => {
+                        (typeof window < `u` &&
+                          (window.speechSynthesis.cancel(), N(null)),
+                          a(e.id));
+                      },
+                      className: `w-full text-left rounded-md px-3 py-2.5 transition-colors ${n === e.id ? `bg-sidebar-accent text-sidebar-accent-foreground` : `text-muted-foreground hover:bg-muted/60`}`,
+                      children: [
+                        (0, C.jsxs)(`div`, {
+                          className: `flex items-center gap-2`,
+                          children: [
+                            (0, C.jsx)(l, {
+                              className: `h-3.5 w-3.5 shrink-0`,
+                            }),
+                            (0, C.jsx)(`span`, {
+                              className: `text-xs truncate`,
+                              children: e.title,
+                            }),
+                          ],
+                        }),
+                        (0, C.jsx)(`div`, {
+                          className: `text-[10px] font-mono text-muted-foreground/60 mt-0.5 pl-5`,
+                          children: e.ts.toLocaleDateString(`en-US`),
+                        }),
+                      ],
+                    },
+                    e.id,
+                  ),
+                ),
+              }),
+            ],
+          }),
+          (0, C.jsxs)(`div`, {
+            className: `flex-1 flex flex-col min-w-0`,
+            children: [
+              (0, C.jsxs)(`div`, {
+                className: `flex-1 overflow-y-auto p-6 space-y-4 bg-muted/5`,
+                children: [
+                  G.map((e) =>
+                    (0, C.jsx)(
+                      O,
+                      { msg: e, onSpeak: V, playingVoiceId: M },
+                      e.id,
+                    ),
+                  ),
+                  D &&
+                    (0, C.jsxs)(`div`, {
+                      className: `flex gap-3`,
+                      children: [
+                        (0, C.jsx)(`div`, {
+                          className: `h-7 w-7 rounded-md bg-muted border border-border flex items-center justify-center shrink-0`,
+                          children: (0, C.jsx)(g, {
+                            className: `h-4 w-4 text-primary animate-pulse`,
+                          }),
+                        }),
+                        (0, C.jsxs)(`div`, {
+                          className: `bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-2 text-sm text-muted-foreground shadow-sm`,
+                          children: [
+                            (0, C.jsx)(s, {
+                              className: `h-4 w-4 animate-spin text-primary`,
+                            }),
+                            `Analyzing market signals…`,
+                          ],
+                        }),
+                      ],
+                    }),
+                  (0, C.jsx)(`div`, { ref: P }),
+                ],
+              }),
+              (0, C.jsxs)(`div`, {
+                className: `p-4 border-t border-border bg-card/30`,
+                children: [
+                  G.length <= 1 &&
+                    (0, C.jsx)(`div`, {
+                      className: `flex flex-wrap gap-1.5 mb-3`,
+                      children: [
+                        `Find cotton suppliers in India with GOTS`,
+                        `What are current polyester yarn prices?`,
+                        `Assess risk for Bangladesh manufacturers`,
+                        `Compare top denim mills in Turkey`,
+                        `Sustainability certifications overview`,
+                        `Generate a market trend report`,
+                      ].map((e) =>
+                        (0, C.jsx)(
+                          `button`,
+                          {
+                            onClick: () => {
+                              E(e);
+                            },
+                            className: `text-[11px] font-mono px-2.5 py-1 rounded-full border border-border text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors`,
+                            children: e,
+                          },
+                          e,
+                        ),
+                      ),
+                    }),
+                  (0, C.jsxs)(`div`, {
+                    className: `flex gap-3`,
+                    children: [
+                      (0, C.jsxs)(`div`, {
+                        className: `flex-1 relative`,
+                        children: [
+                          (0, C.jsx)(c, {
+                            className: `absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/60`,
+                          }),
+                          (0, C.jsx)(`input`, {
+                            value: x,
+                            onChange: (e) => E(e.target.value),
+                            onKeyDown: (e) =>
+                              e.key === `Enter` && !e.shiftKey && K(),
+                            placeholder: A
+                              ? `Listening...`
+                              : `Ask about suppliers, prices, risks, markets…`,
+                            disabled: A,
+                            className: o(
+                              `w-full h-10 pl-9 pr-10 rounded-lg border border-border bg-background text-sm outline-none focus:border-primary transition-all`,
+                              A &&
+                                `border-red-500/50 bg-red-50/5 ring-1 ring-red-500/30 placeholder:text-red-400`,
+                            ),
+                          }),
+                          (0, C.jsx)(`button`, {
+                            type: `button`,
+                            onClick: A ? U : H,
+                            className: o(
+                              `absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-muted-foreground hover:text-primary transition-all cursor-pointer`,
+                              A &&
+                                `text-red-500 hover:text-red-600 bg-red-100/10 animate-pulse`,
+                            ),
+                            title: A ? `Stop listening` : `Dictate your query`,
+                            children: A
+                              ? (0, C.jsx)(_, { className: `h-4 w-4` })
+                              : (0, C.jsx)(v, { className: `h-4 w-4` }),
+                          }),
+                        ],
+                      }),
+                      (0, C.jsx)(f, {
+                        onClick: K,
+                        disabled: !x.trim() || D || A,
+                        size: `sm`,
+                        className: `h-10 px-4`,
+                        children: (0, C.jsx)(d, { className: `h-4 w-4` }),
+                      }),
+                    ],
+                  }),
+                  (0, C.jsx)(`div`, {
+                    className: `mt-2 text-[10px] font-mono text-muted-foreground text-center`,
+                    children: `AI responses are estimates and intelligence summaries · Connected to verified company databases`,
+                  }),
+                ],
+              }),
+            ],
+          }),
+        ],
+      }),
+    ],
+  });
+}
+export { k as component };

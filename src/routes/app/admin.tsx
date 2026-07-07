@@ -1,10 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
-import { 
-  Settings, Users, Building2, ShieldCheck, ClipboardList, 
-  CheckCircle2, Clock, XCircle, ChevronDown, ChevronUp, 
-  AlertOctagon, MoreVertical, Edit3, Trash2, Plus 
+import {
+  Settings,
+  Users,
+  Building2,
+  ShieldCheck,
+  ClipboardList,
+  CheckCircle2,
+  Clock,
+  XCircle,
+  ChevronDown,
+  ChevronUp,
+  AlertOctagon,
+  MoreVertical,
+  Edit3,
+  Trash2,
+  Plus,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/app/page-header";
@@ -32,18 +44,76 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/app/admin")({ component: Page });
 
 const MOCK_USERS = [
-  { id: "u1", email: "hr.hardik05@gmail.com", full_name: "Hardik Parmar", company: "GMIntel", role: "admin", created_at: new Date(Date.now() - 86400000 * 30).toISOString() },
-  { id: "u2", email: "analyst@gmintelhq.com", full_name: "Sarah Chen", company: "GMIntel", role: "analyst", created_at: new Date(Date.now() - 86400000 * 20).toISOString() },
-  { id: "u3", email: "buyer@sourcing.co", full_name: "Alex Rahman", company: "Sourcing Co", role: "viewer", created_at: new Date(Date.now() - 86400000 * 10).toISOString() },
-  { id: "u4", email: "trade@fashionbrand.eu", full_name: "Marie Dubois", company: "Fashion Brand EU", role: "viewer", created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
+  {
+    id: "u1",
+    email: "hr.hardik05@gmail.com",
+    full_name: "Hardik Parmar",
+    company: "GMIntel",
+    role: "admin",
+    created_at: new Date(Date.now() - 86400000 * 30).toISOString(),
+  },
+  {
+    id: "u2",
+    email: "analyst@gmintelhq.com",
+    full_name: "Sarah Chen",
+    company: "GMIntel",
+    role: "analyst",
+    created_at: new Date(Date.now() - 86400000 * 20).toISOString(),
+  },
+  {
+    id: "u3",
+    email: "buyer@sourcing.co",
+    full_name: "Alex Rahman",
+    company: "Sourcing Co",
+    role: "viewer",
+    created_at: new Date(Date.now() - 86400000 * 10).toISOString(),
+  },
+  {
+    id: "u4",
+    email: "trade@fashionbrand.eu",
+    full_name: "Marie Dubois",
+    company: "Fashion Brand EU",
+    role: "viewer",
+    created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+  },
 ];
 
 const MOCK_AUDIT_LOGS = [
-  { id: "a1", action: "company.verified", entity: "Arvind Mills Ltd", actor: "hr.hardik05@gmail.com", created_at: new Date(Date.now() - 3600000).toISOString() },
-  { id: "a2", action: "rfq.created", entity: "Cotton Greige RFQ", actor: "buyer@sourcing.co", created_at: new Date(Date.now() - 7200000).toISOString() },
-  { id: "a3", action: "report.generated", entity: "Bangladesh Country Report", actor: "analyst@gmintelhq.com", created_at: new Date(Date.now() - 86400000).toISOString() },
-  { id: "a4", action: "user.signup", entity: "trade@fashionbrand.eu", actor: "system", created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
-  { id: "a5", action: "company.rejected", entity: "Unknown Factory CN", actor: "hr.hardik05@gmail.com", created_at: new Date(Date.now() - 86400000 * 7).toISOString() },
+  {
+    id: "a1",
+    action: "company.verified",
+    entity: "Arvind Mills Ltd",
+    actor: "hr.hardik05@gmail.com",
+    created_at: new Date(Date.now() - 3600000).toISOString(),
+  },
+  {
+    id: "a2",
+    action: "rfq.created",
+    entity: "Cotton Greige RFQ",
+    actor: "buyer@sourcing.co",
+    created_at: new Date(Date.now() - 7200000).toISOString(),
+  },
+  {
+    id: "a3",
+    action: "report.generated",
+    entity: "Bangladesh Country Report",
+    actor: "analyst@gmintelhq.com",
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+  },
+  {
+    id: "a4",
+    action: "user.signup",
+    entity: "trade@fashionbrand.eu",
+    actor: "system",
+    created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+  },
+  {
+    id: "a5",
+    action: "company.rejected",
+    entity: "Unknown Factory CN",
+    actor: "hr.hardik05@gmail.com",
+    created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
+  },
 ];
 
 const ROLE_COLORS: Record<string, string> = {
@@ -52,15 +122,36 @@ const ROLE_COLORS: Record<string, string> = {
   viewer: "text-muted-foreground border-border bg-muted/20",
 };
 
-const STATUS_ACTIONS: Record<string, { label: string; nextStatus: string; cls: string }> = {
-  pending_review: { label: "Verify", nextStatus: "verified", cls: "text-success" },
-  verified: { label: "Archive", nextStatus: "archived", cls: "text-muted-foreground" },
-  rejected: { label: "Re-review", nextStatus: "pending_review", cls: "text-warning" },
-  archived: { label: "Restore", nextStatus: "pending_review", cls: "text-info" },
+const STATUS_ACTIONS: Record<
+  string,
+  { label: string; nextStatus: string; cls: string }
+> = {
+  pending_review: {
+    label: "Verify",
+    nextStatus: "verified",
+    cls: "text-success",
+  },
+  verified: {
+    label: "Archive",
+    nextStatus: "archived",
+    cls: "text-muted-foreground",
+  },
+  rejected: {
+    label: "Re-review",
+    nextStatus: "pending_review",
+    cls: "text-warning",
+  },
+  archived: {
+    label: "Restore",
+    nextStatus: "pending_review",
+    cls: "text-info",
+  },
 };
 
 function Page() {
-  const [activeTab, setActiveTab] = useState<"companies" | "users" | "audit">("companies");
+  const [activeTab, setActiveTab] = useState<"companies" | "users" | "audit">(
+    "companies",
+  );
   const [statusFilter, setStatusFilter] = useState("pending_review");
   const [expandedUser, setExpandedUser] = useState<string | null>(null);
   const [mockProfiles, setMockProfiles] = useState(MOCK_USERS);
@@ -75,12 +166,14 @@ function Page() {
   const [isBypassActive, setIsBypassActive] = useState<boolean>(false);
   const [localCompanies, setLocalCompanies] = useState<any[]>([]);
   const [localRoles, setLocalRoles] = useState<Record<string, string>>({});
-  const [hasLoadedFromStorage, setHasLoadedFromStorage] = useState<boolean>(false);
+  const [hasLoadedFromStorage, setHasLoadedFromStorage] =
+    useState<boolean>(false);
 
   // Load from localStorage on mount (client-side only to avoid hydration mismatch with SSR)
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedBypass = localStorage.getItem("gmintel_admin_bypass") === "true";
+      const storedBypass =
+        localStorage.getItem("gmintel_admin_bypass") === "true";
       const storedCompanies = localStorage.getItem("gmintel_local_companies");
       const storedRoles = localStorage.getItem("gmintel_local_roles");
 
@@ -100,7 +193,10 @@ function Page() {
 
   useEffect(() => {
     if (typeof window !== "undefined" && hasLoadedFromStorage) {
-      localStorage.setItem("gmintel_local_companies", JSON.stringify(localCompanies));
+      localStorage.setItem(
+        "gmintel_local_companies",
+        JSON.stringify(localCompanies),
+      );
     }
   }, [localCompanies, hasLoadedFromStorage]);
 
@@ -129,7 +225,10 @@ function Page() {
       setIsRoleLoading(false);
     } else if (currentUser) {
       setIsUserLoading(false);
-      if (currentUser.email === "talentmatch56@gmail.com" || currentUser.email === "dev@gmail.com") {
+      if (
+        currentUser.email === "talentmatch56@gmail.com" ||
+        currentUser.email === "dev@gmail.com"
+      ) {
         setCurrentUserRole("admin");
         setIsRoleLoading(false);
         return;
@@ -141,14 +240,19 @@ function Page() {
         setIsRoleLoading(false);
       } else {
         setIsRoleLoading(true);
-        supabase.from("user_roles").select("role").eq("user_id", currentUser.id).maybeSingle().then(({ data }) => {
-          if (data) {
-            setCurrentUserRole(data.role);
-          } else {
-            setCurrentUserRole("viewer");
-          }
-          setIsRoleLoading(false);
-        });
+        supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", currentUser.id)
+          .maybeSingle()
+          .then(({ data }) => {
+            if (data) {
+              setCurrentUserRole(data.role);
+            } else {
+              setCurrentUserRole("viewer");
+            }
+            setIsRoleLoading(false);
+          });
       }
     }
   }, [isBypassActive, currentUser]);
@@ -165,7 +269,9 @@ function Page() {
   const [formCity, setFormCity] = useState("");
   const [formBusinessType, setFormBusinessType] = useState("manufacturer");
   const [formTrustScore, setFormTrustScore] = useState("85");
-  const [formRiskLevel, setFormRiskLevel] = useState<"low" | "medium" | "high">("low");
+  const [formRiskLevel, setFormRiskLevel] = useState<"low" | "medium" | "high">(
+    "low",
+  );
   const [formCapacity, setFormCapacity] = useState("");
   const [formMOQ, setFormMOQ] = useState("");
   const [formLeadTime, setFormLeadTime] = useState("");
@@ -176,12 +282,17 @@ function Page() {
     queryKey: ["admin-companies"],
     queryFn: async () => {
       const [compRes, countRes] = await Promise.all([
-        supabase.from("companies").select("id,slug,name,country_code,city,business_type,status,ai_risk_level,ai_trust_score,monthly_capacity,moq,lead_time_days,created_at").order("created_at", { ascending: false }),
-        supabase.from("countries").select("code,name").order("name")
+        supabase
+          .from("companies")
+          .select(
+            "id,slug,name,country_code,city,business_type,status,ai_risk_level,ai_trust_score,monthly_capacity,moq,lead_time_days,created_at",
+          )
+          .order("created_at", { ascending: false }),
+        supabase.from("countries").select("code,name").order("name"),
       ]);
       return {
         companies: compRes.data ?? [],
-        countries: countRes.data ?? []
+        countries: countRes.data ?? [],
       };
     },
   });
@@ -189,11 +300,15 @@ function Page() {
   const { data: profiles, refetch: refetchProfiles } = useQuery({
     queryKey: ["admin-profiles"],
     queryFn: async () => {
-      const { data: pData } = await supabase.from("profiles").select("id,email,full_name,company,created_at");
-      const { data: rData } = await supabase.from("user_roles").select("user_id,role");
-      return (pData ?? []).map(p => ({
+      const { data: pData } = await supabase
+        .from("profiles")
+        .select("id,email,full_name,company,created_at");
+      const { data: rData } = await supabase
+        .from("user_roles")
+        .select("user_id,role");
+      return (pData ?? []).map((p) => ({
         ...p,
-        role: rData?.find(r => r.user_id === p.id)?.role || "viewer"
+        role: rData?.find((r) => r.user_id === p.id)?.role || "viewer",
       }));
     },
   });
@@ -211,16 +326,18 @@ function Page() {
   }, [dbCompanies, hasLoadedFromStorage]);
 
   const allProfiles = useMemo(() => {
-    const dbProfiles = (profiles ?? []).map(p => ({
+    const dbProfiles = (profiles ?? []).map((p) => ({
       ...p,
-      role: localRoles[p.id] || p.role || "viewer"
+      role: localRoles[p.id] || p.role || "viewer",
     }));
     return [
       ...dbProfiles,
-      ...mockProfiles.map(m => ({
-        ...m,
-        role: localRoles[m.id] || m.role
-      })).filter(m => !dbProfiles.some(p => p.email === m.email))
+      ...mockProfiles
+        .map((m) => ({
+          ...m,
+          role: localRoles[m.id] || m.role,
+        }))
+        .filter((m) => !dbProfiles.some((p) => p.email === m.email)),
     ];
   }, [profiles, mockProfiles, localRoles]);
 
@@ -229,7 +346,9 @@ function Page() {
   }, [localCompanies, dbCompanies]);
 
   const filteredCompanies = useMemo(() => {
-    return statusFilter === "all" ? allCompanies : allCompanies.filter((c) => c.status === statusFilter);
+    return statusFilter === "all"
+      ? allCompanies
+      : allCompanies.filter((c) => c.status === statusFilter);
   }, [allCompanies, statusFilter]);
 
   const stats = useMemo(() => {
@@ -243,37 +362,51 @@ function Page() {
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      const { error } = await supabase.from("companies").update({ status } as any).eq("id", id);
+      const { error } = await supabase
+        .from("companies")
+        .update({ status } as any)
+        .eq("id", id);
       if (error) throw error;
       toast.success(`Status updated successfully`);
       refetchCompanies();
     } catch (e: any) {
       console.warn("DB update failed, using local state fallback:", e);
-      setLocalCompanies(prev => prev.map(c => c.id === id ? { ...c, status } : c));
+      setLocalCompanies((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, status } : c)),
+      );
       toast.success(`Status updated successfully (Local Demo Mode)`);
     }
   };
 
   const handleUpdateRole = async (userId: string, newRole: string) => {
     if (userId.startsWith("u")) {
-      setLocalRoles(prev => ({ ...prev, [userId]: newRole }));
+      setLocalRoles((prev) => ({ ...prev, [userId]: newRole }));
       toast.success(`Role updated to ${newRole} for mock user`);
       return;
     }
     try {
-      const { data } = await supabase.from("user_roles").select("id").eq("user_id", userId).maybeSingle();
+      const { data } = await supabase
+        .from("user_roles")
+        .select("id")
+        .eq("user_id", userId)
+        .maybeSingle();
       let res;
       if (data) {
-        res = await supabase.from("user_roles").update({ role: newRole } as any).eq("user_id", userId);
+        res = await supabase
+          .from("user_roles")
+          .update({ role: newRole } as any)
+          .eq("user_id", userId);
       } else {
-        res = await supabase.from("user_roles").insert({ user_id: userId, role: newRole } as any);
+        res = await supabase
+          .from("user_roles")
+          .insert({ user_id: userId, role: newRole } as any);
       }
       if (res.error) throw res.error;
       toast.success(`Role updated to ${newRole} successfully`);
       refetchProfiles();
     } catch (e: unknown) {
       console.warn("DB role update failed, using local fallback:", e);
-      setLocalRoles(prev => ({ ...prev, [userId]: newRole }));
+      setLocalRoles((prev) => ({ ...prev, [userId]: newRole }));
       toast.success(`Role updated to ${newRole} (Local Demo Mode)`);
       if (currentUser && userId === currentUser.id) {
         setCurrentUserRole(newRole);
@@ -284,10 +417,10 @@ function Page() {
   const handleToggleSuspend = (userId: string) => {
     const isSuspended = suspendedUserIds.includes(userId);
     if (isSuspended) {
-      setSuspendedUserIds(prev => prev.filter(id => id !== userId));
+      setSuspendedUserIds((prev) => prev.filter((id) => id !== userId));
       toast.success("User account activated");
     } else {
-      setSuspendedUserIds(prev => [...prev, userId]);
+      setSuspendedUserIds((prev) => [...prev, userId]);
       toast.error("User account suspended");
     }
   };
@@ -328,15 +461,20 @@ function Page() {
   };
 
   const handleDeleteCompany = async (id: string, name: string) => {
-    if (window.confirm(`Are you sure you want to permanently delete "${name}"?`)) {
+    if (
+      window.confirm(`Are you sure you want to permanently delete "${name}"?`)
+    ) {
       try {
-        const { error } = await supabase.from("companies").delete().eq("id", id);
+        const { error } = await supabase
+          .from("companies")
+          .delete()
+          .eq("id", id);
         if (error) throw error;
         toast.success(`Successfully deleted "${name}"`);
         refetchCompanies();
       } catch (e: any) {
         console.warn("DB delete failed, using local state fallback:", e);
-        setLocalCompanies(prev => prev.filter(c => c.id !== id));
+        setLocalCompanies((prev) => prev.filter((c) => c.id !== id));
         toast.success(`Successfully deleted "${name}" (Local Demo Mode)`);
       }
     }
@@ -350,13 +488,19 @@ function Page() {
     }
 
     // Ensure unique slug by appending a short random suffix on creation to bypass key constraints
-    const baseSlug = formName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-    const generatedSlug = formSlug.trim() || (isEditing 
-      ? baseSlug 
-      : `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`);
+    const baseSlug = formName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    const generatedSlug =
+      formSlug.trim() ||
+      (isEditing
+        ? baseSlug
+        : `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`);
 
     const payload = {
-      id: isEditing && editingCompanyId ? editingCompanyId : crypto.randomUUID(),
+      id:
+        isEditing && editingCompanyId ? editingCompanyId : crypto.randomUUID(),
       name: formName.trim(),
       slug: generatedSlug,
       country_code: formCountry,
@@ -372,11 +516,16 @@ function Page() {
 
     try {
       if (isEditing && editingCompanyId) {
-        const { error } = await supabase.from("companies").update(payload as any).eq("id", editingCompanyId);
+        const { error } = await supabase
+          .from("companies")
+          .update(payload as any)
+          .eq("id", editingCompanyId);
         if (error) throw error;
         toast.success(`Successfully updated "${formName}"`);
       } else {
-        const { error } = await supabase.from("companies").insert([payload] as any);
+        const { error } = await supabase
+          .from("companies")
+          .insert([payload] as any);
         if (error) throw error;
         toast.success(`Successfully added "${formName}"`);
       }
@@ -385,10 +534,14 @@ function Page() {
     } catch (e: any) {
       console.warn("DB save failed, using local state fallback:", e);
       if (isEditing && editingCompanyId) {
-        setLocalCompanies(prev => prev.map(c => c.id === editingCompanyId ? { ...c, ...payload } : c));
+        setLocalCompanies((prev) =>
+          prev.map((c) =>
+            c.id === editingCompanyId ? { ...c, ...payload } : c,
+          ),
+        );
         toast.success(`Successfully updated "${formName}" (Local Demo Mode)`);
       } else {
-        setLocalCompanies(prev => [payload, ...prev]);
+        setLocalCompanies((prev) => [payload, ...prev]);
         toast.success(`Successfully added "${formName}" (Local Demo Mode)`);
       }
       setModalOpen(false);
@@ -414,16 +567,21 @@ function Page() {
 
         <div className="p-8 rounded-lg border border-destructive/30 bg-destructive/5 text-center max-w-xl mx-auto my-12 space-y-4">
           <AlertOctagon className="h-12 w-12 mx-auto text-destructive animate-bounce" />
-          <h3 className="font-display font-semibold text-lg text-foreground">Access Denied</h3>
+          <h3 className="font-display font-semibold text-lg text-foreground">
+            Access Denied
+          </h3>
           <p className="text-sm text-muted-foreground">
-            You do not have the required administrator privileges to view this page. If you believe this is an error, please contact your system administrator.
+            You do not have the required administrator privileges to view this
+            page. If you believe this is an error, please contact your system
+            administrator.
           </p>
           <div className="pt-4 flex flex-col gap-3 items-center">
             <div className="p-3 rounded border border-warning/20 bg-warning/5 text-xs text-warning font-mono w-full text-left">
-              <strong>Current User:</strong> {currentUser?.email || "anonymous"}<br />
+              <strong>Current User:</strong> {currentUser?.email || "anonymous"}
+              <br />
               <strong>Current Role:</strong> {currentUserRole}
             </div>
-            
+
             <div className="flex gap-4">
               <Button
                 variant="outline"
@@ -431,7 +589,9 @@ function Page() {
                 onClick={() => {
                   setCurrentUserRole("admin");
                   setIsBypassActive(true);
-                  toast.success("Local Admin Bypass activated! You can now verify, edit, and add companies locally.");
+                  toast.success(
+                    "Local Admin Bypass activated! You can now verify, edit, and add companies locally.",
+                  );
                 }}
                 className="text-xs font-mono border-warning/30 bg-warning/10 hover:bg-warning/20 text-warning"
               >
@@ -459,26 +619,35 @@ function Page() {
         <div className="p-3 rounded-lg border border-info/30 bg-info/5 text-info text-xs flex items-center justify-between font-mono">
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-info animate-pulse" />
-            <span><strong>Local Admin Bypass Active:</strong> Actions will fall back to local UI state instead of Supabase.</span>
+            <span>
+              <strong>Local Admin Bypass Active:</strong> Actions will fall back
+              to local UI state instead of Supabase.
+            </span>
           </div>
           <div className="flex gap-3">
-            <button 
+            <button
               onClick={() => {
-                if (window.confirm("Are you sure you want to clear your local overrides and reload database defaults?")) {
+                if (
+                  window.confirm(
+                    "Are you sure you want to clear your local overrides and reload database defaults?",
+                  )
+                ) {
                   localStorage.removeItem("gmintel_local_companies");
                   localStorage.removeItem("gmintel_local_roles");
                   setLocalCompanies([]);
                   setLocalRoles({});
                   refetchCompanies();
                   refetchProfiles();
-                  toast.success("Local cache cleared! Restored database defaults.");
+                  toast.success(
+                    "Local cache cleared! Restored database defaults.",
+                  );
                 }
               }}
               className="text-[10px] text-muted-foreground hover:text-foreground underline font-semibold"
             >
               Reset Cache
             </button>
-            <button 
+            <button
               onClick={() => {
                 setCurrentUserRole("viewer");
                 setIsBypassActive(false);
@@ -493,18 +662,46 @@ function Page() {
       )}
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Total Companies" value={stats.total} icon={<Building2 className="h-4 w-4" />} />
-        <StatCard label="Pending Review" value={stats.pending} icon={<Clock className="h-4 w-4" />} delta={{ value: "needs action", positive: false }} />
-        <StatCard label="Verified" value={stats.verified} icon={<CheckCircle2 className="h-4 w-4" />} delta={{ value: "approved", positive: true }} />
-        <StatCard label="Platform Users" value={stats.users} icon={<Users className="h-4 w-4" />} />
+        <StatCard
+          label="Total Companies"
+          value={stats.total}
+          icon={<Building2 className="h-4 w-4" />}
+        />
+        <StatCard
+          label="Pending Review"
+          value={stats.pending}
+          icon={<Clock className="h-4 w-4" />}
+          delta={{ value: "needs action", positive: false }}
+        />
+        <StatCard
+          label="Verified"
+          value={stats.verified}
+          icon={<CheckCircle2 className="h-4 w-4" />}
+          delta={{ value: "approved", positive: true }}
+        />
+        <StatCard
+          label="Platform Users"
+          value={stats.users}
+          icon={<Users className="h-4 w-4" />}
+        />
       </div>
 
       {/* Tab navigation */}
       <div className="flex gap-1 border-b border-border overflow-x-auto flex-nowrap whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {([["companies", "Company Management", Building2], ["users", "User Management", Users], ["audit", "Audit Log", ClipboardList]] as const).map(([key, label, Icon]) => (
-          <button key={key} onClick={() => setActiveTab(key)}
-            className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors ${activeTab === key ? "border-primary text-foreground font-medium" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
-            <Icon className="h-3.5 w-3.5" />{label}
+        {(
+          [
+            ["companies", "Company Management", Building2],
+            ["users", "User Management", Users],
+            ["audit", "Audit Log", ClipboardList],
+          ] as const
+        ).map(([key, label, Icon]) => (
+          <button
+            key={key}
+            onClick={() => setActiveTab(key)}
+            className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors ${activeTab === key ? "border-primary text-foreground font-medium" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+          >
+            <Icon className="h-3.5 w-3.5" />
+            {label}
           </button>
         ))}
       </div>
@@ -514,20 +711,37 @@ function Page() {
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border gap-3 bg-muted/10">
             <div>
-              <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Company Registry</div>
-              <div className="font-display font-semibold">Verification queue</div>
+              <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+                Company Registry
+              </div>
+              <div className="font-display font-semibold">
+                Verification queue
+              </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <div className="flex flex-wrap gap-1.5">
-                {["all", "pending_review", "verified", "rejected", "archived"].map((s) => (
-                  <button key={s} onClick={() => setStatusFilter(s)}
-                    className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}>
+                {[
+                  "all",
+                  "pending_review",
+                  "verified",
+                  "rejected",
+                  "archived",
+                ].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setStatusFilter(s)}
+                    className={`px-2.5 py-1 rounded text-xs font-mono border capitalize transition-colors ${statusFilter === s ? "bg-primary/15 text-primary border-primary/40" : "border-border text-muted-foreground hover:border-primary/30"}`}
+                  >
                     {s === "pending_review" ? "Pending" : s}
                   </button>
                 ))}
               </div>
-              <Button size="sm" onClick={handleOpenAddModal} className="gap-1.5 text-xs font-mono">
+              <Button
+                size="sm"
+                onClick={handleOpenAddModal}
+                className="gap-1.5 text-xs font-mono"
+              >
                 <Plus className="h-3.5 w-3.5" /> Add Company
               </Button>
             </div>
@@ -542,63 +756,96 @@ function Page() {
               <div className="hidden sm:block col-span-1 text-right">Risk</div>
               <div className="col-span-5 sm:col-span-2 text-right">Actions</div>
             </div>
-            
+
             {filteredCompanies.length === 0 && (
-              <div className="p-8 text-center text-sm text-muted-foreground">No companies in this status.</div>
+              <div className="p-8 text-center text-sm text-muted-foreground">
+                No companies in this status.
+              </div>
             )}
-            
+
             {filteredCompanies.map((c) => {
               const action = STATUS_ACTIONS[c.status ?? "pending_review"];
               return (
-                <div key={c.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
+                <div
+                  key={c.id}
+                  className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors"
+                >
                   <div className="col-span-5 sm:col-span-4 min-w-0">
                     <div className="font-medium truncate">{c.name}</div>
                     <div className="text-xs text-muted-foreground truncate">
-                      {c.city ? `${c.city}, ` : ""}{c.country_code ?? "—"}
+                      {c.city ? `${c.city}, ` : ""}
+                      {c.country_code ?? "—"}
                     </div>
                   </div>
-                  <div className="hidden sm:block col-span-2 font-mono text-xs text-muted-foreground truncate">{c.country_code ?? "—"}</div>
-                  <div className="hidden md:block col-span-2 text-xs text-muted-foreground capitalize truncate">{c.business_type ?? "—"}</div>
-                  <div className="col-span-2 sm:col-span-1 text-right font-mono tabular-nums">{c.ai_trust_score ?? "—"}</div>
-                  <div className="hidden sm:block col-span-1 text-right"><RiskBadge level={c.ai_risk_level} /></div>
+                  <div className="hidden sm:block col-span-2 font-mono text-xs text-muted-foreground truncate">
+                    {c.country_code ?? "—"}
+                  </div>
+                  <div className="hidden md:block col-span-2 text-xs text-muted-foreground capitalize truncate">
+                    {c.business_type ?? "—"}
+                  </div>
+                  <div className="col-span-2 sm:col-span-1 text-right font-mono tabular-nums">
+                    {c.ai_trust_score ?? "—"}
+                  </div>
+                  <div className="hidden sm:block col-span-1 text-right">
+                    <RiskBadge level={c.ai_risk_level} />
+                  </div>
                   <div className="col-span-5 sm:col-span-2 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       {action && (
-                        <button 
+                        <button
                           onClick={() => updateStatus(c.id, action.nextStatus)}
                           className={`text-[10px] font-mono px-2 py-0.5 rounded border border-border/80 hover:bg-muted transition-colors ${action.cls}`}
                         >
                           {action.label}
                         </button>
                       )}
-                      
+
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 p-0 rounded-md hover:bg-muted">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 p-0 rounded-md hover:bg-muted"
+                          >
                             <MoreVertical className="h-4 w-4 text-muted-foreground" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40 font-sans">
-                          <DropdownMenuItem onClick={() => handleOpenEditModal(c)} className="gap-2 text-xs cursor-pointer">
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-40 font-sans"
+                        >
+                          <DropdownMenuItem
+                            onClick={() => handleOpenEditModal(c)}
+                            className="gap-2 text-xs cursor-pointer"
+                          >
                             <Edit3 className="h-3.5 w-3.5" /> Edit Details
                           </DropdownMenuItem>
-                          
+
                           {action && (
-                            <DropdownMenuItem onClick={() => updateStatus(c.id, action.nextStatus)} className="gap-2 text-xs cursor-pointer text-success">
-                              <CheckCircle2 className="h-3.5 w-3.5" /> {action.label}
+                            <DropdownMenuItem
+                              onClick={() =>
+                                updateStatus(c.id, action.nextStatus)
+                              }
+                              className="gap-2 text-xs cursor-pointer text-success"
+                            >
+                              <CheckCircle2 className="h-3.5 w-3.5" />{" "}
+                              {action.label}
                             </DropdownMenuItem>
                           )}
-                          
-                          {c.status !== 'rejected' && (
-                            <DropdownMenuItem onClick={() => updateStatus(c.id, 'rejected')} className="gap-2 text-xs cursor-pointer text-warning">
+
+                          {c.status !== "rejected" && (
+                            <DropdownMenuItem
+                              onClick={() => updateStatus(c.id, "rejected")}
+                              className="gap-2 text-xs cursor-pointer text-warning"
+                            >
                               <XCircle className="h-3.5 w-3.5" /> Reject
                             </DropdownMenuItem>
                           )}
-                          
+
                           <DropdownMenuSeparator />
-                          
-                          <DropdownMenuItem 
-                            onClick={() => handleDeleteCompany(c.id, c.name)} 
+
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteCompany(c.id, c.name)}
                             className="gap-2 text-xs text-destructive focus:bg-destructive/10 cursor-pointer"
                           >
                             <Trash2 className="h-3.5 w-3.5" /> Delete Company
@@ -618,7 +865,9 @@ function Page() {
       {activeTab === "users" && (
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="p-4 border-b border-border">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">User Registry</div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+              User Registry
+            </div>
             <div className="font-display font-semibold">Platform accounts</div>
           </div>
           <div className="divide-y divide-border">
@@ -633,45 +882,77 @@ function Page() {
               <div key={u.id}>
                 <div className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
                   <div className="col-span-7 sm:col-span-4 min-w-0">
-                    <div className="font-medium truncate">{u.full_name || "—"}</div>
-                    <div className="text-xs text-muted-foreground font-mono truncate">{u.email}</div>
+                    <div className="font-medium truncate">
+                      {u.full_name || "—"}
+                    </div>
+                    <div className="text-xs text-muted-foreground font-mono truncate">
+                      {u.email}
+                    </div>
                     <div className="text-xs text-muted-foreground sm:hidden truncate mt-0.5">
                       {(u as any).company || "No Company"}
                     </div>
                   </div>
-                  <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">{(u as any).company || "—"}</div>
+                  <div className="hidden sm:block col-span-3 text-xs text-muted-foreground truncate">
+                    {(u as any).company || "—"}
+                  </div>
                   <div className="col-span-4 sm:col-span-2">
                     {suspendedUserIds.includes(u.id) ? (
                       <span className="inline-flex items-center gap-1 rounded border border-destructive/30 bg-destructive/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide text-destructive">
                         <AlertOctagon className="h-2.5 w-2.5" /> Suspended
                       </span>
                     ) : (
-                      <span className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as any).role] ?? ROLE_COLORS.viewer}`}>
-                        <ShieldCheck className="h-2.5 w-2.5" />{(u as any).role || "viewer"}
+                      <span
+                        className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wide ${ROLE_COLORS[(u as any).role] ?? ROLE_COLORS.viewer}`}
+                      >
+                        <ShieldCheck className="h-2.5 w-2.5" />
+                        {(u as any).role || "viewer"}
                       </span>
                     )}
                   </div>
-                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">{new Date(u.created_at).toLocaleDateString("en-US")}</div>
+                  <div className="hidden md:block col-span-2 text-xs font-mono text-muted-foreground">
+                    {new Date(u.created_at).toLocaleDateString("en-US")}
+                  </div>
                   <div className="col-span-1 text-right">
-                    <button onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)} className="text-muted-foreground hover:text-foreground">
-                      {expandedUser === u.id ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    <button
+                      onClick={() =>
+                        setExpandedUser(expandedUser === u.id ? null : u.id)
+                      }
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      {expandedUser === u.id ? (
+                        <ChevronUp className="h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4" />
+                      )}
                     </button>
                   </div>
                 </div>
                 {expandedUser === u.id && (
                   <div className="px-4 pb-3 border-t border-border/50 bg-muted/10">
                     <div className="pt-3 text-xs text-muted-foreground space-y-1">
-                      <div><span className="font-mono text-foreground">ID:</span> {u.id}</div>
+                      <div>
+                        <span className="font-mono text-foreground">ID:</span>{" "}
+                        {u.id}
+                      </div>
                       <div className="flex gap-2 mt-2">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button size="sm" variant="outline" className="h-7 text-xs flex items-center gap-1" disabled={suspendedUserIds.includes(u.id)}>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-7 text-xs flex items-center gap-1"
+                              disabled={suspendedUserIds.includes(u.id)}
+                            >
                               Change Role <ChevronDown className="h-3 w-3" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="start">
                             {["admin", "analyst", "viewer"].map((r) => (
-                              <DropdownMenuItem key={r} onClick={() => handleUpdateRole(u.id, r)} className="cursor-pointer">
+                              <DropdownMenuItem
+                                key={r}
+                                onClick={() => handleUpdateRole(u.id, r)}
+                                className="cursor-pointer"
+                              >
                                 {r.charAt(0).toUpperCase() + r.slice(1)}
                               </DropdownMenuItem>
                             ))}
@@ -687,7 +968,9 @@ function Page() {
                               : "text-destructive border-destructive/30 hover:bg-destructive/10"
                           }`}
                         >
-                          {suspendedUserIds.includes(u.id) ? "Unsuspend" : "Suspend"}
+                          {suspendedUserIds.includes(u.id)
+                            ? "Unsuspend"
+                            : "Suspend"}
                         </Button>
                       </div>
                     </div>
@@ -703,7 +986,9 @@ function Page() {
       {activeTab === "audit" && (
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="p-4 border-b border-border">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Audit Trail</div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+              Audit Trail
+            </div>
             <div className="font-display font-semibold">System event log</div>
           </div>
           <div className="divide-y divide-border">
@@ -714,17 +999,29 @@ function Page() {
               <div className="col-span-3 sm:col-span-2 text-right">When</div>
             </div>
             {MOCK_AUDIT_LOGS.map((log) => (
-              <div key={log.id} className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors">
-                <div className="col-span-4 sm:col-span-3 font-mono text-xs text-primary truncate">{log.action}</div>
+              <div
+                key={log.id}
+                className="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center hover:bg-muted/40 transition-colors"
+              >
+                <div className="col-span-4 sm:col-span-3 font-mono text-xs text-primary truncate">
+                  {log.action}
+                </div>
                 <div className="col-span-5 sm:col-span-4 text-sm min-w-0">
                   <div className="truncate">{log.entity}</div>
                   <div className="text-[10px] text-muted-foreground font-mono truncate sm:hidden mt-0.5">
                     by {log.actor}
                   </div>
                 </div>
-                <div className="hidden sm:block col-span-3 text-xs text-muted-foreground font-mono truncate">{log.actor}</div>
+                <div className="hidden sm:block col-span-3 text-xs text-muted-foreground font-mono truncate">
+                  {log.actor}
+                </div>
                 <div className="col-span-3 sm:col-span-2 text-right text-xs font-mono text-muted-foreground">
-                  {new Date(log.created_at).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                  {new Date(log.created_at).toLocaleString([], {
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </div>
               </div>
             ))}
@@ -737,60 +1034,89 @@ function Page() {
         <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto bg-card border border-border p-6 font-sans">
           <DialogHeader>
             <DialogTitle className="font-display text-lg font-bold text-foreground">
-              {isEditing ? "Edit Company Registry Profile" : "Add New Verified Company"}
+              {isEditing
+                ? "Edit Company Registry Profile"
+                : "Add New Verified Company"}
             </DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleSaveCompany} className="space-y-4 py-3 text-sm">
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="c-name" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Company Name *</Label>
-                <Input 
-                  id="c-name" 
-                  value={formName} 
-                  onChange={(e) => setFormName(e.target.value)} 
-                  placeholder="e.g. Arvind Mills Ltd" 
-                  required 
+                <Label
+                  htmlFor="c-name"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Company Name *
+                </Label>
+                <Input
+                  id="c-name"
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                  placeholder="e.g. Arvind Mills Ltd"
+                  required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-slug" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Slug (Optional URL segment)</Label>
-                <Input 
-                  id="c-slug" 
-                  value={formSlug} 
-                  onChange={(e) => setFormSlug(e.target.value)} 
-                  placeholder="e.g. arvind-mills-ltd" 
+                <Label
+                  htmlFor="c-slug"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Slug (Optional URL segment)
+                </Label>
+                <Input
+                  id="c-slug"
+                  value={formSlug}
+                  onChange={(e) => setFormSlug(e.target.value)}
+                  placeholder="e.g. arvind-mills-ltd"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-country" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Country Hub *</Label>
-                <select 
+                <Label
+                  htmlFor="c-country"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Country Hub *
+                </Label>
+                <select
                   id="c-country"
                   value={formCountry}
                   onChange={(e) => setFormCountry(e.target.value)}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 >
                   {countries.map((cnt: any) => (
-                    <option key={cnt.code} value={cnt.code}>{cnt.name} ({cnt.code})</option>
+                    <option key={cnt.code} value={cnt.code}>
+                      {cnt.name} ({cnt.code})
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-city" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">City</Label>
-                <Input 
-                  id="c-city" 
-                  value={formCity} 
-                  onChange={(e) => setFormCity(e.target.value)} 
-                  placeholder="e.g. Ahmedabad" 
+                <Label
+                  htmlFor="c-city"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  City
+                </Label>
+                <Input
+                  id="c-city"
+                  value={formCity}
+                  onChange={(e) => setFormCity(e.target.value)}
+                  placeholder="e.g. Ahmedabad"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-type" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Business Category</Label>
-                <select 
+                <Label
+                  htmlFor="c-type"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Business Category
+                </Label>
+                <select
                   id="c-type"
                   value={formBusinessType}
                   onChange={(e) => setFormBusinessType(e.target.value)}
@@ -800,13 +1126,20 @@ function Page() {
                   <option value="supplier">Supplier / Trading House</option>
                   <option value="exporter">Exporter</option>
                   <option value="brand">Brand</option>
-                  <option value="organic supplier">Organic Fiber Supplier</option>
+                  <option value="organic supplier">
+                    Organic Fiber Supplier
+                  </option>
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-status" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">System Status</Label>
-                <select 
+                <Label
+                  htmlFor="c-status"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  System Status
+                </Label>
+                <select
                   id="c-status"
                   value={formStatus}
                   onChange={(e) => setFormStatus(e.target.value)}
@@ -820,20 +1153,30 @@ function Page() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-trust" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">AI Trust Score (1-100)</Label>
-                <Input 
-                  id="c-trust" 
+                <Label
+                  htmlFor="c-trust"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  AI Trust Score (1-100)
+                </Label>
+                <Input
+                  id="c-trust"
                   type="number"
                   min="1"
                   max="100"
-                  value={formTrustScore} 
-                  onChange={(e) => setFormTrustScore(e.target.value)} 
+                  value={formTrustScore}
+                  onChange={(e) => setFormTrustScore(e.target.value)}
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-risk" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">AI Risk Level</Label>
-                <select 
+                <Label
+                  htmlFor="c-risk"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  AI Risk Level
+                </Label>
+                <select
                   id="c-risk"
                   value={formRiskLevel}
                   onChange={(e) => setFormRiskLevel(e.target.value as any)}
@@ -846,41 +1189,61 @@ function Page() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-capacity" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Monthly Capacity (meters/month)</Label>
-                <Input 
-                  id="c-capacity" 
-                  type="number" 
-                  value={formCapacity} 
-                  onChange={(e) => setFormCapacity(e.target.value)} 
-                  placeholder="e.g. 1000000" 
+                <Label
+                  htmlFor="c-capacity"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Monthly Capacity (meters/month)
+                </Label>
+                <Input
+                  id="c-capacity"
+                  type="number"
+                  value={formCapacity}
+                  onChange={(e) => setFormCapacity(e.target.value)}
+                  placeholder="e.g. 1000000"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="c-moq" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Minimum Order Qty (MOQ)</Label>
-                <Input 
-                  id="c-moq" 
-                  type="number" 
-                  value={formMOQ} 
-                  onChange={(e) => setFormMOQ(e.target.value)} 
-                  placeholder="e.g. 500" 
+                <Label
+                  htmlFor="c-moq"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Minimum Order Qty (MOQ)
+                </Label>
+                <Input
+                  id="c-moq"
+                  type="number"
+                  value={formMOQ}
+                  onChange={(e) => setFormMOQ(e.target.value)}
+                  placeholder="e.g. 500"
                 />
               </div>
 
               <div className="space-y-1.5 sm:col-span-2">
-                <Label htmlFor="c-lead" className="text-xs text-muted-foreground uppercase font-mono tracking-wide">Lead Time (Days)</Label>
-                <Input 
-                  id="c-lead" 
-                  type="number" 
-                  value={formLeadTime} 
-                  onChange={(e) => setFormLeadTime(e.target.value)} 
-                  placeholder="e.g. 45" 
+                <Label
+                  htmlFor="c-lead"
+                  className="text-xs text-muted-foreground uppercase font-mono tracking-wide"
+                >
+                  Lead Time (Days)
+                </Label>
+                <Input
+                  id="c-lead"
+                  type="number"
+                  value={formLeadTime}
+                  onChange={(e) => setFormLeadTime(e.target.value)}
+                  placeholder="e.g. 45"
                 />
               </div>
             </div>
 
             <DialogFooter className="mt-6 flex justify-end gap-2 border-t border-border pt-4">
-              <Button type="button" variant="outline" size="sm" onClick={() => setModalOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setModalOpen(false)}
+              >
                 Cancel
               </Button>
               <Button type="submit" size="sm">

@@ -9,7 +9,10 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   const fetchRole = async (currentUser: User) => {
-    if (currentUser.email === "talentmatch56@gmail.com" || currentUser.email === "dev@gmail.com") {
+    if (
+      currentUser.email === "talentmatch56@gmail.com" ||
+      currentUser.email === "dev@gmail.com"
+    ) {
       setRole("admin");
       return;
     }
@@ -70,12 +73,12 @@ export function useAuth() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  return { 
-    session, 
-    user, 
-    role, 
-    loading, 
+  return {
+    session,
+    user,
+    role,
+    loading,
     signOut: () => supabase.auth.signOut(),
-    refetchRole: () => user && fetchRole(user) 
+    refetchRole: () => user && fetchRole(user),
   };
 }

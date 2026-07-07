@@ -7,7 +7,7 @@ export interface Company {
   city: string;
   business_type: string;
   ai_trust_score: number;
-  ai_risk_level: 'low' | 'medium' | 'high';
+  ai_risk_level: "low" | "medium" | "high";
   ai_quality_score?: number | null;
   employees_range?: string | null;
   year_founded?: number | null;
@@ -28,7 +28,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 86,
     employees_range: "250-500",
     year_founded: 1998,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc2",
@@ -42,7 +42,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 75,
     employees_range: "1000-5000",
     year_founded: 2004,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc3",
@@ -56,7 +56,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 83,
     employees_range: "500-1000",
     year_founded: 1992,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc4",
@@ -70,7 +70,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 92,
     employees_range: "100-250",
     year_founded: 2012,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc5",
@@ -84,7 +84,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 80,
     employees_range: "500-1000",
     year_founded: 2008,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc6",
@@ -98,7 +98,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 95,
     employees_range: "5000+",
     year_founded: 1931,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc7",
@@ -112,7 +112,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 89,
     employees_range: "5000+",
     year_founded: 1984,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc8",
@@ -126,7 +126,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 93,
     employees_range: "5000+",
     year_founded: 1990,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc9",
@@ -140,7 +140,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 87,
     employees_range: "1000-5000",
     year_founded: 1973,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc10",
@@ -154,7 +154,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 84,
     employees_range: "1000-5000",
     year_founded: 1983,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc11",
@@ -168,7 +168,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 90,
     employees_range: "5000+",
     year_founded: 1978,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc12",
@@ -182,7 +182,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 91,
     employees_range: "5000+",
     year_founded: 1965,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc13",
@@ -196,7 +196,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 70,
     employees_range: "1000-5000",
     year_founded: 1991,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc14",
@@ -210,7 +210,7 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 88,
     employees_range: "5000+",
     year_founded: 1985,
-    status: "verified"
+    status: "verified",
   },
   {
     id: "mc15",
@@ -224,6 +224,6 @@ export const MOCK_COMPANIES: Company[] = [
     ai_quality_score: 85,
     employees_range: "5000+",
     year_founded: 1975,
-    status: "verified"
-  }
+    status: "verified",
+  },
 ];

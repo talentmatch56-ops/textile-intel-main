@@ -32,8 +32,26 @@ const WORLD_COUNTRIES = [
 ];
 
 const MOCK_COUNTS: Record<string, number> = {
-  CN: 142, IN: 118, BD: 87, PK: 64, VN: 72, TR: 54, KH: 33, ID: 48,
-  MM: 28, US: 22, DE: 18, IT: 24, MA: 19, ET: 12, MX: 16, BR: 21, PT: 14, KR: 19, LK: 31, TH: 38,
+  CN: 142,
+  IN: 118,
+  BD: 87,
+  PK: 64,
+  VN: 72,
+  TR: 54,
+  KH: 33,
+  ID: 48,
+  MM: 28,
+  US: 22,
+  DE: 18,
+  IT: 24,
+  MA: 19,
+  ET: 12,
+  MX: 16,
+  BR: 21,
+  PT: 14,
+  KR: 19,
+  LK: 31,
+  TH: 38,
 };
 
 function getSize(count: number, max: number): number {
@@ -62,7 +80,9 @@ function Page() {
   const counts = useMemo(() => {
     if (!data || data.length === 0) return MOCK_COUNTS;
     const map: Record<string, number> = {};
-    data.forEach((c) => { if (c.country_code) map[c.country_code] = (map[c.country_code] ?? 0) + 1; });
+    data.forEach((c) => {
+      if (c.country_code) map[c.country_code] = (map[c.country_code] ?? 0) + 1;
+    });
     return Object.keys(map).length > 0 ? map : MOCK_COUNTS;
   }, [data]);
 
@@ -78,7 +98,11 @@ function Page() {
 
   const byRegion = REGION_ORDER.map((region) => ({
     region,
-    countries: WORLD_COUNTRIES.filter((c) => c.region === region && (counts[c.code] ?? 0) > 0).map((c) => ({ ...c, count: counts[c.code] ?? 0 })).sort((a, b) => b.count - a.count),
+    countries: WORLD_COUNTRIES.filter(
+      (c) => c.region === region && (counts[c.code] ?? 0) > 0,
+    )
+      .map((c) => ({ ...c, count: counts[c.code] ?? 0 }))
+      .sort((a, b) => b.count - a.count),
   })).filter((r) => r.countries.length > 0);
 
   return (
@@ -90,17 +114,39 @@ function Page() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Companies Mapped" value={totalCompanies.toLocaleString()} icon={<Building2 className="h-4 w-4" />} />
-        <StatCard label="Countries" value={coveredCountries} delta={{ value: "& growing", positive: true }} icon={<Globe2 className="h-4 w-4" />} />
-        <StatCard label="Top Market" value={topCountries[0]?.name ?? "China"} hint={`${topCountries[0]?.count ?? 142} companies`} />
-        <StatCard label="Fastest Growing" value="Bangladesh" delta={{ value: "+18% QoQ", positive: true }} icon={<TrendingUp className="h-4 w-4" />} />
+        <StatCard
+          label="Companies Mapped"
+          value={totalCompanies.toLocaleString()}
+          icon={<Building2 className="h-4 w-4" />}
+        />
+        <StatCard
+          label="Countries"
+          value={coveredCountries}
+          delta={{ value: "& growing", positive: true }}
+          icon={<Globe2 className="h-4 w-4" />}
+        />
+        <StatCard
+          label="Top Market"
+          value={topCountries[0]?.name ?? "China"}
+          hint={`${topCountries[0]?.count ?? 142} companies`}
+        />
+        <StatCard
+          label="Fastest Growing"
+          value="Bangladesh"
+          delta={{ value: "+18% QoQ", positive: true }}
+          icon={<TrendingUp className="h-4 w-4" />}
+        />
       </div>
 
       {/* Bubble map by region */}
       <div className="rounded-lg border border-border bg-card overflow-hidden">
         <div className="p-4 border-b border-border">
-          <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Geographic Distribution</div>
-          <div className="font-display font-semibold">Company density by country</div>
+          <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+            Geographic Distribution
+          </div>
+          <div className="font-display font-semibold">
+            Company density by country
+          </div>
         </div>
         <div className="p-6 space-y-8">
           {byRegion.map(({ region, countries }) => (
@@ -115,15 +161,24 @@ function Page() {
                   const size = getSize(c.count, maxCount);
                   const colorCls = getColor(c.count, maxCount);
                   return (
-                    <div key={c.code} className="flex flex-col items-center gap-1.5 group cursor-pointer">
+                    <div
+                      key={c.code}
+                      className="flex flex-col items-center gap-1.5 group cursor-pointer"
+                    >
                       <div
                         className={`rounded-full flex flex-col items-center justify-center transition-transform group-hover:scale-110 ${colorCls}`}
                         style={{ width: size, height: size }}
                       >
-                        <div className="font-mono font-bold leading-none" style={{ fontSize: Math.max(9, size / 5) }}>
+                        <div
+                          className="font-mono font-bold leading-none"
+                          style={{ fontSize: Math.max(9, size / 5) }}
+                        >
                           {c.count}
                         </div>
-                        <div className="font-mono leading-none opacity-70" style={{ fontSize: Math.max(8, size / 6) }}>
+                        <div
+                          className="font-mono leading-none opacity-70"
+                          style={{ fontSize: Math.max(8, size / 6) }}
+                        >
                           {c.code}
                         </div>
                       </div>
@@ -141,8 +196,16 @@ function Page() {
           <span>Bubble size = company count</span>
           <span>·</span>
           <div className="flex items-center gap-3">
-            {[{ cls: "bg-primary/15", label: "Low" }, { cls: "bg-primary/35", label: "Moderate" }, { cls: "bg-primary/60", label: "High" }, { cls: "bg-primary", label: "Very High" }].map((l) => (
-              <span key={l.label} className="flex items-center gap-1"><span className={`h-2.5 w-2.5 rounded-full ${l.cls}`} />{l.label}</span>
+            {[
+              { cls: "bg-primary/15", label: "Low" },
+              { cls: "bg-primary/35", label: "Moderate" },
+              { cls: "bg-primary/60", label: "High" },
+              { cls: "bg-primary", label: "Very High" },
+            ].map((l) => (
+              <span key={l.label} className="flex items-center gap-1">
+                <span className={`h-2.5 w-2.5 rounded-full ${l.cls}`} />
+                {l.label}
+              </span>
             ))}
           </div>
         </div>
@@ -152,23 +215,41 @@ function Page() {
       <div className="grid lg:grid-cols-2 gap-4">
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="p-4 border-b border-border">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Top 10 Markets</div>
-            <div className="font-display font-semibold">Companies by country</div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+              Top 10 Markets
+            </div>
+            <div className="font-display font-semibold">
+              Companies by country
+            </div>
           </div>
           <div className="divide-y divide-border">
             {topCountries.map((c, i) => (
-              <div key={c.code} className="flex items-center gap-4 px-4 py-3 hover:bg-muted/40 transition-colors">
-                <span className="text-[10px] font-mono text-muted-foreground w-5 text-right">{i + 1}</span>
+              <div
+                key={c.code}
+                className="flex items-center gap-4 px-4 py-3 hover:bg-muted/40 transition-colors"
+              >
+                <span className="text-[10px] font-mono text-muted-foreground w-5 text-right">
+                  {i + 1}
+                </span>
                 <div className="flex-1">
                   <div className="text-sm font-medium">{c.name}</div>
-                  <div className="text-xs text-muted-foreground font-mono">{c.region}</div>
+                  <div className="text-xs text-muted-foreground font-mono">
+                    {c.region}
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-mono tabular-nums font-semibold text-foreground">{c.count.toLocaleString()}</div>
-                  <div className="text-[10px] text-muted-foreground">companies</div>
+                  <div className="font-mono tabular-nums font-semibold text-foreground">
+                    {c.count.toLocaleString()}
+                  </div>
+                  <div className="text-[10px] text-muted-foreground">
+                    companies
+                  </div>
                 </div>
                 <div className="w-24 h-1.5 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: `${(c.count / maxCount) * 100}%` }} />
+                  <div
+                    className="h-full bg-primary rounded-full"
+                    style={{ width: `${(c.count / maxCount) * 100}%` }}
+                  />
                 </div>
               </div>
             ))}
@@ -178,8 +259,12 @@ function Page() {
         {/* Region breakdown */}
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="p-4 border-b border-border">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">Regional Breakdown</div>
-            <div className="font-display font-semibold">Companies by region</div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary">
+              Regional Breakdown
+            </div>
+            <div className="font-display font-semibold">
+              Companies by region
+            </div>
           </div>
           <div className="p-4 space-y-4">
             {byRegion.map(({ region, countries }) => {
@@ -189,12 +274,19 @@ function Page() {
                 <div key={region}>
                   <div className="flex justify-between text-sm mb-1.5">
                     <span className="font-medium">{region}</span>
-                    <span className="font-mono tabular-nums text-muted-foreground">{total.toLocaleString()} ({pct}%)</span>
+                    <span className="font-mono tabular-nums text-muted-foreground">
+                      {total.toLocaleString()} ({pct}%)
+                    </span>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${pct}%` }} />
+                    <div
+                      className="h-full bg-primary rounded-full transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
                   </div>
-                  <div className="text-[10px] text-muted-foreground font-mono mt-1">{countries.length} countries</div>
+                  <div className="text-[10px] text-muted-foreground font-mono mt-1">
+                    {countries.length} countries
+                  </div>
                 </div>
               );
             })}

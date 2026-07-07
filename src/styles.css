@@ -113,7 +113,7 @@
   --card-foreground: oklch(0.96 0.006 90);
   --popover: oklch(0.185 0.01 250);
   --popover-foreground: oklch(0.96 0.006 90);
-  --primary: oklch(0.78 0.17 55);           /* amber signature */
+  --primary: oklch(0.78 0.17 55); /* amber signature */
   --primary-foreground: oklch(0.12 0.02 60);
   --secondary: oklch(0.22 0.012 250);
   --secondary-foreground: oklch(0.96 0.006 90);
@@ -178,7 +178,8 @@
   }
 
   .glow-primary {
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
       0 8px 32px -8px color-mix(in oklab, var(--primary) 30%, transparent);
   }
 }
@@ -203,7 +204,8 @@
 
 @layer base {
   .glow-success {
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--success) 30%, transparent),
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--success) 30%, transparent),
       0 4px 16px -4px color-mix(in oklab, var(--success) 20%, transparent);
   }
 
@@ -224,7 +226,7 @@
     margin-top: 0.25rem;
   }
 
-  .prose-chat p+p {
+  .prose-chat p + p {
     margin-top: 0.5rem;
   }
 }
