@@ -89,6 +89,25 @@ function Page() {
     }
   }, []);
 
+  // Save changes to localStorage to persist them across page refreshes
+  useEffect(() => {
+    if (typeof window !== "undefined" && hasLoadedFromStorage) {
+      localStorage.setItem("gmintel_admin_bypass", String(isBypassActive));
+    }
+  }, [isBypassActive, hasLoadedFromStorage]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && hasLoadedFromStorage) {
+      localStorage.setItem("gmintel_local_companies", JSON.stringify(localCompanies));
+    }
+  }, [localCompanies, hasLoadedFromStorage]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && hasLoadedFromStorage) {
+      localStorage.setItem("gmintel_local_roles", JSON.stringify(localRoles));
+    }
+  }, [localRoles, hasLoadedFromStorage]);
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
