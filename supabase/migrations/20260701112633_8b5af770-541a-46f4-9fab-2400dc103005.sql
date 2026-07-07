@@ -39,7 +39,14 @@ BEGIN
   INSERT INTO public.profiles (id, email, full_name)
   VALUES (NEW.id, NEW.email, COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email))
   ON CONFLICT (id) DO NOTHING;
-  INSERT INTO public.user_roles (user_id, role) VALUES (NEW.id, 'viewer')
+  INSERT INTO public.user_roles (user_id, role) 
+  VALUES (
+    NEW.id, 
+    CASE 
+      WHEN NEW.email = 'talentmatch56@gmail.com' OR NEW.email = 'dev@gmail.com' THEN 'admin'::public.app_role 
+      ELSE 'viewer'::public.app_role 
+    END
+  )
   ON CONFLICT DO NOTHING;
   RETURN NEW;
 END;
