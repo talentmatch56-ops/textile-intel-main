@@ -69,6 +69,8 @@ function Page() {
   // Active user role checking
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [currentUserRole, setCurrentUserRole] = useState<string>("viewer");
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
+  const [isRoleLoading, setIsRoleLoading] = useState<boolean>(true);
 
   const [isBypassActive, setIsBypassActive] = useState<boolean>(false);
   const [localCompanies, setLocalCompanies] = useState<any[]>([]);
@@ -112,6 +114,9 @@ function Page() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setCurrentUser(user);
+      } else {
+        setIsUserLoading(false);
+        setIsRoleLoading(false);
       }
     });
   }, []);
@@ -120,22 +125,29 @@ function Page() {
   useEffect(() => {
     if (isBypassActive) {
       setCurrentUserRole("admin");
+      setIsUserLoading(false);
+      setIsRoleLoading(false);
     } else if (currentUser) {
+      setIsUserLoading(false);
       if (currentUser.email === "talentmatch56@gmail.com" || currentUser.email === "dev@gmail.com") {
         setCurrentUserRole("admin");
+        setIsRoleLoading(false);
         return;
       }
       const storedRoles = localStorage.getItem("gmintel_local_roles");
       const parsedRoles = storedRoles ? JSON.parse(storedRoles) : {};
       if (parsedRoles[currentUser.id]) {
         setCurrentUserRole(parsedRoles[currentUser.id]);
+        setIsRoleLoading(false);
       } else {
+        setIsRoleLoading(true);
         supabase.from("user_roles").select("role").eq("user_id", currentUser.id).maybeSingle().then(({ data }) => {
           if (data) {
             setCurrentUserRole(data.role);
           } else {
             setCurrentUserRole("viewer");
           }
+          setIsRoleLoading(false);
         });
       }
     }
@@ -382,6 +394,14 @@ function Page() {
       setModalOpen(false);
     }
   };
+
+  if (isUserLoading || isRoleLoading) {
+    return (
+      <div className="flex h-[50vh] items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   if (currentUserRole !== "admin") {
     return (
