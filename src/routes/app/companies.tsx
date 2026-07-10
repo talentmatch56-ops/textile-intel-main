@@ -27,12 +27,18 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { MOCK_COMPANIES } from "@/utils/mock-companies";
+import type { Database } from "@/integrations/supabase/types";
+import { MOCK_COMPANIES, type Company } from "@/utils/mock-companies";
 import { MOCK_COMPANY_NEWS } from "@/utils/mock-company-news";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/companies")({ component: Page });
+
+type CompanyRow = Database["public"]["Tables"]["companies"]["Row"];
+type AppCompany = Partial<CompanyRow> & {
+  year_founded?: number | null;
+};
 
 type SortKey = "name" | "ai_trust_score" | "ai_risk_score" | "country_code";
 
@@ -46,9 +52,9 @@ function Page() {
 
   // Watchlist & Details state
   const [watchlist, setWatchlist] = useState<string[]>([]);
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  const [selectedCompany, setSelectedCompany] = useState<AppCompany | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [localCompanies, setLocalCompanies] = useState<any[]>([]);
+  const [localCompanies, setLocalCompanies] = useState<AppCompany[]>([]);
 
   // Load watchlist and local companies on mount
   useEffect(() => {
@@ -69,7 +75,7 @@ function Page() {
         .replace(/(^-|-$)/g, "") +
       `-${Math.random().toString(36).substring(2, 6)}`;
 
-    const newCompany = {
+    const newCompany: AppCompany = {
       id: crypto.randomUUID(),
       name: companyName.trim(),
       slug: slug,
@@ -77,8 +83,8 @@ function Page() {
       city: "Sourcing City",
       business_type: "manufacturer",
       ai_trust_score: 85,
-      ai_risk_level: "low",
-      status: "verified",
+      ai_risk_level: "low" as const,
+      status: "verified" as const,
       created_at: new Date().toISOString(),
     };
 
@@ -124,8 +130,8 @@ function Page() {
   });
 
   const dbCompanies = data?.companies ?? [];
-  const companies = useMemo(() => {
-    const list = [...dbCompanies];
+  const companies = useMemo<AppCompany[]>(() => {
+    const list: AppCompany[] = [...dbCompanies];
     
     // Add locally saved companies from localStorage
     localCompanies.forEach((local) => {
@@ -136,7 +142,7 @@ function Page() {
 
     MOCK_COMPANIES.forEach((mock) => {
       if (!list.some((c) => c.slug === mock.slug)) {
-        list.push(mock as any);
+        list.push(mock as AppCompany);
       }
     });
     return list;
@@ -170,7 +176,7 @@ function Page() {
     if (search)
       list = list.filter(
         (c) =>
-          c.name.toLowerCase().includes(search.toLowerCase()) ||
+          (c.name ?? "").toLowerCase().includes(search.toLowerCase()) ||
           (c.city ?? "").toLowerCase().includes(search.toLowerCase()),
       );
     if (countryFilter)
@@ -413,7 +419,7 @@ function Page() {
             </div>
           )}
           {filtered.map((c) => {
-            const isFollowed = watchlist.includes(c.slug);
+            const isFollowed = watchlist.includes(c.slug ?? "");
             return (
               <div
                 key={c.id}
@@ -466,7 +472,7 @@ function Page() {
                 </div>
                 <div className="col-span-2 sm:col-span-1 text-center">
                   <button
-                    onClick={(e) => toggleWatchlist(c.slug, e)}
+                    onClick={(e) => toggleWatchlist(c.slug ?? "", e)}
                     className="p-1.5 rounded-full hover:bg-muted/80 text-muted-foreground hover:text-primary transition-all"
                   >
                     <Star
@@ -497,7 +503,7 @@ function Page() {
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center font-mono text-primary text-lg font-bold">
-                      {selectedCompany.name.slice(0, 2).toUpperCase()}
+                      {(selectedCompany.name ?? "").slice(0, 2).toUpperCase()}
                     </div>
                     <div>
                       <SheetTitle className="font-display text-xl font-bold leading-tight text-foreground">
@@ -507,7 +513,7 @@ function Page() {
                         {selectedCompany.city
                           ? `${selectedCompany.city}, `
                           : ""}
-                        {countryMap[selectedCompany.country_code] ??
+                        {countryMap[selectedCompany.country_code ?? ""] ??
                           selectedCompany.country_code}
                       </SheetDescription>
                     </div>
@@ -515,18 +521,18 @@ function Page() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={(e) => toggleWatchlist(selectedCompany.slug, e)}
+                    onClick={(e) => toggleWatchlist(selectedCompany.slug ?? "", e)}
                     className="gap-1.5 shrink-0"
                   >
                     <Star
                       className={cn(
                         "h-3.5 w-3.5",
-                        watchlist.includes(selectedCompany.slug)
+                        watchlist.includes(selectedCompany.slug ?? "")
                           ? "fill-primary text-primary"
                           : "",
                       )}
                     />
-                    {watchlist.includes(selectedCompany.slug)
+                    {watchlist.includes(selectedCompany.slug ?? "")
                       ? "Watchlisted"
                       : "Watchlist"}
                   </Button>
